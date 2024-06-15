@@ -29,6 +29,8 @@ public class Users {
     @NotEmpty
     private String password;
 
+    @Getter
+    @Setter
     private boolean isActive;
 
     @Setter
