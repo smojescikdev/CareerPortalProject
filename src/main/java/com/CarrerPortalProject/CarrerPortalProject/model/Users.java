@@ -65,7 +65,6 @@ public class Users {
                 ", password='" + password + '\'' +
                 ", isActive=" + isActive +
                 ", registrationDate=" + registrationDate +
-                ", userTypeId=" + userTypeId +
                 '}';
     }
 }
