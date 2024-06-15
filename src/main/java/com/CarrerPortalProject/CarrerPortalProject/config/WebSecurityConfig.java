@@ -8,6 +8,7 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,15 +22,18 @@ import org.springframework.stereotype.Controller;
 
 
 @Configuration
+@EnableWebSecurity
 public class WebSecurityConfig {
 
     private final CustomUserDetailsService customUserDetailsService;
 
-    @Autowired
-    public WebSecurityConfig(CustomUserDetailsService customUserDetailsService) {
-        this.customUserDetailsService = customUserDetailsService;
-    }
+    private final CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
 
+    @Autowired
+    public WebSecurityConfig(CustomUserDetailsService customUserDetailsService, CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler) {
+        this.customUserDetailsService = customUserDetailsService;
+        this.customAuthenticationSuccessHandler = customAuthenticationSuccessHandler;
+    }
 
     private final String[] publicUrl = {"/",
             "/global-search/**",
@@ -60,18 +64,18 @@ public class WebSecurityConfig {
             auth.anyRequest().authenticated();
         });
 
-//        // Konfiguracja strony logowania
-//        http.formLogin(form -> form
-//                        .loginPage("/login")
-//                        .permitAll().successHandler(customAuthenticationSuccessHandler))
-//
-//                // Konfiguracja wylogowania
-//
-//                .logout(logout -> {
-//                    logout.logoutUrl("/logout");
-//                    logout.logoutSuccessUrl("/");
-//                }).cors(Customizer.withDefaults())
-//                .csrf(AbstractHttpConfigurer::disable);
+        // Konfiguracja strony logowania
+        http.formLogin(form -> form
+                        .loginPage("/login")
+                        .permitAll().successHandler(customAuthenticationSuccessHandler))
+                // Konfiguracja wylogowania
+
+
+                .logout(logout -> {
+                    logout.logoutUrl("/logout");
+                    logout.logoutSuccessUrl("/");
+                }).cors(Customizer.withDefaults())
+                .csrf(AbstractHttpConfigurer::disable);
 
         return http.build();
     }
