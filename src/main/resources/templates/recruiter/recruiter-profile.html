@@ -1,10 +1,383 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:form="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Job Board HTML-5 Template</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/img/favicon.ico">
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="/static/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/assets/css/flaticon.css">
+    <link rel="stylesheet" href="/assets/css/price_rangs.css">
+    <link rel="stylesheet" href="/assets/css/slicknav.css">
+    <link rel="stylesheet" href="/assets/css/animate.min.css">
+    <link rel="stylesheet" href="/assets/css/magnific-popup.css">
+    <link rel="stylesheet" href="/assets/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="/assets/css/themify-icons.css">
+    <link rel="stylesheet" href="/assets/css/slick.css">
+    <link rel="stylesheet" href="/assets/css/nice-select.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+
+
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/styles2.css}"/>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css} "/>
+    <link th:rel="stylesheet" th:href="@{/webjars/font-awesome/css/all.css}"/>
+
 </head>
+
 <body>
-<h1>RECRUITER PROFILE</h1>
+
+<!-- HEADER -->
+<div th:insert="~{fragments/header :: header}"></div>
+<!-- HEADER ENDED -->
+
+
+<!--NAVBAR  for logged user  ---   START HERE-->
+<header>
+    <!-- Header Start -->
+    <div class="header-area header-transparrent">
+        <div class="headder-top header-sticky">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-3 col-md-2">
+                        <!-- Logo -->
+                        <!--                        <div class="logo">-->
+                        <!--                            <a href="/"><img src="/assets/img/logo/logo.png" alt=""></a>-->
+                        <!--                        </div>-->
+                    </div>
+                    <div class="col-lg-9 col-md-9">
+                        <div class="menu-wrapper">
+                            <!-- Main-menu -->
+                            <div class="main-menu">
+                                <nav class="d-none d-lg-block">
+                                    <ul id="navigation">
+                                        <!-- Dodatkowe elementy nawigacyjne -->
+                                        <li sec:authorize="hasAuthority('Job Seeker')"><a class="nav-link"
+                                                                                          th:href="@{/dashboard/}"><i
+                                                class="fas fa-search"></i> Search for Jobs</a></li>
+                                        <li sec:authorize="hasAuthority('Job Seeker')"><a class="nav-link"
+                                                                                          th:href="@{/saved-jobs/}"><i
+                                                class="fa-solid fa-eye"></i> View Saved Jobs</a></li>
+                                        <li sec:authorize="hasAuthority('Job Seeker')"><a class="nav-link"
+                                                                                          th:href="@{/job-seeker-profile/}"><i
+                                                class="fa-solid fa-pencil"></i> Edit Profile</a></li>
+                                        <li sec:authorize="hasAuthority('Recruiter')"><a class="nav-link"
+                                                                                         th:href="@{/dashboard/add}"><i
+                                                class="fa-solid fa-file-circle-plus"></i> Post New Job</a></li>
+                                        <li sec:authorize="hasAuthority('Recruiter')"><a class="nav-link"
+                                                                                         th:href="@{/dashboard/}"><i
+                                                class="fa-solid fa-eye"></i> View Your Jobs</a></li>
+                                        <li sec:authorize="hasAuthority('Recruiter')"><a class="nav-link"
+                                                                                         th:href="@{/recruiter/recruiter-profile/}"><i
+                                                class="fa-solid fa-pencil"></i> Edit Account</a></li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Mobile Menu -->
+                    <div class="col-12">
+                        <div class="mobile_menu d-block d-lg-none"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button class="btn head-btn2 header-btn f-right d-lg-block" onclick="window.location.href='/logout'">Logout
+        </button>
+
+    </div>
+    <!-- Header End -->
+</header>
+<!--NAVBAR  for logged user  ---   ENDED HERE-->
+
+
+<section class="section">
+    <div class="sidenav px-5">
+    </div>
+    <article>
+        <div class="box" sec:authorize="hasAuthority('Recruiter')">
+            <h1 class="primary-title">Recruiter Dashboard</h1>
+        </div>
+        <div class="box mt-3">
+            <label class="large-label px-3 mb-3" sec:authorize="hasAuthority('Job Seeker')">Search Results</label>
+            <th:block th:each="jobPost:${jobPost}">
+                <a
+                        th:href="@{/job-details-apply/{id}(id=${jobPost.jobPostId})}"
+                        style="text-decoration: none; color: black"
+                >
+                    <div
+                            onclick="window.location=/job-details-apply/{id}(id=${jobPost.jobPostId})"
+                            class="job-row"
+                    >
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label class="job-title text-left">
+                                    [[${jobPost.jobTitle}]]
+                                    <span
+                                            class="title-span"
+                                            sec:authorize="hasAuthority('Recruiter')"
+                                            th:text="'('+ @{${jobPost.totalCandidates}}+' Candidates Applied)'"
+                                    >(xx candidates applied)</span
+                                    >
+                                    <span
+                                            class="title-span"
+                                            sec:authorize="hasAuthority('Job Seeker')"
+                                            th:if="${jobPost.isActive == true}"
+                                    >(Applied)</span
+                                    >
+                                    <span
+                                            class="title-span"
+                                            sec:authorize="hasAuthority('Job Seeker')"
+                                            th:if="${jobPost.isSaved == true}"
+                                    >(Saved)</span
+                                    >
+                                </label>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <label
+                                        th:text="${jobPost.jobLocationId.city+', '+ jobPost.jobLocationId.state}"
+                                >
+                                    City State</label
+                                >
+                            </div>
+                            <div class="col-md-4 text-right">
+                                <label th:text="@{${jobPost.jobCompanyId.name}}"
+                                >Recruiter Company Name</label
+                                >
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </th:block>
+        </div>
+    </article>
+</section>
+
+
+
+
+<div class="container">
+    <h2>Recruiter Profile</h2>
+    <div class="profile-form-wrapper">
+        <div class="profile-section">
+            <h2>Recruiter Profile</h2>
+            <div th:if="${profile}">
+                <fieldset>
+                    <legend>Personal Information</legend>
+                    <p><strong>First Name:</strong> <span th:text="${profile.firstName}"></span></p>
+                    <p><strong>Last Name:</strong> <span th:text="${profile.lastName}"></span></p>
+                    <p><strong>Phone Number:</strong> <span th:text="${profile.phoneNumber}"></span></p>
+                    <p><strong>Email:</strong> <span th:text="${profile.email}"></span></p>
+                </fieldset>
+                <fieldset>
+                    <legend>Company Details</legend>
+                    <p><strong>Company Name:</strong> <span th:text="${profile.companyName}"></span></p>
+                    <p><strong>Company Country:</strong> <span th:text="${profile.companyCountry}"></span></p>
+                    <p><strong>Company Street:</strong> <span th:text="${profile.companyStreet}"></span></p>
+                    <p><strong>Company Zip Code:</strong> <span th:text="${profile.companyZipCode}"></span></p>
+                    <p><strong>Company City:</strong> <span th:text="${profile.companyCity}"></span></p>
+                    <p><strong>Company Website:</strong> <span th:text="${profile.companyWebsite}"></span></p>
+                    <p><strong>Company Email:</strong> <span th:text="${profile.companyEmail}"></span></p>
+                    <p><strong>Company Tax ID:</strong> <span th:text="${profile.companyTaxId}"></span></p>
+                    <p><strong>Company Description:</strong> <span th:text="${profile.companyDescription}"></span></p>
+                </fieldset>
+            </div>
+            <div th:unless="${profile}">
+                <p>No profile found</p>
+            </div>
+        </div>
+        <div class="form-section">
+            <h2>Recruiter Profile Form</h2>
+            <form action="#" th:action="@{/recruiter/recruiter-profile-success}" method="post">
+                <input type="hidden" name="userAccountId" th:value="${userAccountId}">
+                <fieldset>
+                    <legend>Personal Information</legend>
+                    <div>
+                        <label for="firstName">First Name:</label>
+                        <input type="text" id="firstName" name="firstName" required>
+                        <button type="submit" class="btn head-btn1">Update</button>
+                    </div>
+                </fieldset>
+            </form>
+            <form action="#" th:action="@{/recruiter/recruiter-profile-success}" method="post">
+                <input type="hidden" name="userAccountId" th:value="${userAccountId}">
+                <fieldset>
+                    <div>
+                        <label for="lastName">Last Name:</label>
+                        <input type="text" id="lastName" name="lastName" required>
+                        <button type="submit" class="btn head-btn1">Update</button>
+                    </div>
+                </fieldset>
+            </form>
+            <form action="#" th:action="@{/recruiter/recruiter-profile-success}" method="post">
+                <input type="hidden" name="userAccountId" th:value="${userAccountId}">
+                <fieldset>
+                    <div>
+                        <label for="phoneNumber">Phone Number:</label>
+                        <input type="text" id="phoneNumber" name="phoneNumber" required>
+                        <button type="submit" class="btn head-btn1">Update</button>
+                    </div>
+                </fieldset>
+            </form>
+            <form action="#" th:action="@{/recruiter/recruiter-profile-success}" method="post">
+                <input type="hidden" name="userAccountId" th:value="${userAccountId}">
+                <fieldset>
+                    <div>
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" required>
+                        <button type="submit" class="btn head-btn1">Update</button>
+                    </div>
+                </fieldset>
+            </form>
+            <form action="#" th:action="@{/recruiter/recruiter-profile-success}" method="post">
+                <input type="hidden" name="userAccountId" th:value="${userAccountId}">
+                <fieldset>
+                    <legend>Company Details</legend>
+                    <div>
+                        <label for="companyName">Company Name:</label>
+                        <input type="text" id="companyName" name="companyName" required>
+                        <button type="submit" class="btn head-btn1">Update</button>
+                    </div>
+                </fieldset>
+            </form>
+            <form action="#" th:action="@{/recruiter/recruiter-profile-success}" method="post">
+                <input type="hidden" name="userAccountId" th:value="${userAccountId}">
+                <fieldset>
+                    <div>
+                        <label for="companyCountry">Company Country:</label>
+                        <input type="text" id="companyCountry" name="companyCountry" required>
+                        <button type="submit" class="btn head-btn1">Update</button>
+                    </div>
+                </fieldset>
+            </form>
+            <form action="#" th:action="@{/recruiter/recruiter-profile-success}" method="post">
+                <input type="hidden" name="userAccountId" th:value="${userAccountId}">
+                <fieldset>
+                    <div>
+                        <label for="companyStreet">Company Street:</label>
+                        <input type="text" id="companyStreet" name="companyStreet" required>
+                        <button type="submit" class="btn head-btn1">Update</button>
+                    </div>
+                </fieldset>
+            </form>
+            <form action="#" th:action="@{/recruiter/recruiter-profile-success}" method="post">
+                <input type="hidden" name="userAccountId" th:value="${userAccountId}">
+                <fieldset>
+                    <div>
+                        <label for="companyZipCode">Company Zip Code:</label>
+                        <input type="text" id="companyZipCode" name="companyZipCode" required>
+                        <button type="submit" class="btn head-btn1">Update</button>
+                    </div>
+                </fieldset>
+            </form>
+            <form action="#" th:action="@{/recruiter/recruiter-profile-success}" method="post">
+                <input type="hidden" name="userAccountId" th:value="${userAccountId}">
+                <fieldset>
+                    <div>
+                        <label for="companyCity">Company City:</label>
+                        <input type="text" id="companyCity" name="companyCity" required>
+                        <button type="submit" class="btn head-btn1">Update</button>
+                    </div>
+                </fieldset>
+            </form>
+            <form action="#" th:action="@{/recruiter/recruiter-profile-success}" method="post">
+                <input type="hidden" name="userAccountId" th:value="${userAccountId}">
+                <fieldset>
+                    <div>
+                        <label for="companyWebsite">Company Website:</label>
+                        <input type="text" id="companyWebsite" name="companyWebsite" required>
+                        <button type="submit" class="btn head-btn1">Update</button>
+                    </div>
+                </fieldset>
+            </form>
+            <form action="#" th:action="@{/recruiter/recruiter-profile-success}" method="post">
+                <input type="hidden" name="userAccountId" th:value="${userAccountId}">
+                <fieldset>
+                    <div>
+                        <label for="companyEmail">Company Email:</label>
+                        <input type="email" id="companyEmail" name="companyEmail" required>
+                        <button type="submit" class="btn head-btn1">Update</button>
+                    </div>
+                </fieldset>
+            </form>
+            <form action="#" th:action="@{/recruiter/recruiter-profile-success}" method="post">
+                <input type="hidden" name="userAccountId" th:value="${userAccountId}">
+                <fieldset>
+                    <div>
+                        <label for="companyTaxId">Company Tax ID:</label>
+                        <input type="text" id="companyTaxId" name="companyTaxId" required>
+                        <button type="submit" class="btn head-btn1">Update</button>
+                    </div>
+                </fieldset>
+            </form>
+            <form action="#" th:action="@{/recruiter/recruiter-profile-success}" method="post">
+                <input type="hidden" name="userAccountId" th:value="${userAccountId}">
+                <fieldset>
+                    <div>
+                        <label for="companyDescription">Company Description:</label>
+                        <textarea id="companyDescription" name="companyDescription" required></textarea>
+                        <button type="submit" class="btn head-btn1">Update</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- FOOTER -->
+<div th:insert="~{fragments/footer :: footer}"></div>
+<!-- FOOTER ENDED -->
+
+<!-- JS here -->
+<!-- All JS Custom Plugins Link Here here -->
+<script src="/./assets/js/vendor/modernizr-3.5.0.min.js"></script>
+<!-- Jquery, Popper, Bootstrap -->
+<script src="/./assets/js/vendor/jquery-1.12.4.min.js"></script>
+<script src="/./assets/js/popper.min.js"></script>
+<script src="/./assets/js/bootstrap.min.js"></script>
+<!-- Jquery Mobile Menu -->
+<script src="/./assets/js/jquery.slicknav.min.js"></script>
+<!-- Jquery Slick, Owl-Carousel Plugins -->
+<script src="/./assets/js/owl.carousel.min.js"></script>
+<script src="/./assets/js/slick.min.js"></script>
+<script src="/./assets/js/price_rangs.js"></script>
+<!-- One Page, Animated-HeadLin -->
+<script src="/./assets/js/wow.min.js"></script>
+<script src="/./assets/js/animated.headline.js"></script>
+<script src="/./assets/js/jquery.magnific-popup.js"></script>
+<!-- Scrollup, nice-select, sticky -->
+<script src="/./assets/js/jquery.scrollUp.min.js"></script>
+<script src="/./assets/js/jquery.nice-select.min.js"></script>
+<script src="/./assets/js/jquery.sticky.js"></script>
+<!-- contact js -->
+<script src="/./assets/js/contact.js"></script>
+<script src="/./assets/js/jquery.form.js"></script>
+<script src="/./assets/js/jquery.validate.min.js"></script>
+<script src="/./assets/js/mail-script.js"></script>
+<script src="/./assets/js/jquery.ajaxchimp.min.js"></script>
+<!-- Jquery Plugins, main Jquery -->
+<script src="/./assets/js/plugins.js"></script>
+<script src="/./assets/js/main.js"></script>
+
+
+<script
+        type="text/javascript"
+        th:src="@{/webjars/jquery/jquery.min.js}"
+></script>
+<script
+        type="text/javascript"
+        th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"
+></script>
+
+
 </body>
 </html>
