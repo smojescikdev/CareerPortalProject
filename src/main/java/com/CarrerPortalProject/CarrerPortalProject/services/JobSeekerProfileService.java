@@ -21,5 +21,8 @@ public class JobSeekerProfileService {
         return jobSeekerProfileRepository.findByUserId(user);
     }
 
+    public Optional<JobSeekerProfile> findById(int accountId) {
+        return jobSeekerProfileRepository.findById(accountId);
+    }
 }
 

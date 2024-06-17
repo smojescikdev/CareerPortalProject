@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:form="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:form="http://www.w3.org/1999/xhtml"
+      xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -27,6 +28,69 @@
     <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/styles2.css}"/>
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css} "/>
     <link th:rel="stylesheet" th:href="@{/webjars/font-awesome/css/all.css}"/>
+
+
+    <style>
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .profile-form-wrapper {
+            display: flex;
+            gap: 20px;
+        }
+
+        .profile-section, .form-section {
+            flex: 1;
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+
+        .profile-section h2, .form-section h2 {
+            margin-top: 0;
+        }
+
+        fieldset {
+            border: none;
+            padding: 0;
+            margin-bottom: 20px;
+        }
+
+        legend {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input, textarea {
+            width: calc(100% - 20px);
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 
 
 </head>
@@ -96,308 +160,260 @@
 
 
 <div class="container">
-    <table style="width: 100%;">
-        <tr>
-            <td style="width: 50%; vertical-align: top;">
-                <div class="profile-form-wrapper">
-                    <div class="profile-section">
-                        <h2>Job Seeker Profile</h2>
-                        <div th:if="${profile != null}">
-                            <div class="profile-info">
-                                <fieldset>
-                                    <legend>Personal Information</legend>
-                                    <p><strong>First Name:</strong> <span th:text="${profile.firstName}"></span></p>
-                                    <p><strong>Last Name:</strong> <span th:text="${profile.lastName}"></span></p>
-                                    <p><strong>Phone:</strong> <span th:text="${profile.phone}"></span></p>
-                                    <p><strong>Email:</strong> <span th:text="${profile.email}"></span></p>
-                                    <p><strong>Date of Birth:</strong> <span th:text="${profile.dateOfBirth}"></span>
-                                    </p>
-                                </fieldset>
-                            </div>
-
-                            <div class="profile-info">
-                                <fieldset>
-                                    <legend>Career Preferences</legend>
-                                    <p><strong>Desired Industry:</strong> <span
-                                            th:text="${profile?.desiredIndustry}"></span></p>
-                                    <p><strong>Desired Occupation:</strong> <span
-                                            th:text="${profile?.desiredOccupation}"></span></p>
-                                    <!-- New fields from JobSeekerBasicInformation -->
-                                    <p><strong>Driver License:</strong> <span
-                                            th:text="${profile.jobSeekerBasicInformation?.driverLicense} ? 'Yes' : 'No'"></span>
-                                    </p>
-                                    <p><strong>Car Owner:</strong> <span
-                                            th:text="${profile.jobSeekerBasicInformation?.carOwner} ? 'Yes' : 'No'"></span>
-                                    </p>
-                                    <p><strong>Polish Language Level:</strong> <span
-                                            th:text="${profile.jobSeekerBasicInformation?.polishLanguageLevel}"></span>
-                                    </p>
-                                    <p><strong>German Language Level:</strong> <span
-                                            th:text="${profile.jobSeekerBasicInformation?.germanLanguageLevel}"></span>
-                                    </p>
-                                    <p><strong>English Language Level:</strong> <span
-                                            th:text="${profile.jobSeekerBasicInformation?.englishLanguageLevel}"></span>
-                                    </p>
-                                </fieldset>
-                            </div>
-                        </div>
-
-                        <!--                        INPUTY-->
-
-                        <!--                        <div th:if="${profile == null}" th:unless="${profile}">-->
-                        <!--                            <p>No profile found</p>-->
-                        <!--                        </div>-->
-                        <!--                    </div>-->
-                        <!--                </div>-->
-                        <!--            </td>-->
-                        <!--            <td style="width: 1px; background-color: #ccc;"></td>-->
-                        <!--            <td style="width: 49%; vertical-align: top;">-->
-                        <!--                <div class="form-section">-->
-                        <!--                    <h2>Job Seeker Profile Form</h2>-->
-
-                        <!--                    &lt;!&ndash; Personal Information Forms &ndash;&gt;-->
-                        <!--                    <form action="#" th:action="@{/job-seeker/job-seeker-profile-success}" method="post">-->
-                        <!--                        <input type="hidden" name="userAccountId" th:value="${userAccountId}">-->
-                        <!--                        <fieldset>-->
-                        <!--                            <legend>Personal Information</legend>-->
-                        <!--                            <div>-->
-                        <!--                                <label for="firstName">First Name:</label>-->
-                        <!--                                <input type="text" id="firstName" name="firstName" required>-->
-                        <!--                                <button type="submit" class="btn head-btn1">Update</button>-->
-                        <!--                            </div>-->
-                        <!--                        </fieldset>-->
-                        <!--                    </form>-->
-
-                        <!--                    <form action="#" th:action="@{/job-seeker/job-seeker-profile-success}" method="post">-->
-                        <!--                        <input type="hidden" name="userAccountId" th:value="${userAccountId}">-->
-                        <!--                        <fieldset>-->
-                        <!--                            <legend>Personal Information</legend>-->
-                        <!--                            <div>-->
-                        <!--                                <label for="lastName">Last Name:</label>-->
-                        <!--                                <input type="text" id="lastName" name="lastName" required>-->
-                        <!--                                <button type="submit" class="btn head-btn1">Update</button>-->
-                        <!--                            </div>-->
-                        <!--                        </fieldset>-->
-                        <!--                    </form>-->
-
-                        <!--                    <form action="#" th:action="@{/job-seeker/job-seeker-profile-success}" method="post">-->
-                        <!--                        <input type="hidden" name="userAccountId" th:value="${userAccountId}">-->
-                        <!--                        <fieldset>-->
-                        <!--                            <legend>Personal Information</legend>-->
-                        <!--                            <div>-->
-                        <!--                                <label for="phone">Phone:</label>-->
-                        <!--                                <input type="text" id="phone" name="phone" required>-->
-                        <!--                                <button type="submit" class="btn head-btn1">Update</button>-->
-                        <!--                            </div>-->
-                        <!--                        </fieldset>-->
-                        <!--                    </form>-->
-
-                        <!--                    <form action="#" th:action="@{/job-seeker/job-seeker-profile-success}" method="post">-->
-                        <!--                        <input type="hidden" name="userAccountId" th:value="${userAccountId}">-->
-                        <!--                        <fieldset>-->
-                        <!--                            <legend>Personal Information</legend>-->
-                        <!--                            <div>-->
-                        <!--                                <label for="email">Email:</label>-->
-                        <!--                                <input type="email" id="email" name="email" required>-->
-                        <!--                                <button type="submit" class="btn head-btn1">Update</button>-->
-                        <!--                            </div>-->
-                        <!--                        </fieldset>-->
-                        <!--                    </form>-->
-
-                        <!--                    <form action="#" th:action="@{/job-seeker/job-seeker-profile-success}" method="post">-->
-                        <!--                        <input type="hidden" name="userAccountId" th:value="${userAccountId}">-->
-                        <!--                        <fieldset>-->
-                        <!--                            <legend>Personal Information</legend>-->
-                        <!--                            <div>-->
-                        <!--                                <label for="dateOfBirth">Date of Birth:</label>-->
-                        <!--                                <input type="date" id="dateOfBirth" name="dateOfBirth" required>-->
-                        <!--                                <button type="submit" class="btn head-btn1">Update</button>-->
-                        <!--                            </div>-->
-                        <!--                        </fieldset>-->
-                        <!--                    </form>-->
-
-                        <!--                    &lt;!&ndash; Career Preferences Form &ndash;&gt;-->
-                        <!--                    <form action="#" th:action="@{/job-seeker/job-seeker-profile-success}" method="post">-->
-                        <!--                        <input type="hidden" name="userAccountId" th:value="${userAccountId}">-->
-                        <!--                        <fieldset>-->
-                        <!--                            <legend>Career Preferences</legend>-->
-                        <!--                            <div>-->
-                        <!--                                <label for="desiredIndustry">Desired Industry:</label>-->
-                        <!--                                <input type="text" id="desiredIndustry" name="desiredIndustry" required>-->
-                        <!--                            </div>-->
-                        <!--                            <button type="submit" class="btn head-btn1">Update</button>-->
-                        <!--                        </fieldset>-->
-                        <!--                    </form>-->
-
-                        <!--                    <form action="#" th:action="@{/job-seeker/job-seeker-profile-success}" method="post">-->
-                        <!--                        <input type="hidden" name="userAccountId" th:value="${userAccountId}">-->
-                        <!--                        <fieldset>-->
-                        <!--                            <legend>Career Preferences</legend>-->
-                        <!--                            <div>-->
-                        <!--                                <label for="desiredOccupation">Desired Occupation:</label>-->
-                        <!--                                <input type="text" id="desiredOccupation" name="desiredOccupation" required>-->
-                        <!--                            </div>-->
-                        <!--                            <button type="submit" class="btn head-btn1">Update</button>-->
-                        <!--                        </fieldset>-->
-                        <!--                    </form>-->
-
-                        <!--                    &lt;!&ndash; Basic Information Form &ndash;&gt;-->
-                        <!--                    <form action="#" th:action="@{/job-seeker/job-seeker-profile-success}" method="post">-->
-                        <!--                        <input type="hidden" name="userAccountId" th:value="${userAccountId}">-->
-                        <!--                        <fieldset>-->
-                        <!--                            <legend>Basic Information</legend>-->
-                        <!--                            <div>-->
-                        <!--                                <label for="driverLicense">Driver's License:</label>-->
-                        <!--                                <input type="checkbox" id="driverLicense" name="driverLicense" th:checked="${profile.jobSeekerBasicInformation?.driverLicense}">-->
-                        <!--                                <label for="driverLicense">Driver's License</label>-->
-                        <!--                            </div>-->
-                        <!--                            <div>-->
-                        <!--                                <label for="carOwner">Car Owner:</label>-->
-                        <!--                                <input type="checkbox" id="carOwner" name="carOwner" th:checked="${profile.jobSeekerBasicInformation?.carOwner}">-->
-                        <!--                                <label for="carOwner">Car Owner</label>-->
-                        <!--                            </div>-->
-                        <!--                            <button type="submit" class="btn head-btn1">Update</button>-->
-                        <!--                        </fieldset>-->
-                        <!--                    </form>-->
-
-                        <!--                    &lt;!&ndash; Language Levels Forms &ndash;&gt;-->
-                        <!--                    <form action="#" th:action="@{/job-seeker/job-seeker-profile-success}" method="post">-->
-                        <!--                        <input type="hidden" name="userAccountId" th:value="${userAccountId}">-->
-                        <!--                        <fieldset>-->
-                        <!--                            <legend>Language Levels</legend>-->
-                        <!--                            <div>-->
-                        <!--                                <label for="polishLanguageLevel">Polish Language Level:</label>-->
-                        <!--                                <select id="polishLanguageLevel" name="polishLanguageLevel">-->
-                        <!--                                    <option value="">&#45;&#45; Select &#45;&#45;</option>-->
-                        <!--                                    <option value="A1">A1</option>-->
-                        <!--                                    <option value="A2">A2</option>-->
-                        <!--                                    <option value="B1">B1</option>-->
-                        <!--                                    <option value="B2">B2</option>-->
-                        <!--                                    <option value="C1">C1</option>-->
-                        <!--                                    <option value="C2">C2</option>-->
-                        <!--                                </select>-->
-                        <!--                                <button type="submit" class="btn head-btn1">Update</button>-->
-                        <!--                            </div>-->
-                        <!--                        </fieldset>-->
-                        <!--                    </form>-->
-
-                        <!--                    <form action="#" th:action="@{/job-seeker/job-seeker-profile-success}" method="post">-->
-                        <!--                        <input type="hidden" name="userAccountId" th:value="${userAccountId}">-->
-                        <!--                        <fieldset>-->
-                        <!--                            <legend>Language Levels</legend>-->
-                        <!--                            <div>-->
-                        <!--                                <label for="germanLanguageLevel">German Language Level:</label>-->
-                        <!--                                <select id="germanLanguageLevel" name="germanLanguageLevel">-->
-                        <!--                                    <option value="">&#45;&#45; Select &#45;&#45;</option>-->
-                        <!--                                    <option value="A1">A1</option>-->
-                        <!--                                    <option value="A2">A2</option>-->
-                        <!--                                    <option value="B1">B1</option>-->
-                        <!--                                    <option value="B2">B2</option>-->
-                        <!--                                    <option value="C1">C1</option>-->
-                        <!--                                    <option value="C2">C2</option>-->
-                        <!--                                </select>-->
-                        <!--                                <button type="submit" class="btn head-btn1">Update</button>-->
-                        <!--                            </div>-->
-                        <!--                        </fieldset>-->
-                        <!--                    </form>-->
-
-                        <!--                    <form action="#" th:action="@{/job-seeker/job-seeker-profile-success}" method="post">-->
-                        <!--                        <input type="hidden" name="userAccountId" th:value="${userAccountId}">-->
-                        <!--                        <fieldset>-->
-                        <!--                            <legend>Language Levels</legend>-->
-                        <!--                            <div>-->
-                        <!--                                <label for="englishLanguageLevel">English Language Level:</label>-->
-                        <!--                                <select id="englishLanguageLevel" name="englishLanguageLevel">-->
-                        <!--                                    <option value="">&#45;&#45; Select &#45;&#45;</option>-->
-                        <!--                                    <option value="A1">A1</option>-->
-                        <!--                                    <option value="A2">A2</option>-->
-                        <!--                                    <option value="B1">B1</option>-->
-                        <!--                                    <option value="B2">B2</option>-->
-                        <!--                                    <option value="C1">C1</option>-->
-                        <!--                                    <option value="C2">C2</option>-->
-                        <!--                                </select>-->
-                        <!--                                <button type="submit" class="btn head-btn1">Update</button>-->
-                        <!--                            </div>-->
-                        <!--                        </fieldset>-->
-                        <!--                    </form>-->
-                        <!--                </div>-->
-                        <!--            </td>-->
-                        <!--        </tr>-->
-                        <!--    </table>-->
-                        <!--</div>-->
+    <div class="profile-form-wrapper">
+        <div class="profile-section">
+            <h2>Job Seeker Profile</h2>
+            <div th:if="${profile != null}">
+                <div class="profile-info">
+                    <fieldset>
+                        <legend>Personal Information</legend>
+                        <p><strong>First Name:</strong> <span th:text="${profile.firstName}"></span></p>
+                        <p><strong>Last Name:</strong> <span th:text="${profile.lastName}"></span></p>
+                        <p><strong>Phone:</strong> <span th:text="${profile.phone}"></span></p>
+                        <p><strong>Email:</strong> <span th:text="${profile.email}"></span></p>
+                        <p><strong>Date of Birth:</strong> <span th:text="${profile.dateOfBirth}"></span>
+                        </p>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Career Preferences</legend>
+                        <p><strong>Desired Industry:</strong> <span
+                                th:text="${profile?.desiredIndustry}"></span></p>
+                        <p><strong>Desired Occupation:</strong> <span
+                                th:text="${profile?.desiredOccupation}"></span></p>
+                    </fieldset>
+                    <fieldset>
+                        <legend>License and Car Info Hub</legend>
+                        <!-- New fields from JobSeekerBasicInformation -->
+                        <p><strong>Driver License:</strong> <span
+                                th:text="${profile.jobSeekerBasicInformation?.driverLicense} ? 'Yes' : 'No'"></span>
+                        </p>
+                        <p><strong>Car Owner:</strong> <span
+                                th:text="${profile.jobSeekerBasicInformation?.carOwner} ? 'Yes' : 'No'"></span>
+                        </p>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Language skills</legend>
+                        <p><strong>Polish Language Level:</strong> <span
+                                th:text="${profile.jobSeekerBasicInformation?.polishLanguageLevel}"></span>
+                        </p>
+                        <p><strong>German Language Level:</strong> <span
+                                th:text="${profile.jobSeekerBasicInformation?.germanLanguageLevel}"></span>
+                        </p>
+                        <p><strong>English Language Level:</strong> <span
+                                th:text="${profile.jobSeekerBasicInformation?.englishLanguageLevel}"></span>
+                        </p>
+                    </fieldset>
+                </div>
+            </div>
+            <div th:if="${profile == null}" th:unless="${profile}">
+                <p>No profile found</p>
+            </div>
+        </div>
+    </div>
 
 
-                        <!-- FOOTER -->
-                        <div th:insert="~{fragments/footer :: footer}"></div>
-                        <!-- FOOTER ENDED -->
+    <div class="form-section">
+        <h2>Job Seeker Profile Form</h2>
 
-                        <!-- JS here -->
-                        <!-- All JS Custom Plugins Link Here here -->
-                        <script src="/./assets/js/vendor/modernizr-3.5.0.min.js"></script>
-                        <!-- Jquery, Popper, Bootstrap -->
-                        <script src="/./assets/js/vendor/jquery-1.12.4.min.js"></script>
-                        <script src="/./assets/js/popper.min.js"></script>
-                        <script src="/./assets/js/bootstrap.min.js"></script>
-                        <!-- Jquery Mobile Menu -->
-                        <script src="/./assets/js/jquery.slicknav.min.js"></script>
-                        <!-- Jquery Slick, Owl-Carousel Plugins -->
-                        <script src="/./assets/js/owl.carousel.min.js"></script>
-                        <script src="/./assets/js/slick.min.js"></script>
-                        <script src="/./assets/js/price_rangs.js"></script>
-                        <!-- One Page, Animated-HeadLin -->
-                        <script src="/./assets/js/wow.min.js"></script>
-                        <script src="/./assets/js/animated.headline.js"></script>
-                        <script src="/./assets/js/jquery.magnific-popup.js"></script>
-                        <!-- Scrollup, nice-select, sticky -->
-                        <script src="/./assets/js/jquery.scrollUp.min.js"></script>
-                        <script src="/./assets/js/jquery.nice-select.min.js"></script>
-                        <script src="/./assets/js/jquery.sticky.js"></script>
-                        <!-- contact js -->
-                        <script src="/./assets/js/contact.js"></script>
-                        <script src="/./assets/js/jquery.form.js"></script>
-                        <script src="/./assets/js/jquery.validate.min.js"></script>
-                        <script src="/./assets/js/mail-script.js"></script>
-                        <script src="/./assets/js/jquery.ajaxchimp.min.js"></script>
-                        <!-- Jquery Plugins, main Jquery -->
-                        <script src="/./assets/js/plugins.js"></script>
-                        <script src="/./assets/js/main.js"></script>
+        <!-- Personal Information Forms -->
+        <form action="#" th:action="@{/job-seeker/job-seeker-profile-success}" method="post">
+            <input type="hidden" name="userAccountId" th:value="${userAccountId}">
+            <fieldset>
+                <legend>Personal Information</legend>
+                <div>
+                    <label for="firstName">First Name:</label>
+                    <input type="text" id="firstName" name="firstName" >
+                </div>
+                <div>
+                    <label for="lastName">Last Name:</label>
+                    <input type="text" id="lastName" name="lastName" >
+                </div>
+                <div>
+                    <label for="phone">Phone:</label>
+                    <input type="text" id="phone" name="phone" >
+                </div>
+                <div>
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" >
+                </div>
+                <button type="submit" class="head-btn1">Update Personal Information</button>
+            </fieldset>
+        </form>
 
 
-                        <script th:inline="javascript">
-                            document.addEventListener('DOMContentLoaded', function () {
-                                var industrySelect = document.getElementById('desiredIndustrySelect');
-                                var questionDivs = document.querySelectorAll('.industry-questions');
+        <!-- Date of Birth -->
+        <form action="#" th:action="@{/job-seeker/job-seeker-profile-success}" method="post">
+            <input type="hidden" name="userAccountId" th:value="${userAccountId}">
+            <fieldset>
+                <legend>Date of Birth</legend>
+                <div>
+            <label for="dateOfBirth">Date of Birth:</label>
+            <input type="date" id="dateOfBirth" name="dateOfBirth" >
+        </div>
+                <button type="submit" class="head-btn1">Update Personal Information</button>
+        </fieldset>
+        </form>
 
-                                // Ukryj wszystkie pytania po załadowaniu strony
-                                hideAllQuestions();
+        <!-- Career Preferences Form -->
+        <form action="#" th:action="@{/job-seeker/job-seeker-profile-success}" method="post">
+            <input type="hidden" name="userAccountId" th:value="${userAccountId}">
+            <fieldset>
+                <legend>Career Preferences</legend>
+                <div>
+                    <label for="desiredIndustry">Desired Industry:</label>
+                    <input type="text" id="desiredIndustry" name="desiredIndustry" >
+                </div>
+                <div>
+                    <label for="desiredOccupation">Desired Occupation:</label>
+                    <input type="text" id="desiredOccupation" name="desiredOccupation" >
+                </div>
+                <button type="submit" class="head-btn1">Update Career Preferences</button>
+            </fieldset>
+        </form>
 
-                                // Wyświetl odpowiednie pytania po zmianie wybranej branży
-                                industrySelect.addEventListener('change', function () {
-                                    hideAllQuestions();
-                                    var selectedIndustry = this.value;
-                                    var industryQuestionsDiv = document.getElementById(selectedIndustry.toLowerCase() + 'Questions');
-                                    if (industryQuestionsDiv) {
-                                        industryQuestionsDiv.style.display = 'block';
-                                    }
-                                });
+        <!-- License and Car Information - Basic information -->
+        <form action="#" th:action="@{/job-seeker/job-seeker-profile-success}" method="post">
+            <input type="hidden" name="userAccountId" th:value="${userAccountId}">
+            <fieldset>
+                <legend>License and Car Info Hub</legend>
+                <div>
+                    <label for="driverLicense">Driver's License:</label>
+                    <input type="checkbox" id="driverLicense" name="driverLicense"
+                           th:checked="${profile.jobSeekerBasicInformation?.driverLicense}">
+                </div>
+                <div>
+                    <label for="carOwner">Car Owner:</label>
+                    <input type="checkbox" id="carOwner" name="carOwner"
+                           th:checked="${profile.jobSeekerBasicInformation?.carOwner}">
+                </div>
+                <button type="submit" class="head-btn1">Update License and Car Information</button>
+            </fieldset>
+        </form>
 
-                                function hideAllQuestions() {
-                                    questionDivs.forEach(function (div) {
-                                        div.style.display = 'none';
-                                    });
-                                }
-                            });
-                        </script>
+        <!-- Language Levels Forms -->
+        <form action="#" th:action="@{/job-seeker/job-seeker-profile-success}" method="post">
+            <input type="hidden" name="userAccountId" th:value="${userAccountId}">
+            <fieldset>
+                <legend>Language Levels</legend>
+                <div>
+                    <label for="polishLanguageLevel">Polish Language Level:</label>
+                    <select id="polishLanguageLevel" name="polishLanguageLevel">
+                        <option value="">-- Select --</option>
+                        <option value="A1">A1</option>
+                        <option value="A2">A2</option>
+                        <option value="B1">B1</option>
+                        <option value="B2">B2</option>
+                        <option value="C1">C1</option>
+                        <option value="C2">C2</option>
+                    </select>
+                </div>
+            </fieldset>
+        <fieldset>
+                <div>
+                    <label for="germanLanguageLevel">German Language Level:</label>
+                    <select id="germanLanguageLevel" name="germanLanguageLevel">
+                        <option value="">-- Select --</option>
+                        <option value="A1">A1</option>
+                        <option value="A2">A2</option>
+                        <option value="B1">B1</option>
+                        <option value="B2">B2</option>
+                        <option value="C1">C1</option>
+                        <option value="C2">C2</option>
+                    </select>
+                </div>
+            </fieldset>
+      <fieldset>
+                <div>
+                    <label for="englishLanguageLevel">English Language Level:</label>
+                    <select id="englishLanguageLevel" name="englishLanguageLevel">
+                        <option value="">-- Select --</option>
+                        <option value="A1">A1</option>
+                        <option value="A2">A2</option>
+                        <option value="B1">B1</option>
+                        <option value="B2">B2</option>
+                        <option value="C1">C1</option>
+                        <option value="C2">C2</option>
+                    </select>
+                </div>
+            </fieldset>
+            <button type="submit" class="head-btn1">Update Language Skills</button>
+        </form>
+    </div>
+</div>
 
 
-                        <script
-                                type="text/javascript"
-                                th:src="@{/webjars/jquery/jquery.min.js}"
-                        ></script>
-                        <script
-                                type="text/javascript"
-                                th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"
-                        ></script>
+
+<!-- FOOTER -->
+<div th:insert="~{fragments/footer :: footer}"></div>
+<!-- FOOTER ENDED -->
+
+<!-- JS here -->
+<!-- All JS Custom Plugins Link Here here -->
+<script src="/./assets/js/vendor/modernizr-3.5.0.min.js"></script>
+<!-- Jquery, Popper, Bootstrap -->
+<script src="/./assets/js/vendor/jquery-1.12.4.min.js"></script>
+<script src="/./assets/js/popper.min.js"></script>
+<script src="/./assets/js/bootstrap.min.js"></script>
+<!-- Jquery Mobile Menu -->
+<script src="/./assets/js/jquery.slicknav.min.js"></script>
+<!-- Jquery Slick, Owl-Carousel Plugins -->
+<script src="/./assets/js/owl.carousel.min.js"></script>
+<script src="/./assets/js/slick.min.js"></script>
+<script src="/./assets/js/price_rangs.js"></script>
+<!-- One Page, Animated-HeadLin -->
+<script src="/./assets/js/wow.min.js"></script>
+<script src="/./assets/js/animated.headline.js"></script>
+<script src="/./assets/js/jquery.magnific-popup.js"></script>
+<!-- Scrollup, nice-select, sticky -->
+<script src="/./assets/js/jquery.scrollUp.min.js"></script>
+<script src="/./assets/js/jquery.nice-select.min.js"></script>
+<script src="/./assets/js/jquery.sticky.js"></script>
+<!-- contact js -->
+<script src="/./assets/js/contact.js"></script>
+<script src="/./assets/js/jquery.form.js"></script>
+<script src="/./assets/js/jquery.validate.min.js"></script>
+<script src="/./assets/js/mail-script.js"></script>
+<script src="/./assets/js/jquery.ajaxchimp.min.js"></script>
+<!-- Jquery Plugins, main Jquery -->
+<script src="/./assets/js/plugins.js"></script>
+<script src="/./assets/js/main.js"></script>
+
+
+<script th:inline="javascript">
+    document.addEventListener('DOMContentLoaded', function () {
+        var industrySelect = document.getElementById('desiredIndustrySelect');
+        var questionDivs = document.querySelectorAll('.industry-questions');
+
+        // Ukryj wszystkie pytania po załadowaniu strony
+        hideAllQuestions();
+
+        // Wyświetl odpowiednie pytania po zmianie wybranej branży
+        industrySelect.addEventListener('change', function () {
+            hideAllQuestions();
+            var selectedIndustry = this.value;
+            var industryQuestionsDiv = document.getElementById(selectedIndustry.toLowerCase() + 'Questions');
+            if (industryQuestionsDiv) {
+                industryQuestionsDiv.style.display = 'block';
+            }
+        });
+
+        function hideAllQuestions() {
+            questionDivs.forEach(function (div) {
+                div.style.display = 'none';
+            });
+        }
+    });
+</script>
+
+
+<script
+        type="text/javascript"
+        th:src="@{/webjars/jquery/jquery.min.js}"
+></script>
+<script
+        type="text/javascript"
+        th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"
+></script>
 
 
 </body>
