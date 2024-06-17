@@ -1,9 +1,8 @@
 package com.CarrerPortalProject.CarrerPortalProject.controller;
 
-import com.CarrerPortalProject.CarrerPortalProject.model.JobSeekerProfile;
-import com.CarrerPortalProject.CarrerPortalProject.model.RecruiterProfile;
-import com.CarrerPortalProject.CarrerPortalProject.model.Users;
+import com.CarrerPortalProject.CarrerPortalProject.model.*;
 import com.CarrerPortalProject.CarrerPortalProject.repository.JobSeekerProfileRepository;
+import com.CarrerPortalProject.CarrerPortalProject.repository.QualificationIndustryFormsRepository;
 import com.CarrerPortalProject.CarrerPortalProject.repository.UsersRepository;
 import com.CarrerPortalProject.CarrerPortalProject.services.JobSeekerProfileService;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -18,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 import java.sql.Date;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -26,11 +27,13 @@ public class JobSeekerProfileController {
     private final UsersRepository usersRepository;
     private final JobSeekerProfileService jobSeekerProfileService;
     private final JobSeekerProfileRepository jobSeekerProfileRepository;
+    private final QualificationIndustryFormsRepository qualificationIndustryFormsRepository;
 
-    public JobSeekerProfileController(UsersRepository usersRepository, JobSeekerProfileService jobSeekerProfileService, JobSeekerProfileRepository jobSeekerProfileRepository) {
+    public JobSeekerProfileController(UsersRepository usersRepository, JobSeekerProfileService jobSeekerProfileService, JobSeekerProfileRepository jobSeekerProfileRepository, QualificationIndustryFormsRepository qualificationIndustryFormsRepository) {
         this.usersRepository = usersRepository;
         this.jobSeekerProfileService = jobSeekerProfileService;
         this.jobSeekerProfileRepository = jobSeekerProfileRepository;
+        this.qualificationIndustryFormsRepository = qualificationIndustryFormsRepository;
     }
 
     @GetMapping("/job-seeker/job-seeker-profile/")
@@ -59,9 +62,20 @@ public class JobSeekerProfileController {
             @RequestParam(required = false) Date dateOfBirth,
             @RequestParam(required = false) String resume,
 
-            //
-            @RequestParam(required = false) String desiredIndustry,
-            @RequestParam(required = false) String desiredOccupation
+
+            //License&Car
+            @RequestParam(required = false) boolean driverLicense,
+            @RequestParam(required = false) boolean carOwner,
+
+            //Language skills
+            @RequestParam(required = false) JobSeekerBasicInformation.LanguageLevel polishLanguageLevel,
+            @RequestParam(required = false) JobSeekerBasicInformation.LanguageLevel germanLanguageLevel,
+            @RequestParam(required = false) JobSeekerBasicInformation.LanguageLevel englishLanguageLevel
+
+
+            //QualificationIndustryForms
+//            @RequestParam(required = false) Long industryFormId,
+//            @RequestParam(required = false) List<Long> qualificationsIds
 
 
     ) {
@@ -104,14 +118,44 @@ public class JobSeekerProfileController {
                 }
 
 
-                //optional
-                if (desiredIndustry != null && !desiredIndustry.isEmpty()) {
-                    existingProfile.setDesiredIndustry(desiredIndustry);
+                //    JobSeekerProfile existingProfile = existingProfileOptional.get();
+                // Update or create JobSeekerBasicInformation
+                JobSeekerBasicInformation basicInformation = existingProfile.getJobSeekerBasicInformation();
+                // Ustawienie poziomu języka, jeśli nie są nullami
+                if (polishLanguageLevel != null) {
+                    basicInformation.setPolishLanguageLevel(polishLanguageLevel);
                 }
-                if (desiredOccupation != null && !desiredOccupation.isEmpty()) {
-                    existingProfile.setDesiredOccupation(desiredOccupation);
+                if (germanLanguageLevel != null) {
+                    basicInformation.setGermanLanguageLevel(germanLanguageLevel);
+                }
+                if (englishLanguageLevel != null) {
+                    basicInformation.setEnglishLanguageLevel(englishLanguageLevel);
                 }
 
+
+                basicInformation.setDriverLicense(driverLicense);
+                basicInformation.setCarOwner(carOwner);
+
+
+//                //Qualifi
+//                // Aktualizacja kwalifikacji przemysłowych
+//                // Aktualizacja kwalifikacji przemysłowych
+//                if (industryFormId != null && qualificationsIds != null) {
+//                    // Pobierz formę przemysłu na podstawie ID
+//                    Optional<QualificationIndustryForms> industryFormsOptional = qualificationIndustryFormsRepository.findById(industryFormId);
+//                    if (industryFormsOptional.isPresent()) {
+//                        QualificationIndustryForms industryForm = industryFormsOptional.get();
+//                        List<Qualifications> qualifications = industryForm.getQualifications();
+//
+//                        // Ustawienie flag dla kwalifikacji
+//                        for (Qualifications qualification : qualifications) {
+//                            qualification.setQualified(qualificationsIds.contains(qualification.getId()));
+//                        }
+//
+//                        // Zapisz zmiany
+//                        qualificationIndustryFormsRepository.save(industryForm);
+//                    }
+//                }
 
                 jobSeekerProfileRepository.save(existingProfile);
                 return "job-seeker/job-seeker-profile-success";

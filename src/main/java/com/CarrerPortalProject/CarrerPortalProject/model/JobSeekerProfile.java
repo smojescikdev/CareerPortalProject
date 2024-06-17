@@ -25,6 +25,9 @@ public class JobSeekerProfile {
     @OneToOne(mappedBy = "jobSeekerProfile", cascade = CascadeType.ALL)
     private JobSeekerBasicInformation jobSeekerBasicInformation;
 
+    @OneToOne(mappedBy = "jobSeekerProfile", cascade = CascadeType.ALL)
+    private QualificationIndustryForms qualificationIndustryForms;
+
 
     // Job Seeker details
     private String firstName;

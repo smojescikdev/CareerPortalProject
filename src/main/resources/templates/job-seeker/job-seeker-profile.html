@@ -279,12 +279,12 @@
                 <div>
                     <label for="driverLicense">Driver's License:</label>
                     <input type="checkbox" id="driverLicense" name="driverLicense"
-                           th:checked="${profile.jobSeekerBasicInformation?.driverLicense}">
+                           th:checked="${profile.jobSeekerBasicInformation.driverLicense}">
                 </div>
                 <div>
                     <label for="carOwner">Car Owner:</label>
                     <input type="checkbox" id="carOwner" name="carOwner"
-                           th:checked="${profile.jobSeekerBasicInformation?.carOwner}">
+                           th:checked="${profile.jobSeekerBasicInformation.carOwner}">
                 </div>
                 <button type="submit" class="head-btn1">Update License and Car Information</button>
             </fieldset>
