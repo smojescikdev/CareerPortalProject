@@ -22,4 +22,7 @@ public class RecruiterProfileService {
         return recruiterProfileRepository.findByUserId(user);
     }
 
+    public Optional<RecruiterProfile> findById(int accountId) {
+        return recruiterProfileRepository.findById(accountId);
+    }
 }

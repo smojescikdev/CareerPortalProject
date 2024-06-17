@@ -28,69 +28,6 @@
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css} "/>
     <link th:rel="stylesheet" th:href="@{/webjars/font-awesome/css/all.css}"/>
 
-    <style>
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .profile-form-wrapper {
-            display: flex;
-            gap: 20px;
-        }
-
-        .profile-section, .form-section {
-            flex: 1;
-            border: 1px solid #ccc;
-            padding: 20px;
-            border-radius: 8px;
-            background-color: #f9f9f9;
-        }
-
-        .profile-section h2, .form-section h2 {
-            margin-top: 0;
-        }
-
-        fieldset {
-            border: none;
-            padding: 0;
-            margin-bottom: 20px;
-        }
-
-        legend {
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        input, textarea {
-            width: calc(100% - 20px);
-            padding: 8px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        button {
-            padding: 10px 20px;
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #0056b3;
-        }
-    </style>
-
-
 </head>
 
 <body>
@@ -160,108 +97,16 @@
 <!--NAVBAR  for logged user  ---   ENDED HERE-->
 
 
-<div class="container">
-    <div class="profile-form-wrapper">
-        <div class="profile-section">
-            <h2>Recruiter Profile</h2>
-            <div th:if="${profile}">
-                <fieldset>
-                    <legend>Personal Information</legend>
-                    <p><strong>First Name:</strong> <span th:text="${profile.firstName}"></span></p>
-                    <p><strong>Last Name:</strong> <span th:text="${profile.lastName}"></span></p>
-                    <p><strong>Phone Number:</strong> <span th:text="${profile.phoneNumber}"></span></p>
-                    <p><strong>Email:</strong> <span th:text="${profile.email}"></span></p>
-                </fieldset>
-                <fieldset>
-                    <legend>Company Details</legend>
-                    <p><strong>Company Name:</strong> <span th:text="${profile.companyName}"></span></p>
-                    <p><strong>Company Country:</strong> <span th:text="${profile.companyCountry}"></span></p>
-                    <p><strong>Company Street:</strong> <span th:text="${profile.companyStreet}"></span></p>
-                    <p><strong>Company Zip Code:</strong> <span th:text="${profile.companyZipCode}"></span></p>
-                    <p><strong>Company City:</strong> <span th:text="${profile.companyCity}"></span></p>
-                    <p><strong>Company Website:</strong> <span th:text="${profile.companyWebsite}"></span></p>
-                    <p><strong>Company Email:</strong> <span th:text="${profile.companyEmail}"></span></p>
-                    <p><strong>Company Tax ID:</strong> <span th:text="${profile.companyTaxId}"></span></p>
-                    <p><strong>Company Description:</strong> <span th:text="${profile.companyDescription}"></span></p>
-                </fieldset>
-            </div>
-            <div th:unless="${profile}">
-                <p>No profile found</p>
-            </div>
-        </div>
+<!--test-->
+<h2> Recruiter Profile saved </h2>
+<li sec:authorize="hasAuthority('Job Seeker')"><a class="nav-link"
+                                                  th:href="@{/job-seeker-profile/}"><i
+        class="fa-solid fa-pencil"></i> View your profile now </a></li>
 
-        <div class="form-section">
-            <h2>Recruiter Profile Form</h2>
-            <form action="#" th:action="@{/recruiter/recruiter-profile-success}" method="post">
-                <input type="hidden" name="userAccountId" th:value="${userAccountId}">
-                <fieldset>
-                    <legend>Personal Information</legend>
-                    <div>
-                        <label for="firstName">First Name:</label>
-                        <input type="text" id="firstName" name="firstName">
-                    </div>
-                    <div>
-                        <label for="lastName">Last Name:</label>
-                        <input type="text" id="lastName" name="lastName">
-                    </div>
-                    <div>
-                        <label for="phoneNumber">Phone Number:</label>
-                        <input type="text" id="phoneNumber" name="phoneNumber">
-                    </div>
-                    <div>
-                        <label for="email">Email:</label>
-                        <input type="email" id="email" name="email">
-                    </div>
-                    <button type="submit" class="head-btn1">Update Personal Information</button>
-                </fieldset>
-            </form>
-
-            <form action="#" th:action="@{/recruiter/recruiter-profile-success}" method="post">
-                <input type="hidden" name="userAccountId" th:value="${userAccountId}">
-                <fieldset>
-                    <legend>Company Details</legend>
-                    <div>
-                        <label for="companyName">Company Name:</label>
-                        <input type="text" id="companyName" name="companyName">
-                    </div>
-                    <div>
-                        <label for="companyCountry">Company Country:</label>
-                        <input type="text" id="companyCountry" name="companyCountry">
-                    </div>
-                    <div>
-                        <label for="companyStreet">Company Street:</label>
-                        <input type="text" id="companyStreet" name="companyStreet">
-                    </div>
-                    <div>
-                        <label for="companyZipCode">Company Zip Code:</label>
-                        <input type="text" id="companyZipCode" name="companyZipCode">
-                    </div>
-                    <div>
-                        <label for="companyCity">Company City:</label>
-                        <input type="text" id="companyCity" name="companyCity">
-                    </div>
-                    <div>
-                        <label for="companyWebsite">Company Website:</label>
-                        <input type="text" id="companyWebsite" name="companyWebsite">
-                    </div>
-                    <div>
-                        <label for="companyEmail">Company Email:</label>
-                        <input type="email" id="companyEmail" name="companyEmail">
-                    </div>
-                    <div>
-                        <label for="companyTaxId">Company Tax ID:</label>
-                        <input type="text" id="companyTaxId" name="companyTaxId">
-                    </div>
-                    <div>
-                        <label for="companyDescription">Company Description:</label>
-                        <textarea id="companyDescription" name="companyDescription"></textarea>
-                    </div>
-                    <button type="submit" class="head-btn1">Update Company Information</button>
-                </fieldset>
-            </form>
-        </div>
-    </div>
-</div>
+<li sec:authorize="hasAuthority('Recruiter')"><a class="nav-link"
+                                                 th:href="@{/recruiter/recruiter-profile/}"><i
+        class="fa-solid fa-pencil"></i> View your profile now </a></li>
+<!--test-->
 
 
 <!-- FOOTER -->
