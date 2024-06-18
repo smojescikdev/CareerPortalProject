@@ -222,19 +222,19 @@
                 <legend>Personal Information</legend>
                 <div>
                     <label for="firstName">First Name:</label>
-                    <input type="text" id="firstName" name="firstName" >
+                    <input type="text" id="firstName" name="firstName">
                 </div>
                 <div>
                     <label for="lastName">Last Name:</label>
-                    <input type="text" id="lastName" name="lastName" >
+                    <input type="text" id="lastName" name="lastName">
                 </div>
                 <div>
                     <label for="phone">Phone:</label>
-                    <input type="text" id="phone" name="phone" >
+                    <input type="text" id="phone" name="phone">
                 </div>
                 <div>
                     <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" >
+                    <input type="email" id="email" name="email">
                 </div>
                 <button type="submit" class="head-btn1">Update Personal Information</button>
             </fieldset>
@@ -247,11 +247,11 @@
             <fieldset>
                 <legend>Date of Birth</legend>
                 <div>
-            <label for="dateOfBirth">Date of Birth:</label>
-            <input type="date" id="dateOfBirth" name="dateOfBirth" >
-        </div>
+                    <label for="dateOfBirth">Date of Birth:</label>
+                    <input type="date" id="dateOfBirth" name="dateOfBirth">
+                </div>
                 <button type="submit" class="head-btn1">Update Personal Information</button>
-        </fieldset>
+            </fieldset>
         </form>
 
         <!-- Career Preferences Form -->
@@ -261,11 +261,11 @@
                 <legend>Career Preferences</legend>
                 <div>
                     <label for="desiredIndustry">Desired Industry:</label>
-                    <input type="text" id="desiredIndustry" name="desiredIndustry" >
+                    <input type="text" id="desiredIndustry" name="desiredIndustry">
                 </div>
                 <div>
                     <label for="desiredOccupation">Desired Occupation:</label>
-                    <input type="text" id="desiredOccupation" name="desiredOccupation" >
+                    <input type="text" id="desiredOccupation" name="desiredOccupation">
                 </div>
                 <button type="submit" class="head-btn1">Update Career Preferences</button>
             </fieldset>
@@ -308,7 +308,7 @@
                     </select>
                 </div>
             </fieldset>
-        <fieldset>
+            <fieldset>
                 <div>
                     <label for="germanLanguageLevel">German Language Level:</label>
                     <select id="germanLanguageLevel" name="germanLanguageLevel">
@@ -322,7 +322,7 @@
                     </select>
                 </div>
             </fieldset>
-      <fieldset>
+            <fieldset>
                 <div>
                     <label for="englishLanguageLevel">English Language Level:</label>
                     <select id="englishLanguageLevel" name="englishLanguageLevel">
@@ -340,7 +340,6 @@
         </form>
     </div>
 </div>
-
 
 
 <!-- FOOTER -->
@@ -377,33 +376,6 @@
 <!-- Jquery Plugins, main Jquery -->
 <script src="/./assets/js/plugins.js"></script>
 <script src="/./assets/js/main.js"></script>
-
-
-<script th:inline="javascript">
-    document.addEventListener('DOMContentLoaded', function () {
-        var industrySelect = document.getElementById('desiredIndustrySelect');
-        var questionDivs = document.querySelectorAll('.industry-questions');
-
-        // Ukryj wszystkie pytania po załadowaniu strony
-        hideAllQuestions();
-
-        // Wyświetl odpowiednie pytania po zmianie wybranej branży
-        industrySelect.addEventListener('change', function () {
-            hideAllQuestions();
-            var selectedIndustry = this.value;
-            var industryQuestionsDiv = document.getElementById(selectedIndustry.toLowerCase() + 'Questions');
-            if (industryQuestionsDiv) {
-                industryQuestionsDiv.style.display = 'block';
-            }
-        });
-
-        function hideAllQuestions() {
-            questionDivs.forEach(function (div) {
-                div.style.display = 'none';
-            });
-        }
-    });
-</script>
 
 
 <script

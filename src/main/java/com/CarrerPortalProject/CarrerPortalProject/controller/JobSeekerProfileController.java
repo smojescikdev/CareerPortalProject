@@ -51,9 +51,9 @@ public class JobSeekerProfileController {
         return "job-seeker/job-seeker-profile";
     }
 
+
     @PostMapping("/job-seeker/job-seeker-profile-success")
     public String jobSeekerSuccess(
-            //Personal Information
             @RequestParam String userAccountId,
             @RequestParam(required = false) String firstName,
             @RequestParam(required = false) String lastName,
@@ -61,25 +61,13 @@ public class JobSeekerProfileController {
             @RequestParam(required = false) String phone,
             @RequestParam(required = false) Date dateOfBirth,
             @RequestParam(required = false) String resume,
-
-
-            //License&Car
             @RequestParam(required = false) boolean driverLicense,
             @RequestParam(required = false) boolean carOwner,
-
-            //Language skills
             @RequestParam(required = false) JobSeekerBasicInformation.LanguageLevel polishLanguageLevel,
             @RequestParam(required = false) JobSeekerBasicInformation.LanguageLevel germanLanguageLevel,
             @RequestParam(required = false) JobSeekerBasicInformation.LanguageLevel englishLanguageLevel
 
-
-            //QualificationIndustryForms
-//            @RequestParam(required = false) Long industryFormId,
-//            @RequestParam(required = false) List<Long> qualificationsIds
-
-
     ) {
-
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             String currentUsername = authentication.getName();
@@ -107,18 +95,14 @@ public class JobSeekerProfileController {
                 if (email != null && !email.isEmpty()) {
                     existingProfile.setEmail(email);
                 }
-                //date of birth
+                // date of birth
                 if (dateOfBirth != null) {
                     existingProfile.setDateOfBirth(dateOfBirth);
                 }
-
-
                 if (resume != null && !resume.isEmpty()) {
                     existingProfile.setResume(resume);
                 }
 
-
-                //    JobSeekerProfile existingProfile = existingProfileOptional.get();
                 // Update or create JobSeekerBasicInformation
                 JobSeekerBasicInformation basicInformation = existingProfile.getJobSeekerBasicInformation();
                 // Ustawienie poziomu języka, jeśli nie są nullami
@@ -132,30 +116,8 @@ public class JobSeekerProfileController {
                     basicInformation.setEnglishLanguageLevel(englishLanguageLevel);
                 }
 
-
                 basicInformation.setDriverLicense(driverLicense);
                 basicInformation.setCarOwner(carOwner);
-
-
-//                //Qualifi
-//                // Aktualizacja kwalifikacji przemysłowych
-//                // Aktualizacja kwalifikacji przemysłowych
-//                if (industryFormId != null && qualificationsIds != null) {
-//                    // Pobierz formę przemysłu na podstawie ID
-//                    Optional<QualificationIndustryForms> industryFormsOptional = qualificationIndustryFormsRepository.findById(industryFormId);
-//                    if (industryFormsOptional.isPresent()) {
-//                        QualificationIndustryForms industryForm = industryFormsOptional.get();
-//                        List<Qualifications> qualifications = industryForm.getQualifications();
-//
-//                        // Ustawienie flag dla kwalifikacji
-//                        for (Qualifications qualification : qualifications) {
-//                            qualification.setQualified(qualificationsIds.contains(qualification.getId()));
-//                        }
-//
-//                        // Zapisz zmiany
-//                        qualificationIndustryFormsRepository.save(industryForm);
-//                    }
-//                }
 
                 jobSeekerProfileRepository.save(existingProfile);
                 return "job-seeker/job-seeker-profile-success";

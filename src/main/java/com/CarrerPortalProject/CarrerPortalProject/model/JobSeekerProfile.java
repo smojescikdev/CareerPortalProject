@@ -21,12 +21,11 @@ public class JobSeekerProfile {
     @MapsId
     private Users userId;
 
-
     @OneToOne(mappedBy = "jobSeekerProfile", cascade = CascadeType.ALL)
     private JobSeekerBasicInformation jobSeekerBasicInformation;
 
-    @OneToOne(mappedBy = "jobSeekerProfile", cascade = CascadeType.ALL)
-    private QualificationIndustryForms qualificationIndustryForms;
+    @OneToMany(mappedBy = "jobSeekerProfile", cascade = CascadeType.ALL)
+    private List<QualificationIndustryForms> qualificationIndustryForms;
 
 
     // Job Seeker details
@@ -37,11 +36,11 @@ public class JobSeekerProfile {
     private Date dateOfBirth;
     private String resume;
 
-//    @Column(nullable = true, length = 64)
-//    private String profilePhoto;
-
     private String desiredIndustry;
     private String desiredOccupation;
+
+//    @Column(nullable = true, length = 64)
+//    private String profilePhoto;
 
 
     public JobSeekerProfile() {
@@ -53,16 +52,18 @@ public class JobSeekerProfile {
 
 //TODO: resume delete or implement
 
-    public JobSeekerProfile(int userAccountId, Users userId, String firstName, String lastName, String email, String phone, Date dateOfBirth, String resume, String profilePhoto) {
+
+    public JobSeekerProfile(int userAccountId, Users userId, JobSeekerBasicInformation jobSeekerBasicInformation, List<QualificationIndustryForms> qualificationIndustryForms, String firstName, String lastName, String email, String phone, Date dateOfBirth, String resume, String desiredIndustry, String desiredOccupation) {
         this.userAccountId = userAccountId;
         this.userId = userId;
+        this.jobSeekerBasicInformation = jobSeekerBasicInformation;
+        this.qualificationIndustryForms = qualificationIndustryForms;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.phone = phone;
         this.dateOfBirth = dateOfBirth;
-        this.resume = resume;
-        //    this.profilePhoto = profilePhoto;
+   //     this.resume = resume;
         this.desiredIndustry = desiredIndustry;
         this.desiredOccupation = desiredOccupation;
     }
@@ -72,18 +73,16 @@ public class JobSeekerProfile {
         return "JobSeekerProfile{" +
                 "userAccountId=" + userAccountId +
                 ", userId=" + userId +
+                ", jobSeekerBasicInformation=" + jobSeekerBasicInformation +
+                ", qualificationIndustryForms=" + qualificationIndustryForms +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
                 ", dateOfBirth=" + dateOfBirth +
-                ", resume='" + resume + '\'' +
-                //            ", profilePhoto='" + profilePhoto + '\'' +
+//                ", resume='" + resume + '\'' +
                 ", desiredIndustry='" + desiredIndustry + '\'' +
                 ", desiredOccupation='" + desiredOccupation + '\'' +
-
                 '}';
     }
-
-
 }
