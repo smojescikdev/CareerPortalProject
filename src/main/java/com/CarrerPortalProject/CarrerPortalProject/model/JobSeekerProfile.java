@@ -24,10 +24,6 @@ public class JobSeekerProfile {
     @OneToOne(mappedBy = "jobSeekerProfile", cascade = CascadeType.ALL)
     private JobSeekerBasicInformation jobSeekerBasicInformation;
 
-    @OneToMany(mappedBy = "jobSeekerProfile", cascade = CascadeType.ALL)
-    private List<QualificationIndustryForms> qualificationIndustryForms;
-
-
     // Job Seeker details
     private String firstName;
     private String lastName;
@@ -53,17 +49,16 @@ public class JobSeekerProfile {
 //TODO: resume delete or implement
 
 
-    public JobSeekerProfile(int userAccountId, Users userId, JobSeekerBasicInformation jobSeekerBasicInformation, List<QualificationIndustryForms> qualificationIndustryForms, String firstName, String lastName, String email, String phone, Date dateOfBirth, String resume, String desiredIndustry, String desiredOccupation) {
+    public JobSeekerProfile(int userAccountId, Users userId, JobSeekerBasicInformation jobSeekerBasicInformation, String firstName, String lastName, String email, String phone, Date dateOfBirth, String desiredIndustry, String desiredOccupation) {
         this.userAccountId = userAccountId;
         this.userId = userId;
         this.jobSeekerBasicInformation = jobSeekerBasicInformation;
-        this.qualificationIndustryForms = qualificationIndustryForms;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.phone = phone;
         this.dateOfBirth = dateOfBirth;
-   //     this.resume = resume;
+        //     this.resume = resume;
         this.desiredIndustry = desiredIndustry;
         this.desiredOccupation = desiredOccupation;
     }
@@ -74,7 +69,6 @@ public class JobSeekerProfile {
                 "userAccountId=" + userAccountId +
                 ", userId=" + userId +
                 ", jobSeekerBasicInformation=" + jobSeekerBasicInformation +
-                ", qualificationIndustryForms=" + qualificationIndustryForms +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +

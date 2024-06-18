@@ -2,7 +2,6 @@ package com.CarrerPortalProject.CarrerPortalProject.controller;
 
 import com.CarrerPortalProject.CarrerPortalProject.model.*;
 import com.CarrerPortalProject.CarrerPortalProject.repository.JobSeekerProfileRepository;
-import com.CarrerPortalProject.CarrerPortalProject.repository.QualificationIndustryFormsRepository;
 import com.CarrerPortalProject.CarrerPortalProject.repository.UsersRepository;
 import com.CarrerPortalProject.CarrerPortalProject.services.JobSeekerProfileService;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 import java.sql.Date;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,13 +25,11 @@ public class JobSeekerProfileController {
     private final UsersRepository usersRepository;
     private final JobSeekerProfileService jobSeekerProfileService;
     private final JobSeekerProfileRepository jobSeekerProfileRepository;
-    private final QualificationIndustryFormsRepository qualificationIndustryFormsRepository;
 
-    public JobSeekerProfileController(UsersRepository usersRepository, JobSeekerProfileService jobSeekerProfileService, JobSeekerProfileRepository jobSeekerProfileRepository, QualificationIndustryFormsRepository qualificationIndustryFormsRepository) {
+    public JobSeekerProfileController(UsersRepository usersRepository, JobSeekerProfileService jobSeekerProfileService, JobSeekerProfileRepository jobSeekerProfileRepository) {
         this.usersRepository = usersRepository;
         this.jobSeekerProfileService = jobSeekerProfileService;
         this.jobSeekerProfileRepository = jobSeekerProfileRepository;
-        this.qualificationIndustryFormsRepository = qualificationIndustryFormsRepository;
     }
 
     @GetMapping("/job-seeker/job-seeker-profile/")
@@ -66,7 +62,6 @@ public class JobSeekerProfileController {
             @RequestParam(required = false) JobSeekerBasicInformation.LanguageLevel polishLanguageLevel,
             @RequestParam(required = false) JobSeekerBasicInformation.LanguageLevel germanLanguageLevel,
             @RequestParam(required = false) JobSeekerBasicInformation.LanguageLevel englishLanguageLevel
-
     ) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
@@ -74,15 +69,12 @@ public class JobSeekerProfileController {
             Users user = usersRepository.findByEmail(currentUsername)
                     .orElseThrow(() -> new UsernameNotFoundException("Could not find user"));
 
-            // Pobieramy ID zalogowanego użytkownika
             int accountId = user.getUserId();
-
             Optional<JobSeekerProfile> existingProfileOptional = jobSeekerProfileService.findById(accountId);
 
             if (existingProfileOptional.isPresent()) {
                 JobSeekerProfile existingProfile = existingProfileOptional.get();
 
-                // Aktualizujemy profil rekrutera tylko jeśli pola nie są puste
                 if (firstName != null && !firstName.isEmpty()) {
                     existingProfile.setFirstName(firstName);
                 }
@@ -95,7 +87,6 @@ public class JobSeekerProfileController {
                 if (email != null && !email.isEmpty()) {
                     existingProfile.setEmail(email);
                 }
-                // date of birth
                 if (dateOfBirth != null) {
                     existingProfile.setDateOfBirth(dateOfBirth);
                 }
@@ -103,9 +94,7 @@ public class JobSeekerProfileController {
                     existingProfile.setResume(resume);
                 }
 
-                // Update or create JobSeekerBasicInformation
                 JobSeekerBasicInformation basicInformation = existingProfile.getJobSeekerBasicInformation();
-                // Ustawienie poziomu języka, jeśli nie są nullami
                 if (polishLanguageLevel != null) {
                     basicInformation.setPolishLanguageLevel(polishLanguageLevel);
                 }
