@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Select Industry</title>
+</head>
+<body>
+<h1>Select Industry</h1>
+<form action="#" th:action="@{/job-seeker/select-industry}" method="post">
+    <select name="industryId">
+        <option th:each="industry : ${industries}" th:value="${industry.id}" th:text="${industry.name}"></option>
+    </select>
+    <button type="submit">Next</button>
+</form>
+
+<script
+        type="text/javascript"
+        th:src="@{/webjars/jquery/jquery.min.js}"
+></script>
+<script
+        type="text/javascript"
+        th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"
+></script>
+
+
+
+</body>
+</html>

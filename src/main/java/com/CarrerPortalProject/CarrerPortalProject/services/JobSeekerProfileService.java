@@ -1,7 +1,6 @@
 package com.CarrerPortalProject.CarrerPortalProject.services;
 
 import com.CarrerPortalProject.CarrerPortalProject.model.JobSeekerProfile;
-import com.CarrerPortalProject.CarrerPortalProject.model.RecruiterProfile;
 import com.CarrerPortalProject.CarrerPortalProject.model.Users;
 import com.CarrerPortalProject.CarrerPortalProject.repository.JobSeekerProfileRepository;
 import org.springframework.stereotype.Service;
@@ -23,6 +22,6 @@ public class JobSeekerProfileService {
 
     public Optional<JobSeekerProfile> findById(int accountId) {
         return jobSeekerProfileRepository.findById(accountId);
-    }
+      }
 }
 

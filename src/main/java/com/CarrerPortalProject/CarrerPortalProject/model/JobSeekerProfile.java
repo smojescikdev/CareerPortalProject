@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.sql.Date;
-import java.util.List;
 
 @Entity
 @Getter
@@ -35,9 +34,8 @@ public class JobSeekerProfile {
     private String desiredIndustry;
     private String desiredOccupation;
 
-//    @Column(nullable = true, length = 64)
+    //    @Column(nullable = true, length = 64)
 //    private String profilePhoto;
-
 
     public JobSeekerProfile() {
     }
@@ -45,9 +43,6 @@ public class JobSeekerProfile {
     public JobSeekerProfile(Users user) {
         this.userId = user;
     }
-
-//TODO: resume delete or implement
-
 
     public JobSeekerProfile(int userAccountId, Users userId, JobSeekerBasicInformation jobSeekerBasicInformation, String firstName, String lastName, String email, String phone, Date dateOfBirth, String desiredIndustry, String desiredOccupation) {
         this.userAccountId = userAccountId;
@@ -58,7 +53,6 @@ public class JobSeekerProfile {
         this.email = email;
         this.phone = phone;
         this.dateOfBirth = dateOfBirth;
-        //     this.resume = resume;
         this.desiredIndustry = desiredIndustry;
         this.desiredOccupation = desiredOccupation;
     }
@@ -74,7 +68,7 @@ public class JobSeekerProfile {
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
                 ", dateOfBirth=" + dateOfBirth +
-//                ", resume='" + resume + '\'' +
+                ", resume='" + resume + '\'' +
                 ", desiredIndustry='" + desiredIndustry + '\'' +
                 ", desiredOccupation='" + desiredOccupation + '\'' +
                 '}';

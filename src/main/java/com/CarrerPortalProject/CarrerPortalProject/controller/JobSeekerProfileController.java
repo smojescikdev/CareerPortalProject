@@ -4,6 +4,7 @@ import com.CarrerPortalProject.CarrerPortalProject.model.*;
 import com.CarrerPortalProject.CarrerPortalProject.repository.JobSeekerProfileRepository;
 import com.CarrerPortalProject.CarrerPortalProject.repository.UsersRepository;
 import com.CarrerPortalProject.CarrerPortalProject.services.JobSeekerProfileService;
+import com.CarrerPortalProject.CarrerPortalProject.services.UsersService;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Controller

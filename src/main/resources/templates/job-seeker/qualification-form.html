@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Qualification Form</title>
+</head>
+<body>
+<h1>Qualification Form</h1>
+
+<form th:action="@{/job-seeker/submit-qualification}" method="post">
+    <div th:each="question, iterStat : ${questions}">
+        <input type="hidden" th:name="qualificationNames" th:value="${question.question}"/>
+        <label th:text="${question.question}"></label>
+        <input type="checkbox" th:name="answers" th:value="${question.question}"/>
+    </div>
+    <button type="submit">Submit</button>
+</form>
+
+
+</body>
+</html>
