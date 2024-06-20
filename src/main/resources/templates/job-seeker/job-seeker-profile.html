@@ -137,21 +137,42 @@
                                         <li sec:authorize="hasAuthority('Recruiter')"><a class="nav-link"
                                                                                          th:href="@{/recruiter/recruiter-profile/}"><i
                                                 class="fa-solid fa-pencil"></i> Edit Account</a></li>
+
+
+                                        <div class="btn-danger">
+                                            <!-- Warunek: Pokaż tylko gdy użytkownik jest zalogowany jako Job Seeker -->
+                                            <li sec:authorize="hasAuthority('Job Seeker')"><a class="btn"
+                                                                                              th:href="@{/job-seeker/select-industry}">
+                                                <i class="btn"></i> Complete Your Professional Qualifications! </a></li>
+                                        </div>
+
+
                                     </ul>
                                 </nav>
+
                             </div>
+
+
+                            </ul>
+                            </nav>
                         </div>
                     </div>
-                    <!-- Mobile Menu -->
-                    <div class="col-12">
-                        <div class="mobile_menu d-block d-lg-none"></div>
-                    </div>
+                </div>
+                <!-- Mobile Menu -->
+                <div class="col-12">
+                    <div class="mobile_menu d-block d-lg-none"></div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <button class="btn head-btn2 header-btn f-right d-lg-block" onclick="window.location.href='/logout'">Logout
-        </button>
+
+
+
+
+
+    <button class="btn head-btn1 header-btn f-right d-lg-block" onclick="window.location.href='/logout'">Logout
+    </button>
 
     </div>
     <!-- Header End -->
