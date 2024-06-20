@@ -1,6 +1,11 @@
 package com.CarrerPortalProject.CarrerPortalProject.controller;
 
+import com.CarrerPortalProject.CarrerPortalProject.model.Industry;
+import com.CarrerPortalProject.CarrerPortalProject.model.JobPostActivity;
 import com.CarrerPortalProject.CarrerPortalProject.model.Users;
+import com.CarrerPortalProject.CarrerPortalProject.repository.IndustryRepository;
+import com.CarrerPortalProject.CarrerPortalProject.services.IndustryService;
+import com.CarrerPortalProject.CarrerPortalProject.services.JobPostActivityService;
 import com.CarrerPortalProject.CarrerPortalProject.services.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -10,20 +15,26 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Date;
+import java.util.List;
 
 @Controller
 public class JobPostActivityController {
 
     private final UsersService usersService;
-//    private final JobPostActivityService jobPostActivityService;
+    private final JobPostActivityService jobPostActivityService;
+    private final IndustryService industryService;
+    private final IndustryRepository industryRepository;
 
 
     @Autowired
-    public JobPostActivityController(UsersService usersService) {
+    public JobPostActivityController(UsersService usersService, JobPostActivityService jobPostActivityService, IndustryService industryService, IndustryRepository industryRepository) {
         this.usersService = usersService;
-  //      this.jobPostActivityService = jobPostActivityService;
+        this.jobPostActivityService = jobPostActivityService;
+        this.industryService = industryService;
+        this.industryRepository = industryRepository;
     }
 
     @GetMapping("/dashboard/")
@@ -40,32 +51,44 @@ public class JobPostActivityController {
         System.out.println("Dashboard viewed with current logged user: " + authentication.getName());
         return "dashboard";
     }
+
+
+    //dodawanie metody w kontrolerze pokazujacej nowy formularz
+    @GetMapping("/dashboard/add")
+    public String addJobs(Model model) {
+        model.addAttribute("jobPostActivity", new JobPostActivity());
+        model.addAttribute("user", usersService.getCurrentUserProfile());
+
+        // Pobierz listę branż
+        List<Industry> industries = industryService.getAllIndustries();
+        model.addAttribute("industries", industries);
+
+
+
+        return "recruiter/add-jobs";
+
+    }
+
+
+    @PostMapping("/dashboard/addNew")
+    public String addNew(@RequestParam("industryId") int industryId, Model model, JobPostActivity jobPostActivity) {
+        Users user = usersService.getCurrentUser();
+        if (user != null) {
+            jobPostActivity.setPostedById(user);
+        }
+        jobPostActivity.setPostedDate(new Date());
+
+        //dodawanie branzy
+        // Pobierz wybraną branżę i ustaw ją w JobPostActivity
+        Industry selectedIndustry = industryRepository.findById(industryId)
+                .orElseThrow(() -> new RuntimeException("Industry not found"));
+        jobPostActivity.setIndustry(selectedIndustry);
+
+
+        model.addAttribute("jobPostActivity", jobPostActivity);
+        JobPostActivity saved = jobPostActivityService.addNew(jobPostActivity);
+
+
+        return "redirect:/dashboard/";
+    }
 }
-//
-//    //dodawanie metody w kontrolerze pokazujacej nowy formularz
-//    @GetMapping("/dashboard/add")
-//    public String addJobs(Model model) {
-//        model.addAttribute("jobPostActivity", new JobPostActivity());
-//        model.addAttribute("user", usersService.getCurrentUserProfile());
-//
-//
-//        return "recruiter/add-jobs";
-//
-//    }
-//
-//
-//    @PostMapping("/dashboard/addNew")
-//    public String addNew(Model model, JobPostActivity jobPostActivity) {
-//        Users user = usersService.getCurrentUser();
-//        if (user != null) {
-//            jobPostActivity.setPostedById(user);
-//        }
-//        jobPostActivity.setPostedDate(new Date());
-//        model.addAttribute("jobPostActivity", jobPostActivity);
-//        JobPostActivity saved = jobPostActivityService.addNew(jobPostActivity);
-//
-//
-//        return "redirect:/dashboard/";
-//    }
-//}
-//
