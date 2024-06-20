@@ -1,11 +1,13 @@
 package com.CarrerPortalProject.CarrerPortalProject.controller;
 
 import com.CarrerPortalProject.CarrerPortalProject.model.*;
+import com.CarrerPortalProject.CarrerPortalProject.repository.IndustryRepository;
+import com.CarrerPortalProject.CarrerPortalProject.repository.JobSeekerProfileRepository;
 import com.CarrerPortalProject.CarrerPortalProject.repository.UsersRepository;
 import com.CarrerPortalProject.CarrerPortalProject.services.IndustryFormService;
 import com.CarrerPortalProject.CarrerPortalProject.services.IndustryService;
+import com.CarrerPortalProject.CarrerPortalProject.services.JobSeekerProfileService;
 import com.CarrerPortalProject.CarrerPortalProject.services.JobSeekerQualificationListService;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -14,13 +16,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+import java.util.Optional;
 
 
 @Controller
@@ -38,6 +39,12 @@ public class JobSeekerQualificationController {
     @Autowired
     private UsersRepository usersRepository;
 
+    @Autowired
+    private JobSeekerProfileRepository jobSeekerProfileRepository;
+
+    @Autowired
+    private IndustryRepository industryRepository;
+
     @GetMapping("/job-seeker/select-industry")
     public String selectIndustry(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -53,16 +60,49 @@ public class JobSeekerQualificationController {
     }
 
     @PostMapping("/job-seeker/select-industry")
-    public String handleIndustrySelection(@RequestParam("industryId") int industryId, Model model) {
+    public String handleIndustrySelection(@RequestParam("industryId") int industryId,
+                                          Model model,
+                                          @RequestParam(required = false) String name) {
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             String currentUsername = authentication.getName();
             Users user = usersRepository.findByEmail(currentUsername)
                     .orElseThrow(() -> new UsernameNotFoundException("Could not find user"));
 
+
+
+
             IndustryForm industryForm = industryFormService.getIndustryFormById(industryId);
-            List<QualificationQuestion> questions = industryFormService.getQuestionsByIndustryFormId(industryForm.getId());
+          List<QualificationQuestion> questions = industryFormService.getQuestionsByIndustryFormId(industryForm.getId());
             model.addAttribute("questions", questions);
+
+
+
+
+
+
+
+            //test adding selected industry form to database
+
+            JobSeekerProfile jobSeekerProfile = jobSeekerProfileRepository.findById(user.getUserId())
+                    .orElseThrow(() -> new RuntimeException("Job seeker profile not found"));
+
+            Industry selectedIndustry = industryRepository.findById(industryId)
+                    .orElseThrow(() -> new RuntimeException("Industry not found"));
+
+            jobSeekerProfile.setDesiredIndustry(selectedIndustry.getName());
+
+            jobSeekerProfileRepository.save(jobSeekerProfile);
+
+
+
+            //test ended
+
+
+
+
+
 
             // Inicjalizacja listy odpowiedzi
             List<String> answers = new ArrayList<>(questions.size());

@@ -199,8 +199,8 @@
                         <legend>Career Preferences</legend>
                         <p><strong>Desired Industry:</strong> <span
                                 th:text="${profile?.desiredIndustry}"></span></p>
-                        <p><strong>Desired Occupation:</strong> <span
-                                th:text="${profile?.desiredOccupation}"></span></p>
+<!--                        <p><strong>Desired Occupation:</strong> <span-->
+<!--                                th:text="${profile?.desiredOccupation}"></span></p>-->
                     </fieldset>
                     <fieldset>
                         <legend>License and Car Info Hub</legend>
@@ -224,6 +224,25 @@
                                 th:text="${profile.jobSeekerBasicInformation?.englishLanguageLevel}"></span>
                         </p>
                     </fieldset>
+
+
+<!--                    //test-->
+
+                    <fieldset>
+                        <legend>Qualifications</legend>
+                        <div th:each="qualification : ${qualifications}">
+                            <p>
+                                <strong th:text="${qualification.qualificationName}"></strong>:
+                                <span th:text="${qualification.qualificationStatus ? 'Tak' : 'Nie'}"></span>
+                            </p>
+                        </div>
+                    </fieldset>
+
+
+<!--                    test ended here-->
+
+
+
                 </div>
             </div>
             <div th:if="${profile == null}" th:unless="${profile}">
@@ -276,21 +295,21 @@
         </form>
 
         <!-- Career Preferences Form -->
-        <form action="#" th:action="@{/job-seeker/job-seeker-profile-success}" method="post">
-            <input type="hidden" name="userAccountId" th:value="${userAccountId}">
-            <fieldset>
-                <legend>Career Preferences</legend>
-                <div>
-                    <label for="desiredIndustry">Desired Industry:</label>
-                    <input type="text" id="desiredIndustry" name="desiredIndustry">
-                </div>
-                <div>
-                    <label for="desiredOccupation">Desired Occupation:</label>
-                    <input type="text" id="desiredOccupation" name="desiredOccupation">
-                </div>
-                <button type="submit" class="head-btn1">Update Career Preferences</button>
-            </fieldset>
-        </form>
+<!--        <form action="#" th:action="@{/job-seeker/job-seeker-profile-success}" method="post">-->
+<!--            <input type="hidden" name="userAccountId" th:value="${userAccountId}">-->
+<!--            <fieldset>-->
+<!--                <legend>Career Preferences</legend>-->
+<!--                <div>-->
+<!--                    <label for="desiredIndustry">Desired Industry:</label>-->
+<!--                    <input type="text" id="desiredIndustry" name="desiredIndustry">-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                    <label for="desiredOccupation">Desired Occupation:</label>-->
+<!--                    <input type="text" id="desiredOccupation" name="desiredOccupation">-->
+<!--                </div>-->
+<!--                <button type="submit" class="head-btn1">Update Career Preferences</button>-->
+<!--            </fieldset>-->
+<!--        </form>-->
 
         <!-- License and Car Information - Basic information -->
         <form action="#" th:action="@{/job-seeker/job-seeker-profile-success}" method="post">

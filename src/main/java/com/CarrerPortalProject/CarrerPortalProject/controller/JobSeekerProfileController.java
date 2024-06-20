@@ -17,9 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -35,6 +32,24 @@ public class JobSeekerProfileController {
         this.jobSeekerProfileRepository = jobSeekerProfileRepository;
     }
 
+//    @GetMapping("/job-seeker/job-seeker-profile/")
+//    public String jobSeekerProfile(Model model) {
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+//            String currentUsername = authentication.getName();
+//            Users user = usersRepository.findByEmail(currentUsername)
+//                    .orElseThrow(() -> new UsernameNotFoundException("Could not find user"));
+//
+//            Optional<JobSeekerProfile> jobSeekerProfile = jobSeekerProfileService.getOne(user);
+//            jobSeekerProfile.ifPresent(profile -> model.addAttribute("profile", profile));
+//        }
+//
+//        return "job-seeker/job-seeker-profile";
+//    }
+
+
+
+    //test
     @GetMapping("/job-seeker/job-seeker-profile/")
     public String jobSeekerProfile(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -44,11 +59,15 @@ public class JobSeekerProfileController {
                     .orElseThrow(() -> new UsernameNotFoundException("Could not find user"));
 
             Optional<JobSeekerProfile> jobSeekerProfile = jobSeekerProfileService.getOne(user);
-            jobSeekerProfile.ifPresent(profile -> model.addAttribute("profile", profile));
+            jobSeekerProfile.ifPresent(profile -> {
+                model.addAttribute("profile", profile);
+                model.addAttribute("qualifications", profile.getJobSeekerQualificationList());
+            });
         }
 
         return "job-seeker/job-seeker-profile";
     }
+    //test ended here
 
 
     @PostMapping("/job-seeker/job-seeker-profile-success")

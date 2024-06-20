@@ -24,4 +24,10 @@ public class JobSeekerQualificationList {
     @ManyToOne
     @JoinColumn(name = "job_seeker_profile_id")
     private JobSeekerProfile jobSeekerProfile;
+
+
+//    //test/ adding industry_ud column to quali list
+//    @ManyToOne
+//    @JoinColumn(name = "industry_id")
+//    private Industry industry;
 }

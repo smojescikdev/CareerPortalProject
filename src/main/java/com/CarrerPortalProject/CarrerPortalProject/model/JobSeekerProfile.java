@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.sql.Date;
+import java.util.List;
 
 @Entity
 @Getter
@@ -23,19 +24,17 @@ public class JobSeekerProfile {
     @OneToOne(mappedBy = "jobSeekerProfile", cascade = CascadeType.ALL)
     private JobSeekerBasicInformation jobSeekerBasicInformation;
 
-    // Job Seeker details
+    @OneToMany(mappedBy = "jobSeekerProfile", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<JobSeekerQualificationList> jobSeekerQualificationList;
+
     private String firstName;
     private String lastName;
     private String email;
     private String phone;
     private Date dateOfBirth;
     private String resume;
-
     private String desiredIndustry;
     private String desiredOccupation;
-
-    //    @Column(nullable = true, length = 64)
-//    private String profilePhoto;
 
     public JobSeekerProfile() {
     }
