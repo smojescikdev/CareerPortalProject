@@ -31,7 +31,7 @@ public class JobPostActivity {
 
     //Job details
     private String jobTitle;
-    @Length(max = 100000)
+    @Length(max = 10000000)
     private String descriptionOfJob;
     private String jobCategory;
     private String jobType;
