@@ -1,15 +1,9 @@
 package com.CarrerPortalProject.CarrerPortalProject.controller;
 
-import com.CarrerPortalProject.CarrerPortalProject.model.Industry;
-import com.CarrerPortalProject.CarrerPortalProject.model.IndustryForm;
-import com.CarrerPortalProject.CarrerPortalProject.model.JobPostActivity;
-import com.CarrerPortalProject.CarrerPortalProject.model.Users;
+import com.CarrerPortalProject.CarrerPortalProject.model.*;
 import com.CarrerPortalProject.CarrerPortalProject.repository.IndustryFormRepository;
 import com.CarrerPortalProject.CarrerPortalProject.repository.IndustryRepository;
-import com.CarrerPortalProject.CarrerPortalProject.services.IndustryFormService;
-import com.CarrerPortalProject.CarrerPortalProject.services.IndustryService;
-import com.CarrerPortalProject.CarrerPortalProject.services.JobPostActivityService;
-import com.CarrerPortalProject.CarrerPortalProject.services.UsersService;
+import com.CarrerPortalProject.CarrerPortalProject.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -19,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Date;
 import java.util.List;
@@ -32,16 +27,18 @@ public class JobPostActivityController {
     private final IndustryRepository industryRepository;
     private final IndustryFormRepository industryFormRepository;
     private final IndustryFormService industryFormService;
+    private final QualificationQuestionService qualificationQuestionService;
 
 
     @Autowired
-    public JobPostActivityController(UsersService usersService, JobPostActivityService jobPostActivityService, IndustryService industryService, IndustryRepository industryRepository, IndustryFormRepository industryFormRepository, IndustryFormService industryFormService) {
+    public JobPostActivityController(UsersService usersService, JobPostActivityService jobPostActivityService, IndustryService industryService, IndustryRepository industryRepository, IndustryFormRepository industryFormRepository, IndustryFormService industryFormService, QualificationQuestionService qualificationQuestionService) {
         this.usersService = usersService;
         this.jobPostActivityService = jobPostActivityService;
         this.industryService = industryService;
         this.industryRepository = industryRepository;
         this.industryFormRepository = industryFormRepository;
         this.industryFormService = industryFormService;
+        this.qualificationQuestionService = qualificationQuestionService;
     }
 
     @GetMapping("/dashboard/")
@@ -68,12 +65,9 @@ public class JobPostActivityController {
 
         // Pobierz listę branż z industry form
         List<IndustryForm> industries = industryFormService.getAllIndustries();
-        industries.forEach(industry -> System.out.println(industry.getFormName()));
         model.addAttribute("industries", industries);
 
-
         return "recruiter/add-jobs";
-
     }
 
 
@@ -95,4 +89,11 @@ public class JobPostActivityController {
 
         return "redirect:/dashboard/";
     }
+
+    @GetMapping("/dashboard/getQuestions")
+    @ResponseBody
+    public List<QualificationQuestion> getQuestions(@RequestParam("industryFormId") int industryFormId) {
+        return qualificationQuestionService.getQuestionsByIndustryFormId(industryFormId);
+    }
+
 }

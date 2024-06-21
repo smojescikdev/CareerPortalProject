@@ -1,5 +1,6 @@
 package com.CarrerPortalProject.CarrerPortalProject.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,6 +19,7 @@ public class QualificationQuestion {
 
     private String question;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "industry_form_id")
     private IndustryForm industryForm;

@@ -33,6 +33,7 @@
     <!--    <link rel="stylesheet" href="/summernote/summernote-lite.min.css">-->
     <link th:rel="stylesheet" type="text/css" media="all" th:href="@{/summernote/summernote-lite.min.css}"/>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 </head>
 
@@ -191,11 +192,22 @@
         </div>
 
 
+        <!--     //pole select-->
+        <!--        <div class="col-md-4 form-group">-->
+        <!--            <label for="industryForm">Select Industry:</label>-->
+        <!--            <select id="industryForm" name="industryFormId">-->
+        <!--                <option value="">Select Industry</option>-->
+        <!--                <th:block th:each="industryForm : ${industries}">-->
+        <!--                    <option th:value="${industryForm.id}" th:text="${industryForm.formName}"></option>-->
+        <!--                </th:block>-->
+        <!--            </select>-->
+        <!--        </div>-->
 
-<!--     //pole select-->
+
+        <!--        test-->
         <div class="col-md-4 form-group">
             <label for="industryForm">Select Industry:</label>
-            <select id="industryForm" name="industryFormId">
+            <select id="industryForm" name="industryFormId" class="form-control">
                 <option value="">Select Industry</option>
                 <th:block th:each="industryForm : ${industries}">
                     <option th:value="${industryForm.id}" th:text="${industryForm.formName}"></option>
@@ -203,7 +215,10 @@
             </select>
         </div>
 
+        <div id="qualificationQuestions"></div>
 
+        <button id="copyToDescriptionBtn" class="btn btn-primary mt-3">Copy Qualifications to Description</button>
+        <!--        test ended here-->
 
 
         <div class="row">
@@ -267,6 +282,94 @@
 <!-- FOOTER ENDED -->
 
 <!-- JS here -->
+<script>
+    $(document).ready(function () {
+        // Po załadowaniu całego dokumentu wykonaj następujące:
+
+        // Obsługa kliknięcia przycisku "Copy to Description"
+        $('#copyToDescriptionBtn').click(function (event) {
+            // Zapobiegaj domyślnej akcji przycisku (wysłaniu formularza)
+            event.preventDefault();
+
+            // Inicjalizacja tablicy na zaznaczone kwalifikacje
+            var selectedQualifications = [];
+
+            // Iteracja po zaznaczonych checkboxach kwalifikacji
+            $('.qualification-checkbox:checked').each(function () {
+                // Pobierz tekst pytania z najbliższego label
+                var questionText = $(this).closest('label').text().trim();
+
+                // Dodaj pytanie do tablicy selectedQualifications
+                selectedQualifications.push(questionText);
+            });
+
+            // Jeśli są zaznaczone jakieś kwalifikacje
+            if (selectedQualifications.length > 0) {
+                // Połącz pytania w jedną linię oddzieloną <br> i przypisz do qualificationsText
+                var qualificationsText = selectedQualifications.join('<br>');
+
+
+// Zdefiniuj nagłówek do wstawienia na końcu
+                var header = '<br><b>WYMAGANE KWALIFIKACJE:</b><br>';
+
+// Połącz nagłówek z listą pytań i zapisz to w zmiennej finalContent
+                var finalContent = qualificationsText +  header;
+
+// Wstaw finalContent do edytora Summernote pod #content
+                $('#content').summernote('pasteHTML', finalContent);
+            }
+        });
+
+        // Obsługa zmiany wartości formularza industryForm
+        $('#industryForm').change(function () {
+            // Pobierz wybrany industryFormId
+            var industryFormId = $(this).val();
+
+            // Jeśli industryFormId nie jest puste
+            if (industryFormId) {
+                // Wyślij żądanie AJAX, aby pobrać pytania dla danego industryFormId
+                $.ajax({
+                    url: '/dashboard/getQuestions', // Adres URL endpointu do pobrania pytań
+                    type: 'GET', // Typ żądania GET
+                    data: {industryFormId: industryFormId}, // Dane przesyłane w żądaniu
+
+                    success: function (data) {
+                        // Obsługa sukcesu - data zawiera pobrane pytania
+
+                        // Znajdź div #qualificationQuestions
+                        var questionsDiv = $('#qualificationQuestions');
+
+                        // Wyczyść zawartość questionsDiv
+                        questionsDiv.empty();
+
+                        // Jeśli są jakieś pytania
+                        if (data.length > 0) {
+                            // Dodaj nagłówek do questionsDiv
+                            questionsDiv.append('<br><br><h3>List of Qualifications to add to description</h3>');
+
+                            // Iteruj po każdym pytaniu w danych
+                            data.forEach(function (question) {
+                                // Dodaj div z klasami i pytaniem
+                                questionsDiv.append('<div class="col-md-7 container myForm">' +
+                                    '<li>' +
+                                    '<label class="heading_font font_sub_heading_color">' +
+                                    '<input type="checkbox" class="qualification-checkbox"> ' +
+                                    question.question +
+                                    '</label>' +
+                                    '</li>' +
+                                    '</div>');
+                            });
+                        }
+                    },
+                    error: function (error) {
+                        // Obsługa błędu żądania AJAX
+                        console.error('Error fetching questions:', error);
+                    }
+                });
+            }
+        });
+    });
+</script>
 
 
 <!-- All JS Custom Plugins Link Here here -->

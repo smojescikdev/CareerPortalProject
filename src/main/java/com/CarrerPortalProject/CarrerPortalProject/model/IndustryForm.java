@@ -1,5 +1,6 @@
 package com.CarrerPortalProject.CarrerPortalProject.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,6 +26,7 @@ public class IndustryForm {
     private String formName;
 
     // Relacja z QualificationQuestion
+    @JsonIgnore
     @OneToMany(mappedBy = "industryForm")
     private List<QualificationQuestion> questions;
 }

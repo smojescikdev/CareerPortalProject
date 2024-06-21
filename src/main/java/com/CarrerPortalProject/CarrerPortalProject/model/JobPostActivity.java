@@ -1,5 +1,6 @@
 package com.CarrerPortalProject.CarrerPortalProject.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -53,15 +54,13 @@ public class JobPostActivity {
 //    private Industry industry;
 
 
-
-//test to add table industryform!
-        @ManyToOne
+    //test to add table industryform!
+// Ignorujemy pole industryForm, aby zapobiec zagnieżdżeniu
+    @JsonIgnore
+    @ManyToOne
     @JoinColumn(name = "industry_form_id")
     private IndustryForm industryForm;
-        //test ended here!
-
-
-
+    //test ended here!
 
 
     public JobPostActivity() {
