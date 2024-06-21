@@ -197,6 +197,21 @@
                     </fieldset>
                     <fieldset>
                         <legend>Career Preferences</legend>
+
+
+
+
+
+                            <!-- Warunek: Pokaż tylko gdy użytkownik jest zalogowany jako Job Seeker -->
+                            <label sec:authorize="hasAuthority('Job Seeker')"><a
+                                                                              th:href="@{/job-seeker/select-industry}">
+                                <button type="submit" class="head-btn1"> Complete Your Professional Qualifications! </button></a></label>
+
+<!--                        <button type="submit" class="head-btn1">Update Personal Information</button>-->
+
+
+
+
                         <p><strong>Desired Industry:</strong> <span
                                 th:text="${profile?.desiredIndustry}"></span></p>
 <!--                        <p><strong>Desired Occupation:</strong> <span-->
