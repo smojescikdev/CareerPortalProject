@@ -66,11 +66,6 @@ public class JobPostActivityController {
         model.addAttribute("jobPostActivity", new JobPostActivity());
         model.addAttribute("user", usersService.getCurrentUserProfile());
 
-//        // Pobierz listę branż
-//        List<Industry> industries = industryService.getAllIndustries();
-//        model.addAttribute("industries", industries);
-
-
         // Pobierz listę branż z industry form
         List<IndustryForm> industries = industryFormService.getAllIndustries();
         industries.forEach(industry -> System.out.println(industry.getFormName()));
@@ -95,22 +90,6 @@ public class JobPostActivityController {
         jobPostActivity.setIndustryForm(selectedIndustry);
 
 
-
-//        //dodawanie branzy
-//        List<IndustryForm> industries = industryFormService.getAllIndustries();
-//        model.addAttribute("industries", industries);
-
-
-
-
-
-//        // Pobierz wybraną branżę i ustaw ją w JobPostActivity
-//        IndustryForm selectedIndustry = industryFormRepository.findById(industryId)
-//                .orElseThrow(() -> new RuntimeException("Industry not found"));
-//        jobPostActivity.setIndustryForm(selectedIndustry);
-//
-//
-//        model.addAttribute("jobPostActivity", jobPostActivity);
         JobPostActivity saved = jobPostActivityService.addNew(jobPostActivity);
 
 
