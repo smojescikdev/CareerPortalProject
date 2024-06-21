@@ -192,15 +192,18 @@
 
 
 
+<!--     //pole select-->
         <div class="col-md-4 form-group">
-<!--            <label for="industry">Select Industry:</label>-->
-            <select id="industry" name="industryId">
+            <label for="industryForm">Select Industry:</label>
+            <select id="industryForm" name="industryFormId">
                 <option value="">Select Industry</option>
-                <th:block th:each="industry : ${industries}">
-                    <option th:value="${industry.id}" th:text="${industry.name}"></option>
+                <th:block th:each="industryForm : ${industries}">
+                    <option th:value="${industryForm.id}" th:text="${industryForm.formName}"></option>
                 </th:block>
             </select>
         </div>
+
+
 
 
         <div class="row">
@@ -213,14 +216,6 @@
                     <option th:value="Internship">Internship</option>
                 </select>
             </div>
-            <!--            <div class="col-md-4 form-group">-->
-            <!--                <select id="remote" th:field="*{remote}" class="form-control">-->
-            <!--                    <option value="">Select a Remote</option>-->
-            <!--                    <option th:value="Remote-Only">Remote-Only</option>-->
-            <!--                    <option th:value="Office-Only">Office-Only</option>-->
-            <!--                    <option th:value="Partial-Remote"> Partial-Remote</option>-->
-            <!--                </select>-->
-            <!--            </div>-->
             <div class="col-md-4 form-group">
                 <input id="salary" th:field="*{salary}" type="text" class="form-control" placeholder="Salary">
             </div>

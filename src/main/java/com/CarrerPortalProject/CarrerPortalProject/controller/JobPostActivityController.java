@@ -1,9 +1,12 @@
 package com.CarrerPortalProject.CarrerPortalProject.controller;
 
 import com.CarrerPortalProject.CarrerPortalProject.model.Industry;
+import com.CarrerPortalProject.CarrerPortalProject.model.IndustryForm;
 import com.CarrerPortalProject.CarrerPortalProject.model.JobPostActivity;
 import com.CarrerPortalProject.CarrerPortalProject.model.Users;
+import com.CarrerPortalProject.CarrerPortalProject.repository.IndustryFormRepository;
 import com.CarrerPortalProject.CarrerPortalProject.repository.IndustryRepository;
+import com.CarrerPortalProject.CarrerPortalProject.services.IndustryFormService;
 import com.CarrerPortalProject.CarrerPortalProject.services.IndustryService;
 import com.CarrerPortalProject.CarrerPortalProject.services.JobPostActivityService;
 import com.CarrerPortalProject.CarrerPortalProject.services.UsersService;
@@ -27,14 +30,18 @@ public class JobPostActivityController {
     private final JobPostActivityService jobPostActivityService;
     private final IndustryService industryService;
     private final IndustryRepository industryRepository;
+    private final IndustryFormRepository industryFormRepository;
+    private final IndustryFormService industryFormService;
 
 
     @Autowired
-    public JobPostActivityController(UsersService usersService, JobPostActivityService jobPostActivityService, IndustryService industryService, IndustryRepository industryRepository) {
+    public JobPostActivityController(UsersService usersService, JobPostActivityService jobPostActivityService, IndustryService industryService, IndustryRepository industryRepository, IndustryFormRepository industryFormRepository, IndustryFormService industryFormService) {
         this.usersService = usersService;
         this.jobPostActivityService = jobPostActivityService;
         this.industryService = industryService;
         this.industryRepository = industryRepository;
+        this.industryFormRepository = industryFormRepository;
+        this.industryFormService = industryFormService;
     }
 
     @GetMapping("/dashboard/")
@@ -59,10 +66,15 @@ public class JobPostActivityController {
         model.addAttribute("jobPostActivity", new JobPostActivity());
         model.addAttribute("user", usersService.getCurrentUserProfile());
 
-        // Pobierz listę branż
-        List<Industry> industries = industryService.getAllIndustries();
-        model.addAttribute("industries", industries);
+//        // Pobierz listę branż
+//        List<Industry> industries = industryService.getAllIndustries();
+//        model.addAttribute("industries", industries);
 
+
+        // Pobierz listę branż z industry form
+        List<IndustryForm> industries = industryFormService.getAllIndustries();
+        industries.forEach(industry -> System.out.println(industry.getFormName()));
+        model.addAttribute("industries", industries);
 
 
         return "recruiter/add-jobs";
@@ -71,21 +83,34 @@ public class JobPostActivityController {
 
 
     @PostMapping("/dashboard/addNew")
-    public String addNew(@RequestParam("industryId") int industryId, Model model, JobPostActivity jobPostActivity) {
+    public String addNew(@RequestParam("industryFormId") int industryFormId, Model model, JobPostActivity jobPostActivity) {
         Users user = usersService.getCurrentUser();
         if (user != null) {
             jobPostActivity.setPostedById(user);
         }
         jobPostActivity.setPostedDate(new Date());
 
-        //dodawanie branzy
         // Pobierz wybraną branżę i ustaw ją w JobPostActivity
-        Industry selectedIndustry = industryRepository.findById(industryId)
-                .orElseThrow(() -> new RuntimeException("Industry not found"));
-        jobPostActivity.setIndustry(selectedIndustry);
+        IndustryForm selectedIndustry = industryFormService.getIndustryFormById(industryFormId);
+        jobPostActivity.setIndustryForm(selectedIndustry);
 
 
-        model.addAttribute("jobPostActivity", jobPostActivity);
+
+//        //dodawanie branzy
+//        List<IndustryForm> industries = industryFormService.getAllIndustries();
+//        model.addAttribute("industries", industries);
+
+
+
+
+
+//        // Pobierz wybraną branżę i ustaw ją w JobPostActivity
+//        IndustryForm selectedIndustry = industryFormRepository.findById(industryId)
+//                .orElseThrow(() -> new RuntimeException("Industry not found"));
+//        jobPostActivity.setIndustryForm(selectedIndustry);
+//
+//
+//        model.addAttribute("jobPostActivity", jobPostActivity);
         JobPostActivity saved = jobPostActivityService.addNew(jobPostActivity);
 
 

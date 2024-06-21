@@ -48,15 +48,27 @@ public class JobPostActivity {
     private String country;
 
     // Dodaj pole Industry
-    @ManyToOne
-    @JoinColumn(name = "industry_id")
-    private Industry industry;
+//    @ManyToOne
+//    @JoinColumn(name = "industry_id")
+//    private Industry industry;
+
+
+
+//test to add table industryform!
+        @ManyToOne
+    @JoinColumn(name = "industry_form_id")
+    private IndustryForm industryForm;
+        //test ended here!
+
+
+
+
 
     public JobPostActivity() {
     }
 
 
-    public JobPostActivity(Integer jobOfferPostId, Users postedById, Boolean isActive, Boolean isSaved, String jobTitle, String descriptionOfJob, String jobCategory, String jobType, String salary, Date postedDate, String city, String postal, String state, String country) {
+    public JobPostActivity(Integer jobOfferPostId, Users postedById, Boolean isActive, Boolean isSaved, String jobTitle, String descriptionOfJob, String jobCategory, String jobType, String salary, Date postedDate, String city, String postal, String country) {
         this.jobOfferPostId = jobOfferPostId;
         this.postedById = postedById;
         this.isActive = isActive;

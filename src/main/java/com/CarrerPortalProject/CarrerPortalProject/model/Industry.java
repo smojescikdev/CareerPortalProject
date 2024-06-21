@@ -45,7 +45,6 @@ public class Industry {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", industryForm=" + industryForm +
-                ", jobSeekerProfile=" + jobSeekerProfile +
                 '}';
     }
 }
