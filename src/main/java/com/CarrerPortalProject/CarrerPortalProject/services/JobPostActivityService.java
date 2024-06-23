@@ -27,4 +27,10 @@ public class JobPostActivityService {
     public List<JobPostActivity> getJobsByRecruiterId(int recruiterId) {
         return jobPostActivityRepository.findByPostedById_UserId(recruiterId);
     }
+
+    public JobPostActivity getOne(int id) {
+
+        return jobPostActivityRepository.findById(id).orElseThrow(()-> new RuntimeException("Job Not Found"));
+
+    }
 }

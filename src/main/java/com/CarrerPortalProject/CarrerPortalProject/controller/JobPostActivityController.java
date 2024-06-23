@@ -28,10 +28,11 @@ public class JobPostActivityController {
     private final IndustryFormRepository industryFormRepository;
     private final IndustryFormService industryFormService;
     private final QualificationQuestionService qualificationQuestionService;
+    private final RecruiterProfileService recruiterProfileService;
 
 
     @Autowired
-    public JobPostActivityController(UsersService usersService, JobPostActivityService jobPostActivityService, IndustryService industryService, IndustryRepository industryRepository, IndustryFormRepository industryFormRepository, IndustryFormService industryFormService, QualificationQuestionService qualificationQuestionService) {
+    public JobPostActivityController(UsersService usersService, JobPostActivityService jobPostActivityService, IndustryService industryService, IndustryRepository industryRepository, IndustryFormRepository industryFormRepository, IndustryFormService industryFormService, QualificationQuestionService qualificationQuestionService, RecruiterProfileService recruiterProfileService) {
         this.usersService = usersService;
         this.jobPostActivityService = jobPostActivityService;
         this.industryService = industryService;
@@ -39,6 +40,7 @@ public class JobPostActivityController {
         this.industryFormRepository = industryFormRepository;
         this.industryFormService = industryFormService;
         this.qualificationQuestionService = qualificationQuestionService;
+        this.recruiterProfileService = recruiterProfileService;
     }
 
     @GetMapping("/dashboard/")
@@ -99,6 +101,7 @@ public class JobPostActivityController {
         // Pobierz wybraną branżę i ustaw ją w JobPostActivity
         IndustryForm selectedIndustry = industryFormService.getIndustryFormById(industryFormId);
         jobPostActivity.setIndustryForm(selectedIndustry);
+
 
 
         JobPostActivity saved = jobPostActivityService.addNew(jobPostActivity);
