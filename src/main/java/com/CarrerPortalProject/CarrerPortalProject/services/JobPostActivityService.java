@@ -5,6 +5,8 @@ import com.CarrerPortalProject.CarrerPortalProject.repository.JobPostActivityRep
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class JobPostActivityService {
 
@@ -20,5 +22,9 @@ public class JobPostActivityService {
     public JobPostActivity addNew(JobPostActivity jobPostActivity) {
         return jobPostActivityRepository.save(jobPostActivity);
 
+    }
+
+    public List<JobPostActivity> getJobsByRecruiterId(int recruiterId) {
+        return jobPostActivityRepository.findByPostedById_UserId(recruiterId);
     }
 }

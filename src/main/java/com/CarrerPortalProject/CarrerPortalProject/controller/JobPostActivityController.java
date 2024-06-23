@@ -53,6 +53,23 @@ public class JobPostActivityController {
         }
         model.addAttribute("user", currentUserProfile);
         System.out.println("Dashboard viewed with current logged user: " + authentication.getName());
+
+        Users currentUser = usersService.getCurrentUser();
+
+
+
+////list of jobs
+        if (currentUser != null) {
+            List<JobPostActivity> jobPosts = jobPostActivityService.getJobsByRecruiterId(currentUser.getUserId());
+            model.addAttribute("jobPosts", jobPosts);
+            model.addAttribute("username", currentUser.getEmail());
+        }
+
+////        ended here
+
+
+
+
         return "dashboard";
     }
 

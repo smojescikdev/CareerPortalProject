@@ -28,6 +28,73 @@
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css} "/>
     <link th:rel="stylesheet" th:href="@{/webjars/font-awesome/css/all.css}"/>
 
+
+    <style>
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .profile-form-wrapper {
+            display: flex;
+            gap: 20px;
+        }
+
+        .profile-section, .form-section {
+            flex: 1;
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+
+        .profile-section h2, .form-section h2 {
+            margin-top: 0;
+        }
+
+        fieldset {
+            border: none;
+            padding: 0;
+            margin-bottom: 20px;
+        }
+
+        legend {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input, textarea {
+            width: calc(100% - 20px);
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+
+
+
+
+
 </head>
 
 <body>
@@ -35,7 +102,6 @@
 <!-- HEADER -->
 <div th:insert="~{fragments/header :: header}"></div>
 <!-- HEADER ENDED -->
-
 
 
 <!--NAVBAR  for logged user  ---   START HERE-->
@@ -61,9 +127,9 @@
                                         <li sec:authorize="hasAuthority('Job Seeker')"><a class="nav-link"
                                                                                           th:href="@{/dashboard/}"><i
                                                 class="fas fa-search"></i> Search for Jobs</a></li>
-<!--                                        <li sec:authorize="hasAuthority('Job Seeker')"><a class="nav-link"-->
-<!--                                                                                          th:href="@{/saved-jobs/}"><i-->
-<!--                                                class="fa-solid fa-eye"></i> View Saved Jobs</a></li>-->
+                                        <!--                                        <li sec:authorize="hasAuthority('Job Seeker')"><a class="nav-link"-->
+                                        <!--                                                                                          th:href="@{/saved-jobs/}"><i-->
+                                        <!--                                                class="fa-solid fa-eye"></i> View Saved Jobs</a></li>-->
                                         <li sec:authorize="hasAuthority('Job Seeker')"><a class="nav-link"
                                                                                           th:href="@{/job-seeker/job-seeker-profile/}"><i
                                                 class="fa-solid fa-pencil"></i> Edit Job Seeker Profile</a></li>
@@ -98,6 +164,9 @@
 <!--NAVBAR  for logged user  ---   ENDED HERE-->
 
 
+
+
+
 <section class="section">
     <div class="sidenav px-5">
     </div>
@@ -107,58 +176,66 @@
         </div>
         <div class="box mt-3">
             <label class="large-label px-3 mb-3" sec:authorize="hasAuthority('Job Seeker')">Search Results</label>
-            <th:block th:each="jobPost:${jobPost}">
-                <a
-                        th:href="@{/job-details-apply/{id}(id=${jobPost.jobPostId})}"
-                        style="text-decoration: none; color: black"
-                >
-                    <div
-                            onclick="window.location=/job-details-apply/{id}(id=${jobPost.jobPostId})"
-                            class="job-row"
-                    >
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label class="job-title text-left">
-                                    [[${jobPost.jobTitle}]]
-                                    <span
-                                            class="title-span"
-                                            sec:authorize="hasAuthority('Recruiter')"
-                                            th:text="'('+ @{${jobPost.totalCandidates}}+' Candidates Applied)'"
-                                    >(xx candidates applied)</span
-                                    >
-                                    <span
-                                            class="title-span"
-                                            sec:authorize="hasAuthority('Job Seeker')"
-                                            th:if="${jobPost.isActive == true}"
-                                    >(Applied)</span
-                                    >
-                                    <span
-                                            class="title-span"
-                                            sec:authorize="hasAuthority('Job Seeker')"
-                                            th:if="${jobPost.isSaved == true}"
-                                    >(Saved)</span
-                                    >
-                                </label>
+            <div class="container">
+                <div class="profile-form-wrapper">
+                    <div class="profile-section">
+                        <div class="table-wrapper">
+                            <div class="table-row header">
+                                <div class="table-cell">Job Title</div>
+                                <div class="table-cell">Job City | Job Country</div>
+                                <div class="table-cell">Posted by User ID</div>
+                                <div class="table-cell">Posted Date</div>
                             </div>
-                            <div class="col-md-4 text-center">
-                                <label
-                                        th:text="${jobPost.jobLocationId.city+', '+ jobPost.jobLocationId.state}"
-                                >
-                                    City State</label
-                                >
-                            </div>
-                            <div class="col-md-4 text-right">
-                                <label th:text="@{${jobPost.jobCompanyId.name}}"
-                                >Recruiter Company Name</label
-                                >
-                            </div>
+                            <th:block th:each="jobPost : ${jobPosts}">
+                                <div class="table-row">
+                                    <div class="table-cell">
+                                        <a th:href="@{/job-details-apply/{id}(id=${jobPost.jobOfferPostId})}"
+                                           style="text-decoration: none; color: black">
+                                            [[${jobPost.jobTitle}]]
+                                        </a>
+                                    </div>
+                                    <div class="table-cell">
+                                        <span th:text="${jobPost.city} + ', ' + ${jobPost.country}">City, Country</span>
+                                    </div>
+                                    <div class="table-cell">
+                                        <span th:text="${jobPost.postedById.userId}">Recruiter ID</span>
+                                    </div>
+                                    <div class="table-cell">
+                                        <span th:text="${jobPost.postedDate}">Posted Date</span>
+                                    </div>
+                                </div>
+                            </th:block>
                         </div>
                     </div>
-                </a>
-            </th:block>
+                </div>
+            </div>
         </div>
     </article>
 </section>
+
+<style>
+    .table-wrapper {
+        display: table;
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0 15px; /* spacing between rows */
+    }
+    .table-row {
+        display: table-row;
+    }
+    .table-cell {
+        display: table-cell;
+        padding: 10px;
+        border: 1px solid #ddd;
+    }
+    .header .table-cell {
+        font-weight: bold;
+        background-color: #f2f2f2;
+    }
+</style>
+
+
+
 
 
 <!-- FOOTER -->
