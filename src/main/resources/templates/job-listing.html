@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Job board HTML-5 Template </title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="assets/css/flaticon.css">
+    <link rel="stylesheet" href="assets/css/price_rangs.css">
+    <link rel="stylesheet" href="assets/css/slicknav.css">
+    <link rel="stylesheet" href="assets/css/animate.min.css">
+    <link rel="stylesheet" href="assets/css/magnific-popup.css">
+    <link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="assets/css/themify-icons.css">
+    <link rel="stylesheet" href="assets/css/slick.css">
+    <link rel="stylesheet" href="assets/css/nice-select.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        width: 80%; /* Szerokość kontenera, możesz dostosować */
+        margin: 0 auto; /* Automatyczne wyśrodkowanie */
+        padding: 20px; /* Margines wewnętrzny dla kontenera */
+    }
+
+    table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        margin-top: 20px; /* Dodatkowy margines na górę tabeli */
+        margin-bottom: 20px; /* Dodatkowy margines na dół tabeli */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Cień dla całej tabeli */
+    }
+
+    th, td {
+        padding: 12px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f0f0f0;
+    }
+
+    td {
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .show-details {
+        float: right;
+        background-color: #4CAF50;
+        border: none;
+        color: white;
+        padding: 8px 12px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .show-details:hover {
+        background-color: #45a049;
+    }
+
+</style>
+
+
+
+
+</head>
+
+<body>
+
+<!--  HEADER -->
+<div th:insert="~{fragments/header :: header}"></div>
+<!--HEADER ENDED-->
+
+
+
+
+
+<div class="container">
+    <h1 style="text-align: center;">Lista Ofert Pracy</h1>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Job Title</th>
+            <th>City</th>
+            <th>Country</th>
+            <th>Salary</th>
+            <th>Posted date</th>
+            <th>Industry Form Name</th>
+            <th>Recruiter Email</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Iteracja po jobPosts -->
+        <tr th:each="jobPost : ${jobPosts}">
+            <td th:text="${jobPost.jobTitle}">Job Title</td>
+            <td th:text="${jobPost.city}">City</td>
+            <td th:text="${jobPost.country}">Country</td>
+            <td th:text="${jobPost.salary}">Salary</td>
+            <td th:text="${jobPost.postedDate}">Posted Date</td>
+            <td th:text="${jobPost.industryForm.getFormName()}">Industry Form Name</td>
+            <td th:text="${jobPost.postedById.email}">Email</td>
+            <td>  <a th:href="@{/job-details-apply/{id}(id=${jobPost.jobOfferPostId})}"
+                     class="show-details">
+                Show details
+            </a></td>
+
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<!--FOOTER-->
+<div th:insert="~{fragments/footer :: footer}"></div>
+<!--FOOTER ENDED-->
+
+<!-- JS here -->
+
+<!-- All JS Custom Plugins Link Here here -->
+<script src="./assets/js/vendor/modernizr-3.5.0.min.js"></script>
+<!-- Jquery, Popper, Bootstrap -->
+<script src="./assets/js/vendor/jquery-1.12.4.min.js"></script>
+<script src="./assets/js/popper.min.js"></script>
+<script src="./assets/js/bootstrap.min.js"></script>
+<!-- Jquery Mobile Menu -->
+<script src="./assets/js/jquery.slicknav.min.js"></script>
+
+<!-- Jquery Slick , Owl-Carousel Plugins -->
+<script src="./assets/js/owl.carousel.min.js"></script>
+<script src="./assets/js/slick.min.js"></script>
+<script src="./assets/js/price_rangs.js"></script>
+
+<!-- One Page, Animated-HeadLin -->
+<script src="./assets/js/wow.min.js"></script>
+<script src="./assets/js/animated.headline.js"></script>
+<script src="./assets/js/jquery.magnific-popup.js"></script>
+
+<!-- Scrollup, nice-select, sticky -->
+<script src="./assets/js/jquery.scrollUp.min.js"></script>
+<script src="./assets/js/jquery.nice-select.min.js"></script>
+<script src="./assets/js/jquery.sticky.js"></script>
+
+<!-- contact js -->
+<script src="./assets/js/contact.js"></script>
+<script src="./assets/js/jquery.form.js"></script>
+<script src="./assets/js/jquery.validate.min.js"></script>
+<script src="./assets/js/mail-script.js"></script>
+<script src="./assets/js/jquery.ajaxchimp.min.js"></script>
+
+<!-- Jquery Plugins, main Jquery -->
+<script src="./assets/js/plugins.js"></script>
+<script src="./assets/js/main.js"></script>
+
+<script
+        type="text/javascript"
+        th:src="@{/webjars/jquery/jquery.min.js}"
+></script>
+<script
+        type="text/javascript"
+        th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"
+></script>
+
+
+</body>
+</html>

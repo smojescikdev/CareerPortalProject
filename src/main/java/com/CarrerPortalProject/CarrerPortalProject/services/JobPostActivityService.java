@@ -33,4 +33,9 @@ public class JobPostActivityService {
         return jobPostActivityRepository.findById(id).orElseThrow(()-> new RuntimeException("Job Not Found"));
 
     }
+
+    // Metoda do pobierania wszystkich ofert pracy posortowanych od najnowszych do najstarszych
+    public List<JobPostActivity> getAllJobPostsSortedByDateDesc() {
+        return jobPostActivityRepository.findAllByOrderByPostedDateDesc();
+    }
 }

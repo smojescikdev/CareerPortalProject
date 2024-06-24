@@ -11,6 +11,6 @@ public interface JobPostActivityRepository extends JpaRepository<JobPostActivity
 
     List<JobPostActivity> findByPostedById_UserId(int postedById);
 
-
-
+    // Metoda zwracająca listę ofert pracy posortowaną od najnowszych do najstarszych
+    List<JobPostActivity> findAllByOrderByPostedDateDesc();
 }
