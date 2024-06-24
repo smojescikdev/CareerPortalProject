@@ -10,10 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
@@ -59,7 +56,6 @@ public class JobPostActivityController {
         Users currentUser = usersService.getCurrentUser();
 
 
-
 ////list of jobs
         if (currentUser != null) {
             List<JobPostActivity> jobPosts = jobPostActivityService.getJobsByRecruiterId(currentUser.getUserId());
@@ -68,8 +64,6 @@ public class JobPostActivityController {
         }
 
 ////        ended here
-
-
 
 
         return "dashboard";
@@ -103,7 +97,6 @@ public class JobPostActivityController {
         jobPostActivity.setIndustryForm(selectedIndustry);
 
 
-
         JobPostActivity saved = jobPostActivityService.addNew(jobPostActivity);
 
 
@@ -115,5 +108,52 @@ public class JobPostActivityController {
     public List<QualificationQuestion> getQuestions(@RequestParam("industryFormId") int industryFormId) {
         return qualificationQuestionService.getQuestionsByIndustryFormId(industryFormId);
     }
+
+
+    //edit job offer
+
+//    @PostMapping("/dashboard/edit/{id}")
+//    public String editJob(@PathVariable("id") int id, Model model) {
+//
+//
+//        JobPostActivity jobPostActivity = jobPostActivityService.getOne(id);
+//        JobPostActivity jobDetails = jobPostActivityService.getOne(id);
+//
+//        System.out.println("Job Description: " + jobPostActivity.getDescriptionOfJob());
+//
+//
+//        model.addAttribute("jobPostActivity", jobPostActivity);
+//        model.addAttribute("jobDetails", jobDetails);
+//        model.addAttribute("user", usersService.getCurrentUserProfile());
+//
+//        return "recruiter/add-jobs";
+//
+//    }
+
+    @GetMapping("/dashboard/edit/{id}")
+    public String editJobForm(@PathVariable("id") int id, Model model) {
+        JobPostActivity jobPostActivity = jobPostActivityService.getOne(id);
+        model.addAttribute("jobPostActivity", jobPostActivity);
+        model.addAttribute("user", usersService.getCurrentUserProfile());
+
+        // Pobierz listę branż z industry form
+        List<IndustryForm> industries = industryFormService.getAllIndustries();
+        model.addAttribute("industries", industries);
+
+        return "recruiter/add-jobs"; // Przekierowanie do formularza edycji
+    }
+
+    @PostMapping("/dashboard/edit/{id}")
+    public String editJob(@PathVariable("id") int id, @ModelAttribute("jobPostActivity") JobPostActivity jobPostActivity, @RequestParam("industryFormId") int industryFormId) {
+        // Pobierz wybraną branżę i ustaw ją w JobPostActivity
+        IndustryForm selectedIndustry = industryFormService.getIndustryFormById(industryFormId);
+        jobPostActivity.setIndustryForm(selectedIndustry);
+
+        // Ustaw pozostałe pola i zapisz lub aktualizuj
+        jobPostActivityService.saveOrUpdate(jobPostActivity);
+
+        return "redirect:/dashboard/"; // Przekierowanie po zapisaniu
+    }
+
 
 }

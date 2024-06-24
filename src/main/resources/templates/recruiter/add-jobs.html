@@ -167,23 +167,24 @@
 </section>
 
 
-<h2> Add job </h2>
+<!-- Nagłówek strony -->
+<h2 th:text="${jobPostActivity.jobOfferPostId} == null ? 'Add Job' : 'Edit Job'"></h2>
 
-<!--//formularz dodawania nowej pracy-->
-
+<!-- Formularz dodawania/edycji pracy -->
 <div class="col-md-7 container myForm">
-    <form id="job-main-form" th:action="@{/dashboard/addNew}" th:object="${jobPostActivity}" method="post"
-          class="job-add-form">
+    <form id="job-main-form" th:action="${jobPostActivity.jobOfferPostId} == null ? @{/dashboard/addNew} : @{/dashboard/edit/{id}(id=${jobPostActivity.jobOfferPostId})}" th:object="${jobPostActivity}" method="post" class="job-add-form">
         <input hidden type="text" th:field="*{jobOfferPostId}">
-        <!--        <input hidden type="text" th:field="*{jobLocationId.Id}" >-->
-        <!--        <input hidden type="text" th:field="*{jobCompanyId.Id}" >-->
+
+        <input type="hidden" th:field="*{postedById}" th:value="${userAccountId}">
+
         <div class="row">
             <div class="col-lg-12">
                 <div class="d-flex justify-content-center pt-3">
-                    <h1 class="heading_font font-weight-bold">Post New Job</h1>
+                    <h1 class="heading_font font-weight-bold" th:text="${jobPostActivity.jobOfferPostId} == null ? 'Post New Job' : 'Edit Job'"></h1>
                 </div>
             </div>
         </div>
+
         <label class="heading_font font_sub_heading_color">Job Details</label>
         <div class="row">
             <div class="col-lg-12 form-group">
@@ -191,20 +192,6 @@
             </div>
         </div>
 
-
-        <!--     //pole select-->
-        <!--        <div class="col-md-4 form-group">-->
-        <!--            <label for="industryForm">Select Industry:</label>-->
-        <!--            <select id="industryForm" name="industryFormId">-->
-        <!--                <option value="">Select Industry</option>-->
-        <!--                <th:block th:each="industryForm : ${industries}">-->
-        <!--                    <option th:value="${industryForm.id}" th:text="${industryForm.formName}"></option>-->
-        <!--                </th:block>-->
-        <!--            </select>-->
-        <!--        </div>-->
-
-
-        <!--        test-->
         <div class="col-md-4 form-group">
             <label for="industryForm">Select Industry:</label>
             <select id="industryForm" name="industryFormId" class="form-control">
@@ -218,8 +205,6 @@
         <div id="qualificationQuestions"></div>
 
         <button id="copyToDescriptionBtn" class="btn btn-primary mt-3">Copy Qualifications to Description</button>
-        <!--        test ended here-->
-
 
         <div class="row">
             <div class="col-md-4 form-group">
@@ -238,8 +223,7 @@
         <div class="row">
             <div class="col-md-12 form-group">
                 <label class="mt-2 heading_font font_sub_heading_color">Description</label>
-                <textarea type="text" rows="4" id="content" placeholder="Content" class="form-control"
-                          th:field="*{descriptionOfJob}" autocomplete="off"></textarea>
+                <textarea type="text" rows="4" id="content" placeholder="Content" class="form-control" th:field="*{descriptionOfJob}" autocomplete="off"></textarea>
             </div>
         </div>
 
@@ -255,12 +239,6 @@
                 <input id="country" th:field="*{country}" type="text" class="form-control" placeholder="Country">
             </div>
         </div>
-        <!--        <div class="row">-->
-        <!--            <div class="col-lg-12 form-group">-->
-        <!--                <label class="mt-2 heading_font font_sub_heading_color">Company</label>-->
-        <!--                <input id="companyName" th:field="*{jobCompanyId.name}" type="text" class="form-control" placeholder="Company Name">-->
-        <!--            </div>-->
-        <!--        </div>-->
 
         <div class="row mt-4">
             <div class="col d-flex justify-content-center">
@@ -416,9 +394,9 @@
             placeholder: 'Write here...'
         });
 
-        // Ustawienie wstępnej zawartości w polu 'content'
-        var initialContent = '<b>Ogólne informacje:</b><br><br><b>Stawka:</b><br><br><b>Wymagania:</b><br>';
-        $('#content').summernote('code', initialContent);
+        // // Ustawienie wstępnej zawartości w polu 'content'
+        // var initialContent = '<b>Ogólne informacje:</b><br><br><b>Stawka:</b><br><br><b>Wymagania:</b><br>';
+        // $('#content').summernote('code', initialContent);
     });
 </script>
 

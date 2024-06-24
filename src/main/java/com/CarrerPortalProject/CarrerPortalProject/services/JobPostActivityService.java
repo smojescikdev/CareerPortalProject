@@ -38,4 +38,8 @@ public class JobPostActivityService {
     public List<JobPostActivity> getAllJobPostsSortedByDateDesc() {
         return jobPostActivityRepository.findAllByOrderByPostedDateDesc();
     }
+
+    public void saveOrUpdate(JobPostActivity jobPostActivity) {
+        jobPostActivityRepository.save(jobPostActivity);
+    }
 }
