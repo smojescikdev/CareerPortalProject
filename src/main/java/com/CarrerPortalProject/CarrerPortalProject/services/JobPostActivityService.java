@@ -42,4 +42,8 @@ public class JobPostActivityService {
     public void saveOrUpdate(JobPostActivity jobPostActivity) {
         jobPostActivityRepository.save(jobPostActivity);
     }
+
+    public void deleteJob(int id) {
+        jobPostActivityRepository.deleteById(id);
+    }
 }

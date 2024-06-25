@@ -163,4 +163,26 @@ public class JobPostActivityController {
     }
 
 
+
+    //delete job:
+
+    // Metoda do wyświetlenia potwierdzenia usunięcia oferty pracy
+    @GetMapping("/dashboard/delete/confirm/{id}")
+    public String deleteJobConfirmation(@PathVariable("id") int id, Model model) {
+        JobPostActivity jobPostActivity = jobPostActivityService.getOne(id);
+        model.addAttribute("jobPostActivity", jobPostActivity);
+        model.addAttribute("user", usersService.getCurrentUserProfile());
+
+        return "recruiter/delete-job-confirmation"; // Widok potwierdzenia usunięcia
+    }
+
+    // Metoda do usunięcia oferty pracy
+    @PostMapping("/dashboard/delete/{id}")
+    public String deleteJob(@PathVariable("id") int id) {
+        jobPostActivityService.deleteJob(id);
+
+        return "redirect:/dashboard/"; // Przekierowanie po usunięciu
+    }
+
+
 }
