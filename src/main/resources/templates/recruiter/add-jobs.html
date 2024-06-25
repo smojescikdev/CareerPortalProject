@@ -174,6 +174,8 @@
 <div class="col-md-7 container myForm">
     <form id="job-main-form" th:action="${jobPostActivity.jobOfferPostId} == null ? @{/dashboard/addNew} : @{/dashboard/edit/{id}(id=${jobPostActivity.jobOfferPostId})}" th:object="${jobPostActivity}" method="post" class="job-add-form">
         <input hidden type="text" th:field="*{jobOfferPostId}">
+        <input hidden type="text" th:field="*{postedDate}">
+        <input hidden type="text" th:field="*{industryForm.id}">
 
         <input type="hidden" th:field="*{postedById}" th:value="${userAccountId}">
 
@@ -194,12 +196,13 @@
 
         <div class="col-md-4 form-group">
             <label for="industryForm">Select Industry:</label>
-            <select id="industryForm" name="industryFormId" class="form-control">
+            <select id="industryForm" name="industryFormId" class="form-control" th:disabled="${jobPostActivity.jobOfferPostId != null}">
                 <option value="">Select Industry</option>
                 <th:block th:each="industryForm : ${industries}">
-                    <option th:value="${industryForm.id}" th:text="${industryForm.formName}"></option>
+                    <option th:value="${industryForm.id}" th:text="${industryForm.formName}" th:selected="${industryForm.id == jobPostActivity.industryForm.id}"></option>
                 </th:block>
             </select>
+            <input type="hidden" name="industryFormId" th:value="${jobPostActivity.industryForm.id}">
         </div>
 
         <div id="qualificationQuestions"></div>

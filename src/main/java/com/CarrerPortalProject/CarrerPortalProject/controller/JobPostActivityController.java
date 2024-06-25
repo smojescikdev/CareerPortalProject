@@ -145,6 +145,13 @@ public class JobPostActivityController {
 
     @PostMapping("/dashboard/edit/{id}")
     public String editJob(@PathVariable("id") int id, @ModelAttribute("jobPostActivity") JobPostActivity jobPostActivity, @RequestParam("industryFormId") int industryFormId) {
+        // Pobierz oryginalny obiekt z bazy danych
+        JobPostActivity existingJobPostActivity = jobPostActivityService.getOne(id);
+
+        // Zachowaj niezmienione pola
+        jobPostActivity.setPostedDate(existingJobPostActivity.getPostedDate());
+        jobPostActivity.setPostedById(existingJobPostActivity.getPostedById());
+
         // Pobierz wybraną branżę i ustaw ją w JobPostActivity
         IndustryForm selectedIndustry = industryFormService.getIndustryFormById(industryFormId);
         jobPostActivity.setIndustryForm(selectedIndustry);
