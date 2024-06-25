@@ -12,4 +12,6 @@ import java.util.Optional;
 public interface RecruiterProfileRepository extends JpaRepository<RecruiterProfile, Integer> {
 
     Optional<RecruiterProfile> findByUserId(Users user);
+
+    Optional<RecruiterProfile> findByUserId_UserId(int userId);
 }

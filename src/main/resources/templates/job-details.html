@@ -243,27 +243,39 @@
                         </div>
                 </div>
             </div>
+            </div>
 
 
+<!--            <div class="mt-3 px-3" sec:authorize="hasAuthority('Job Seeker')">-->
+<!--                <div class="row">-->
+<!--                    <div class="col-md-3">-->
+<!--                        <form th:action="@{/dashboard/apply/{id}(id=${jobDetails.jobOfferPostId})}" method="post">-->
+<!--                            <button class="btn-sec btn-red w-100" type="submit">Apply</button>-->
+<!--                        </form>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
 
 
+<!--            test startet-->
             <div class="mt-3 px-3" sec:authorize="hasAuthority('Job Seeker')">
                 <div class="row">
                     <div class="col-md-3">
-                        <form th:action="@{/dashboard/apply/{id}(id=${jobDetails.jobOfferPostId})}" method="post">
-                            <button class="btn-sec btn-red w-100" type="submit">Apply</button>
-                        </form>
+                        <a th:if="${recruiterProfile != null}"
+                           th:href="@{'mailto:' + ${recruiterProfile.companyEmail} + '?subject=Aplikacja na ofertę pracy: ' + ${jobDetails.jobTitle} + '&body=Dzień dobry,%0D%0A%0D%0AChciałbym aplikować na tę ofertę pracy. Poniżej zamieszczam swój profil kandydata:%0D%0A%0D%0AImię: ' + ${jobSeekerProfile.firstName} + '%0D%0ANazwisko: ' + ${jobSeekerProfile.lastName} + '%0D%0AEmail: ' + ${jobSeekerProfile.email} + '%0D%0ATelefon: ' + ${jobSeekerProfile.phone} + '%0D%0AData urodzenia: ' + ${jobSeekerProfile.dateOfBirth} + '%0D%0A%0D%0APoziom angielskiego: ' + ${jobSeekerProfile.jobSeekerBasicInformation.englishLanguageLevel} + '%0D%0APoziom niemieckiego: ' + ${jobSeekerProfile.jobSeekerBasicInformation.germanLanguageLevel} + '%0D%0APoziom polskiego: ' + ${jobSeekerProfile.jobSeekerBasicInformation.polishLanguageLevel} + '%0D%0A%0D%0ACzy posiada prawo jazdy: ' + ${jobSeekerProfile.jobSeekerBasicInformation.driverLicense} + '%0D%0ACzy posiada samochód: ' + ${jobSeekerProfile.jobSeekerBasicInformation.carOwner} + '%0D%0A%0D%0AKwalifikacje: ' + ${jobSeekerQualifications} + '%0D%0A%0D%0ARezume: ' + ${jobSeekerProfile.resume} + '%0D%0A%0D%0ADziękuję za rozpatrzenie mojej aplikacji.'}"
+                           class="btn-sec btn-red w-100">Apply</a>
+                        <span th:unless="${recruiterProfile != null}">Recruiter profile not found</span>
                     </div>
                 </div>
             </div>
 
+<!--            ended here-->
 
 
 
 
 
 
-        </div>
 
         </div>
     </article>

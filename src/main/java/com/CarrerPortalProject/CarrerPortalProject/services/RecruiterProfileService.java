@@ -18,8 +18,12 @@ public class RecruiterProfileService {
     }
 
 
+//    public Optional<RecruiterProfile> getOne(Users user) {
+//        return recruiterProfileRepository.findByUserId(user);
+//    }
+
     public Optional<RecruiterProfile> getOne(Users user) {
-        return recruiterProfileRepository.findByUserId(user);
+        return recruiterProfileRepository.findByUserId_UserId(user.getUserId());
     }
 
     public Optional<RecruiterProfile> findById(int accountId) {
