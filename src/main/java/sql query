@@ -1,0 +1,227 @@
+--- dodanie user_ttype ---
+
+INSERT INTO users_type (user_type_name)
+VALUES
+('Recruiter'),
+('Job Seeker');
+
+
+
+--- dodanie industry ---
+
+INSERT INTO industry (name)
+VALUES
+('Branża malarska'),
+('Branża elektryczna'),
+('Branża hydrauliczna'),
+('Branża logistyczna'),
+('Branża ślusarska');
+
+
+
+-- dodanie industry_form ---
+
+INSERT INTO industry_form (form_name, industry_id)
+VALUES
+('Branża malarska', 1),
+('Branża elektryczna', 2),
+('Branża hydrauliczna', 3),
+('Branża logistyczna', 4),
+('Branża ślusarska', 5);
+
+
+
+
+
+---Kwalifikacje - dodawanie kwalifikacji do qualification_question ---
+
+INSERT INTO qualification_question (question, industry_form_id)
+VALUES
+('Izolacja fasad', 1),
+('Tapetowanie raufazą', 1),
+('Tapetowanie flizeliną', 1),
+('Tapetowanie tapetą wzorzystą', 1),
+('Szpachlowanie / szlifowanie', 1),
+('Malowanie', 1),
+('Regipsy', 1),
+('Ochrona antykorozyjna', 1),
+('Budowa okien', 1),
+('Lakierowanie pistoletem', 1),
+('Układanie dywanów', 1),
+('Układanie paneli', 1),
+('Układanie kafelek', 1),
+('Tynkowanie ręczne', 1),
+('Tynkowanie maszynowe', 1),
+('Lakierowanie okien i drzwi', 1),
+('Zdolny do pracy na wysokości/rusztowaniach', 1),
+('Uprawnienia na zwyżki', 1),
+('Badania wysokościowe', 1);
+
+
+
+INSERT INTO qualification_question (question, industry_form_id)
+VALUES
+('Remont instalacji elektrycznej w starym budownictwie', 2),
+('Instalacje elektryczne w nowym budownictwie', 2),
+('Bruzdowanie ścian', 2),
+('Wiązanie i układanie przewodów', 2),
+('Montaż gniazd i przełączników', 2),
+('Instalowanie/montaż systemów oświetleniowych', 2),
+('Montaż systemów komunikacji domowej, np. domofony', 2),
+('Montaż paneli fotowoltaicznych', 2),
+('Podłączanie paneli fotowoltaicznych', 2),
+('Instalacja systemu sygnalizacji pożaru', 2),
+('Montaż instalacji odgromowej', 2),
+('Budowa tras kablowych', 2),
+('Układanie kabli', 2),
+('Podłączanie silników, maszyn', 2),
+('Okablowanie instalacji przemysłowych', 2),
+('Podłączanie urządzeń elektrycznych', 2),
+('Ustawienia/regulacja urządzeń sterowniczych', 2),
+('Zbrojenie instalacji', 2),
+('Testowanie/konserwacja systemów elektrycznych', 2),
+('Instalacja sterowników PLC', 2),
+('Układanie przewodów światłowodowych', 2),
+('Podłączanie przewodów światłowodowych', 2),
+('Budowa szaf sterowniczych', 2),
+('Okablowanie szaf zgodnie z planem', 2),
+('Instalacja komponentów', 2),
+('Instalacja wentylacji w szafie sterowniczej', 2),
+('Podłączanie komponentów elektrycznych', 2),
+('Doświadczenie w posługiwaniu się schematami elektrycznymi', 2),
+('Uprawnienia SEP do 1kV', 2);
+
+
+
+
+INSERT INTO qualification_question (question, industry_form_id)
+VALUES
+('Montaż instalacji kanalizacyjnej', 3),
+('Demontaż rur wodnych', 3),
+('Układanie rur wodnych', 3),
+('Montaż i obróbka rur PE', 3),
+('Montaż i obróbka rur PVC', 3),
+('Montaż i obróbka rur SML', 3),
+('Montaż i obróbka rur miedzianych', 3),
+('Montaż i obróbka rur stalowych', 3),
+('Montaż i obróbka rur stalowych ocynkowanych', 3),
+('Montaż i obróbka rur kamionkowych', 3),
+('Montaż i obróbka systemów rur z połączeniem na wcisk', 3),
+('Montaż urządzeń wentylacyjnych', 3),
+('Montaż kanałów wentylacyjnych', 3),
+('Montaż klimatyzacji', 3),
+('Montaż instalacji gazowej', 3),
+('Podłączanie instalacji gazowej', 3),
+('Montaż kolektorów słonecznych', 3),
+('Podłączanie kolektorów słonecznych', 3),
+('Montaż zraszaczy', 3),
+('Montaż czujników przeciwpożarowych', 3),
+('Układanie rur instalacji grzewczej', 3),
+('Ogrzewanie centralne', 3),
+('Ogrzewanie podłogowe', 3),
+('Ogrzewanie powietrzne/nadmuchowe', 3),
+('Montaż kotłów', 3),
+('Instalacja pomp cieplnych', 3),
+('Montaż instalacji i urządzeń sanitarnych, tzw. Biały montaż', 3),
+('Przebudowa, remont łazienki', 3),
+('Spawanie gazowe', 3),
+('Lutowanie na miękko', 3),
+('Lutowanie na twardo', 3),
+('Czytanie i praca wg rysunku technicznego', 3);
+
+
+INSERT INTO qualification_question (question, industry_form_id)
+VALUES
+    ('Montaż instalacji kanalizacyjnej', 3),
+    ('Demontaż rur wodnych', 3),
+    ('Układanie rur wodnych', 3),
+    ('Montaż i obróbka rur PE', 3),
+    ('Montaż i obróbka rur PVC', 3),
+    ('Montaż i obróbka rur SML', 3),
+    ('Montaż i obróbka rur miedzianych', 3),
+    ('Montaż i obróbka rur stalowych', 3),
+    ('Montaż i obróbka rur stalowych ocynkowanych', 3),
+    ('Montaż i obróbka rur kamionkowych', 3),
+    ('Montaż i obróbka systemów rur z połączeniem na wcisk', 3),
+    ('Montaż urządzeń wentylacyjnych', 3),
+    ('Montaż kanałów wentylacyjnych', 3),
+    ('Montaż klimatyzacji', 3),
+    ('Montaż instalacji gazowej', 3),
+    ('Podłączanie instalacji gazowej', 3),
+    ('Montaż kolektorów słonecznych', 3),
+    ('Podłączanie kolektorów słonecznych', 3),
+    ('Montaż zraszaczy', 3),
+    ('Montaż czujników przeciwpożarowych', 3),
+    ('Układanie rur instalacji grzewczej', 3),
+    ('Ogrzewanie centralne', 3),
+    ('Ogrzewanie podłogowe', 3),
+    ('Ogrzewanie powietrzne/nadmuchowe', 3),
+    ('Montaż kotłów', 3),
+    ('Instalacja pomp cieplnych', 3),
+    ('Montaż instalacji i urządzeń sanitarnych, tzw. Biały montaż', 3),
+    ('Przebudowa, remont łazienki', 3),
+    ('Spawanie gazowe', 3),
+    ('Lutowanie na miękko', 3),
+    ('Lutowanie na twardo', 3),
+    ('Czytanie i praca wg rysunku technicznego', 3);
+
+
+
+
+INSERT INTO qualification_question (question, industry_form_id)
+VALUES
+('Przyjmowanie i kontrola towarów', 4),
+('Załadunek i rozładunek towarów', 4),
+('Wewnętrzny transport - przyjmowanie, wydawanie i przenoszenie towarów', 4),
+('Dbanie o porządek na regałach i w magazynie', 4),
+('Prowadzenie wózków widłowych', 4),
+('Prowadzenie pojazdów do transportu wewnętrznego (tzw. wózek paletowy)', 4),
+('Obsługa systemów zarządzania magazynem (LVS)', 4),
+('Komisjonowanie pojedynczych sztuk', 4),
+('Komisjonowanie z użyciem skanera', 4),
+('Komisjonowanie głosowe (Pick-by-Voice)', 4),
+('Prace produkcyjne na taśmie', 4),
+('Transport ciężkich ładunków', 4),
+('Zaopatrywanie i obsługa maszyn do pakowania', 4),
+('Sortowanie produktów i towarów', 4),
+('Pakowanie i transportowanie produktów', 4),
+('Pakowanie i wysyłka towarów', 4),
+('Załadunek i wysyłka towarów', 4),
+('Tworzenie dokumentów wysyłkowych', 4),
+('Inwentaryzacje oraz kontrola stanu magazynowego', 4),
+('Kontrola i zapewnienie jakości', 4),
+('Polskie uprawnienia na wózki widłowe', 4),
+('Niemieckie uprawnienia na wózki widłowe', 4),
+('Uprawnienia na zwyżki', 4);
+
+
+
+
+INSERT INTO qualification_question (question, industry_form_id)
+VALUES
+('Budowa kotłów i zbiorników', 5),
+('Czyszczenie, szlifowanie', 5),
+('Kucie matrycowe, obróbka plastyczna', 5),
+('Piłowanie, skręcanie, wiercenie', 5),
+('Cięcie', 5),
+('Spawanie punktowe', 5),
+('Prace odlewnicze', 5),
+('Prace kuźnicze', 5),
+('Budowa karoserii', 5),
+('Montaż tworzyw sztucznych', 5),
+('Wymiana łożysk oraz wałów', 5),
+('Znajomość rysunku technicznego', 5),
+('Przygotowanie elementów zgodnie z rysunkiem izometrycznym', 5),
+('Balustrady, schody', 5),
+('Drzwi i okna', 5),
+('Bramy', 5),
+('Pomosty', 5),
+('Poręcze', 5),
+('Ogrodzenia', 5),
+('Kratownice', 5),
+('Konstrukcje elementów nośnych', 5),
+('Demontaż konstrukcji metalowych', 5),
+('Konserwacja i serwisowanie', 5),
+('Wykonywanie elementów wg planu', 5),
+('Montaż i demontaż maszyn', 5),
+('Analiza błędów/usuwanie usterek', 5);

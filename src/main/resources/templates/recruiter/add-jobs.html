@@ -51,37 +51,27 @@
         <div class="headder-top header-sticky">
             <div class="container">
                 <div class="row align-items-center">
-                    <div class="col-lg-3 col-md-2">
-                        <!-- Logo -->
-                        <!--                        <div class="logo">-->
-                        <!--                            <a href="/"><img src="/assets/img/logo/logo.png" alt=""></a>-->
-                        <!--                        </div>-->
-                    </div>
                     <div class="col-lg-9 col-md-9">
                         <div class="menu-wrapper">
                             <!-- Main-menu -->
                             <div class="main-menu">
                                 <nav class="d-none d-lg-block">
                                     <ul id="navigation">
-                                        <!-- Dodatkowe elementy nawigacyjne -->
                                         <li sec:authorize="hasAuthority('Job Seeker')"><a class="nav-link"
-                                                                                          th:href="@{/dashboard/}"><i
+                                                                                          th:href="@{/job-listing}"><i
                                                 class="fas fa-search"></i> Search for Jobs</a></li>
                                         <li sec:authorize="hasAuthority('Job Seeker')"><a class="nav-link"
-                                                                                          th:href="@{/saved-jobs/}"><i
-                                                class="fa-solid fa-eye"></i> View Saved Jobs</a></li>
-                                        <li sec:authorize="hasAuthority('Job Seeker')"><a class="nav-link"
-                                                                                          th:href="@{/job-seeker-profile/}"><i
+                                                                                          th:href="@{/job-seeker/job-seeker-profile/}"><i
                                                 class="fa-solid fa-pencil"></i> Edit Profile</a></li>
                                         <li sec:authorize="hasAuthority('Recruiter')"><a class="nav-link"
                                                                                          th:href="@{/dashboard/add}"><i
                                                 class="fa-solid fa-file-circle-plus"></i> Post New Job</a></li>
                                         <li sec:authorize="hasAuthority('Recruiter')"><a class="nav-link"
                                                                                          th:href="@{/dashboard/}"><i
-                                                class="fa-solid fa-eye"></i> View Your Jobs</a></li>
+                                                class="fa-solid fa-eye"></i>View Your Posted Jobs</a></li>
                                         <li sec:authorize="hasAuthority('Recruiter')"><a class="nav-link"
-                                                                                         th:href="@{/recruiter-profile/}"><i
-                                                class="fa-solid fa-pencil"></i> Edit Account</a></li>
+                                                                                         th:href="@{/recruiter/recruiter-profile/}"><i
+                                                class="fa-solid fa-pencil"></i> Edit Job Seeker Profile</a></li>
                                     </ul>
                                 </nav>
                             </div>
@@ -104,75 +94,15 @@
 <!--NAVBAR  for logged user  ---   ENDED HERE-->
 
 
-<section class="section">
-    <div class="sidenav px-5">
-    </div>
-    <article>
-        <div class="box" sec:authorize="hasAuthority('Recruiter')">
-            <h1 class="primary-title">Recruiter Dashboard</h1>
-        </div>
-        <div class="box mt-3">
-            <label class="large-label px-3 mb-3" sec:authorize="hasAuthority('Job Seeker')">Search Results</label>
-            <th:block th:each="jobPost:${jobPost}">
-                <a
-                        th:href="@{/job-details-apply/{id}(id=${jobPost.jobPostId})}"
-                        style="text-decoration: none; color: black"
-                >
-                    <div
-                            onclick="window.location=/job-details-apply/{id}(id=${jobPost.jobPostId})"
-                            class="job-row"
-                    >
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label class="job-title text-left">
-                                    [[${jobPost.jobTitle}]]
-                                    <span
-                                            class="title-span"
-                                            sec:authorize="hasAuthority('Recruiter')"
-                                            th:text="'('+ @{${jobPost.totalCandidates}}+' Candidates Applied)'"
-                                    >(xx candidates applied)</span
-                                    >
-                                    <span
-                                            class="title-span"
-                                            sec:authorize="hasAuthority('Job Seeker')"
-                                            th:if="${jobPost.isActive == true}"
-                                    >(Applied)</span
-                                    >
-                                    <span
-                                            class="title-span"
-                                            sec:authorize="hasAuthority('Job Seeker')"
-                                            th:if="${jobPost.isSaved == true}"
-                                    >(Saved)</span
-                                    >
-                                </label>
-                            </div>
-                            <div class="col-md-4 text-center">
-                                <label
-                                        th:text="${jobPost.jobLocationId.city+', '+ jobPost.jobLocationId.state}"
-                                >
-                                    City State</label
-                                >
-                            </div>
-                            <div class="col-md-4 text-right">
-                                <label th:text="@{${jobPost.jobCompanyId.name}}"
-                                >Recruiter Company Name</label
-                                >
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </th:block>
-        </div>
-    </article>
-</section>
 
 
 <!-- Nagłówek strony -->
-<h2 th:text="${jobPostActivity.jobOfferPostId} == null ? 'Add Job' : 'Edit Job'"></h2>
+<h2 th:text="${jobPostActivity.jobOfferPostId} == null ? 'Add Job Form' : 'Edit Job Form'"></h2>
 
 <!-- Formularz dodawania/edycji pracy -->
 <div class="col-md-7 container myForm">
     <form id="job-main-form" th:action="${jobPostActivity.jobOfferPostId} == null ? @{/dashboard/addNew} : @{/dashboard/edit/{id}(id=${jobPostActivity.jobOfferPostId})}" th:object="${jobPostActivity}" method="post" class="job-add-form">
+
         <input hidden type="text" th:field="*{jobOfferPostId}">
         <input hidden type="text" th:field="*{postedDate}">
         <input hidden type="text" th:field="*{industryForm.id}">
@@ -190,13 +120,13 @@
         <label class="heading_font font_sub_heading_color">Job Details</label>
         <div class="row">
             <div class="col-lg-12 form-group">
-                <input id="title" type="text" th:field="*{jobTitle}" class="form-control" placeholder="Job Title">
+                <input id="title" type="text" th:field="*{jobTitle}" class="form-control" placeholder="Job Title" required>
             </div>
         </div>
 
         <div class="col-md-4 form-group">
             <label for="industryForm">Select Industry:</label>
-            <select id="industryForm" name="industryFormId" class="form-control" th:disabled="${jobPostActivity.jobOfferPostId != null}">
+            <select id="industryForm" name="industryFormId" class="form-control" th:disabled="${jobPostActivity.jobOfferPostId != null}" required>
                 <option value="">Select Industry</option>
                 <th:block th:each="industryForm : ${industries}">
                     <option th:value="${industryForm.id}" th:text="${industryForm.formName}" th:selected="${industryForm.id == jobPostActivity.industryForm.id}"></option>
@@ -211,7 +141,7 @@
 
         <div class="row">
             <div class="col-md-4 form-group">
-                <select id="type" th:field="*{jobType}" class="form-control">
+                <select id="type" th:field="*{jobType}" class="form-control" required>
                     <option value="">Employment Type</option>
                     <option th:value="Full-time">Full-time</option>
                     <option th:value="Part-time">Part-time</option>
@@ -220,36 +150,37 @@
                 </select>
             </div>
             <div class="col-md-4 form-group">
-                <input id="salary" th:field="*{salary}" type="text" class="form-control" placeholder="Salary">
+                <input id="salary" th:field="*{salary}" type="text" class="form-control" placeholder="Salary" required>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12 form-group">
                 <label class="mt-2 heading_font font_sub_heading_color">Description</label>
-                <textarea type="text" rows="4" id="content" placeholder="Content" class="form-control" th:field="*{descriptionOfJob}" autocomplete="off"></textarea>
+                <textarea type="text" rows="4" id="content" placeholder="Content" class="form-control" th:field="*{descriptionOfJob}" autocomplete="off" required></textarea>
             </div>
         </div>
 
         <label class="mt-2 heading_font font_sub_heading_color">Location</label>
         <div class="row">
             <div class="col-md-4 form-group">
-                <input th:field="*{city}" id="city" type="text" class="form-control" placeholder="City">
+                <input th:field="*{city}" id="city" type="text" class="form-control" placeholder="City" required>
             </div>
             <div class="col-md-4 form-group">
-                <input id="state" th:field="*{postal}" type="text" class="form-control" placeholder="Postal">
+                <input id="state" th:field="*{postal}" type="text" class="form-control" placeholder="Postal" required>
             </div>
             <div class="col-md-4 form-group">
-                <input id="country" th:field="*{country}" type="text" class="form-control" placeholder="Country">
+                <input id="country" th:field="*{country}" type="text" class="form-control" placeholder="Country" required>
             </div>
         </div>
 
         <div class="row mt-4">
             <div class="col d-flex justify-content-center">
-                <button type="submit" name="submit" class="btn btn-primary base_button px-4 py-2 mb-5">Save</button>
+                <button type="submit" name="submit" class="btn btn-primary base_button px-4 py-2 mb-5">Add job offer</button>
             </div>
         </div>
     </form>
 </div>
+
 </body>
 
 <!--//tutaj sie konczy formularz dodawnaia nowej pracy-->
@@ -294,7 +225,7 @@
                 var header = '<br><b>WYMAGANE KWALIFIKACJE:</b><br>';
 
 // Połącz nagłówek z listą pytań i zapisz to w zmiennej finalContent
-                var finalContent = qualificationsText +  header;
+                var finalContent = header + qualificationsText;
 
 // Wstaw finalContent do edytora Summernote pod #content
                 $('#content').summernote('pasteHTML', finalContent);

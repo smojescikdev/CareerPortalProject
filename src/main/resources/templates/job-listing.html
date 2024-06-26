@@ -96,7 +96,7 @@
 
 
 <div class="container">
-    <h1 style="text-align: center;">Lista Ofert Pracy</h1>
+    <h1 style="text-align: center;">List of job offers</h1>
 
     <table>
         <thead>
@@ -106,7 +106,7 @@
             <th>Country</th>
             <th>Salary</th>
             <th>Posted date</th>
-            <th>Industry Form Name</th>
+            <th>Industry</th>
             <th>Recruiter Email</th>
         </tr>
         </thead>
@@ -117,7 +117,7 @@
             <td th:text="${jobPost.city}">City</td>
             <td th:text="${jobPost.country}">Country</td>
             <td th:text="${jobPost.salary}">Salary</td>
-            <td th:text="${jobPost.postedDate}">Posted Date</td>
+            <td th:text="${#dates.format(jobPost.postedDate, 'yyyy-MM-dd HH:mm')}">Posted Date</td>
             <td th:text="${jobPost.industryForm.getFormName()}">Industry Form Name</td>
             <td th:text="${jobPost.postedById.email}">Email</td>
             <td>  <a th:href="@{/job-details-apply/{id}(id=${jobPost.jobOfferPostId})}"

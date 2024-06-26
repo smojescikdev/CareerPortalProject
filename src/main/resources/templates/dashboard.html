@@ -125,11 +125,8 @@
                                     <ul id="navigation">
                                         <!-- Dodatkowe elementy nawigacyjne -->
                                         <li sec:authorize="hasAuthority('Job Seeker')"><a class="nav-link"
-                                                                                          th:href="@{/dashboard/}"><i
+                                                                                          th:href="@{/job-listing}"><i
                                                 class="fas fa-search"></i> Search for Jobs</a></li>
-                                        <!--                                        <li sec:authorize="hasAuthority('Job Seeker')"><a class="nav-link"-->
-                                        <!--                                                                                          th:href="@{/saved-jobs/}"><i-->
-                                        <!--                                                class="fa-solid fa-eye"></i> View Saved Jobs</a></li>-->
                                         <li sec:authorize="hasAuthority('Job Seeker')"><a class="nav-link"
                                                                                           th:href="@{/job-seeker/job-seeker-profile/}"><i
                                                 class="fa-solid fa-pencil"></i> Edit Job Seeker Profile</a></li>
@@ -138,10 +135,11 @@
                                                 class="fa-solid fa-file-circle-plus"></i> Post New Job</a></li>
                                         <li sec:authorize="hasAuthority('Recruiter')"><a class="nav-link"
                                                                                          th:href="@{/dashboard/}"><i
-                                                class="fa-solid fa-eye"></i> View Your Jobs</a></li>
+                                                class="fa-solid fa-eye"></i>View Your Posted Jobs</a></li>
                                         <li sec:authorize="hasAuthority('Recruiter')"><a class="nav-link"
                                                                                          th:href="@{/recruiter/recruiter-profile/}"><i
-                                                class="fa-solid fa-pencil"></i> Edit Recruiter Profile</a></li>
+                                                class="fa-solid fa-pencil"></i> Edit Job Seeker Profile</a></li>
+
                                     </ul>
                                 </nav>
                             </div>
@@ -164,7 +162,27 @@
 <!--NAVBAR  for logged user  ---   ENDED HERE-->
 
 
+<section class="section">
+    <div class="sidenav px-5">
+    </div>
+    <article>
+        <div class="box" sec:authorize="hasAuthority('Job Seeker')">
+            <div class="box mt-3">
+                <div class="container">
+                    <div class="profile-form-wrapper">
+                        <div class="profile-section">
+                            <div class="d-none d-lg-block">
+                                <h4 class="primary-title">Job Seeker Dashboard</h4>
+                                <!-- Warunek: Pokaż tylko gdy użytkownik jest zalogowany jako Job Seeker -->
+                                <li sec:authorize="hasAuthority('Job Seeker')"><a class="btn head-btn1"
+                                                                                  th:href="@{/job-listing}">
+                                    <i class="fas fa-search head-btn1"></i> Find Job for You! </a></li>
 
+                            </div>
+                        </div>
+        </div>
+    </article>
+</section>
 
 
 <section class="section">
@@ -173,9 +191,8 @@
     <article>
         <div class="box" sec:authorize="hasAuthority('Recruiter')">
             <h1 class="primary-title">Recruiter Dashboard</h1>
-        </div>
         <div class="box mt-3">
-            <label class="large-label px-3 mb-3" sec:authorize="hasAuthority('Job Seeker')">Search Results</label>
+<!--            <label class="large-label px-3 mb-3" sec:authorize="hasAuthority('Job Seeker')">Search Results</label>-->
             <div class="container">
                 <div class="profile-form-wrapper">
                     <div class="profile-section">
@@ -201,7 +218,7 @@
                                         <span th:text="${jobPost.postedById.userId}">Recruiter ID</span>
                                     </div>
                                     <div class="table-cell">
-                                        <span th:text="${jobPost.postedDate}">Posted Date</span>
+                                        <span th:text="${#dates.format(jobPost.postedDate, 'yyyy-MM-dd HH:mm')}">Posted Date</span>
                                     </div>
                                 </div>
                             </th:block>
@@ -209,6 +226,7 @@
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     </article>
 </section>

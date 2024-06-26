@@ -119,25 +119,21 @@
                             <div class="main-menu">
                                 <nav class="d-none d-lg-block">
                                     <ul id="navigation">
-                                        <!-- Dodatkowe elementy nawigacyjne -->
                                         <li sec:authorize="hasAuthority('Job Seeker')"><a class="nav-link"
-                                                                                          th:href="@{/dashboard/}"><i
+                                                                                          th:href="@{/job-listing}"><i
                                                 class="fas fa-search"></i> Search for Jobs</a></li>
                                         <li sec:authorize="hasAuthority('Job Seeker')"><a class="nav-link"
-                                                                                          th:href="@{/saved-jobs/}"><i
-                                                class="fa-solid fa-eye"></i> View Saved Jobs</a></li>
-                                        <li sec:authorize="hasAuthority('Job Seeker')"><a class="nav-link"
-                                                                                          th:href="@{/job-seeker-profile/}"><i
+                                                                                          th:href="@{/job-seeker/job-seeker-profile/}"><i
                                                 class="fa-solid fa-pencil"></i> Edit Profile</a></li>
                                         <li sec:authorize="hasAuthority('Recruiter')"><a class="nav-link"
                                                                                          th:href="@{/dashboard/add}"><i
                                                 class="fa-solid fa-file-circle-plus"></i> Post New Job</a></li>
                                         <li sec:authorize="hasAuthority('Recruiter')"><a class="nav-link"
                                                                                          th:href="@{/dashboard/}"><i
-                                                class="fa-solid fa-eye"></i> View Your Jobs</a></li>
+                                                class="fa-solid fa-eye"></i>View Your Posted Jobs</a></li>
                                         <li sec:authorize="hasAuthority('Recruiter')"><a class="nav-link"
                                                                                          th:href="@{/recruiter/recruiter-profile/}"><i
-                                                class="fa-solid fa-pencil"></i> Edit Account</a></li>
+                                                class="fa-solid fa-pencil"></i> Edit Job Seeker Profile</a></li>
                                     </ul>
                                 </nav>
                             </div>
@@ -170,7 +166,7 @@
                     <p><strong>First Name:</strong> <span th:text="${profile.firstName}"></span></p>
                     <p><strong>Last Name:</strong> <span th:text="${profile.lastName}"></span></p>
                     <p><strong>Phone Number:</strong> <span th:text="${profile.phoneNumber}"></span></p>
-                    <p><strong>Email:</strong> <span th:text="${profile.email}"></span></p>
+                    <p><strong>Contact Email:</strong> <span th:text="${profile.email}"></span></p>
                 </fieldset>
                 <fieldset>
                     <legend>Company Details</legend>
@@ -209,7 +205,7 @@
                         <input type="text" id="phoneNumber" name="phoneNumber">
                     </div>
                     <div>
-                        <label for="email">Email:</label>
+                        <label for="email">Contact email:</label>
                         <input type="email" id="email" name="email">
                     </div>
                     <button type="submit" class="head-btn1">Update Personal Information</button>

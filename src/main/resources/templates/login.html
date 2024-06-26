@@ -27,79 +27,62 @@
 <body>
 
 
-
-
 <!--  HEADER -->
 <div th:insert="~{fragments/header :: header}"></div>
 <!--HEADER ENDED-->
 
 
+<div class="col-md-3 mx-auto">
+    <div class="myForm" style="align-items:center">
+        <form th:action="@{/login}" th:object="${user}" method="post">
+            <h1 class="text-center bold font-weight-bold mb-4">Login</h1>
+            <div class="form-group">
+                <input
+                        placeholder="Email"
+                        name="username"
+                        field="{email}"
+                        type="email"
+                        class="form-control"
+                        required
+                />
+            </div>
+            <div class="form-group">
+                <input
+                        placeholder="Password"
+                        name="password"
+                        field="{password}"
+                        type="password"
+                        class="form-control"
+                        required
+                />
+            </div>
+<!--            <div class="clearfix mb-4">-->
+<!--                <label class="float-left form-check-label"-->
+<!--                ><input type="checkbox"/> Remember me</label-->
+<!--                >-->
+<!--                <a href="#" class="color-text float-right">Forgot Password?</a>-->
+<!--            </div>-->
+            <div class="form-group">
+                <button type="submit" class="btn-danger">Log in</button>
+            </div>
 
-
-    <div class="col-md-3 mx-auto">
-        <div class="myForm" style="align-items:center">
-            <form th:action="@{/login}" th:object="${user}" method="post">
-                <h1 class="text-center bold font-weight-bold mb-4">Login</h1>
-                <div class="form-group">
-                    <input
-                            placeholder="Email"
-                            name="username"
-                            field="{email}"
-                            type="email"
-                            class="form-control"
-                            required
-                    />
-                </div>
-                <div class="form-group">
-                    <input
-                            placeholder="Password"
-                            name="password"
-                            field="{password}"
-                            type="password"
-                            class="form-control"
-                            required
-                    />
-                </div>
-                <div class="clearfix mb-4">
-                    <label class="float-left form-check-label"
-                    ><input type="checkbox" /> Remember me</label
-                    >
-                    <a href="#" class="color-text float-right">Forgot Password?</a>
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn-danger">Log in</button>
-                </div>
-
-                <p class="text-center">
-                    Are you a new User?
-                    <a
-                            class="color-text"
-                            href="#"
-                            th:href="@{/register}"
-                    >
-                        Register Now</a
-                    >
-                </p>
-            </form>
-        </div>
+            <p>
+                Are you a new User?
+                <a
+                        href="#"
+                        th:href="@{/register}"
+                >
+                    Register Now</a
+                >
+            </p>
+        </form>
     </div>
 </div>
-
 
 
 <!--FOOTER-->
 <div th:insert="~{fragments/footer :: footer}"></div>
 <!--FOOTER ENDED-->
-
-
-
-
-
-
-
-
-
-
 
 
 </body>

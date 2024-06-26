@@ -97,16 +97,13 @@
 <!--NAVBAR  for logged user  ---   ENDED HERE-->
 
 
-<!--test-->
+
 <h2> Recruiter Profile saved </h2>
-<li sec:authorize="hasAuthority('Job Seeker')"><a class="nav-link"
-                                                  th:href="@{/job-seeker-profile/}"><i
-        class="fa-solid fa-pencil"></i> View your profile now </a></li>
 
 <li sec:authorize="hasAuthority('Recruiter')"><a class="nav-link"
                                                  th:href="@{/recruiter/recruiter-profile/}"><i
         class="fa-solid fa-pencil"></i> View your profile now </a></li>
-<!--test-->
+
 
 
 <!-- FOOTER -->

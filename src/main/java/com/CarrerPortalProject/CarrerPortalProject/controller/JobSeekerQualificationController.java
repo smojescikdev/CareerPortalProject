@@ -78,12 +78,7 @@ public class JobSeekerQualificationController {
             model.addAttribute("questions", questions);
 
 
-
-
-
-
-
-            //test adding selected industry form to database
+            //adding selected industry form to database
 
             JobSeekerProfile jobSeekerProfile = jobSeekerProfileRepository.findById(user.getUserId())
                     .orElseThrow(() -> new RuntimeException("Job seeker profile not found"));
@@ -96,15 +91,7 @@ public class JobSeekerQualificationController {
             jobSeekerProfileRepository.save(jobSeekerProfile);
 
 
-
-            //test ended
-
-
-
-
-
-
-            // Inicjalizacja listy odpowiedzi
+            //  lista odpowiedzi
             List<String> answers = new ArrayList<>(questions.size());
             for (int i = 0; i < questions.size(); i++) {
                 answers.add("false"); // Wartość domyślna

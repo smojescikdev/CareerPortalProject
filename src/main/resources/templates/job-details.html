@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Job Board HTML-5 Template</title>
+    <title>Job details</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="site.webmanifest">
@@ -41,58 +41,68 @@
             gap: 20px;
         }
 
-        .profile-section, .form-section {
+        .profile-section-left, .profile-section-right {
             flex: 1;
-            border: 1px solid #ccc;
             padding: 20px;
             border-radius: 8px;
-            background-color: #f9f9f9;
+            background-color: #f5f5f5;
         }
 
-        .profile-section h2, .form-section h2 {
-            margin-top: 0;
-        }
-
-        fieldset {
-            border: none;
-            padding: 0;
+        .job-header, .job-info, .job-description, .job-actions, .job-apply {
+            background-color: #e0e0e0;
+            padding: 20px;
+            border-radius: 8px;
             margin-bottom: 20px;
         }
 
-        legend {
-            font-weight: bold;
-            margin-bottom: 10px;
+        .job-header h4, .large-label {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .job-header p {
+            margin: 0;
+        }
+
+        .profile-section-left h2, .profile-section-right h2 {
+            margin-top: 0;
         }
 
         label {
             display: block;
             margin-bottom: 5px;
+            color: #333;
         }
 
-        input, textarea {
-            width: calc(100% - 20px);
-            padding: 8px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        button {
+        .btn-sec {
+            display: block;
+            text-align: center;
             padding: 10px 20px;
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
+            margin-bottom: 10px;
+            color: #fff;
+            text-decoration: none;
         }
 
-        button:hover {
-            background-color: #0056b3;
+        .btn-red {
+            background-color: #d9534f;
+        }
+
+        .btn-red:hover {
+            background-color: #c9302c;
+        }
+
+        .btn-black {
+            background-color: #292b2c;
+        }
+
+        .btn-black:hover {
+            background-color: #1c1d1e;
+        }
+
+        .w-100 {
+            width: 100%;
         }
     </style>
-
-
-
 
 
 </head>
@@ -111,25 +121,15 @@
         <div class="headder-top header-sticky">
             <div class="container">
                 <div class="row align-items-center">
-                    <div class="col-lg-3 col-md-2">
-                        <!-- Logo -->
-                        <!--                        <div class="logo">-->
-                        <!--                            <a href="/"><img src="/assets/img/logo/logo.png" alt=""></a>-->
-                        <!--                        </div>-->
-                    </div>
                     <div class="col-lg-9 col-md-9">
                         <div class="menu-wrapper">
                             <!-- Main-menu -->
                             <div class="main-menu">
                                 <nav class="d-none d-lg-block">
                                     <ul id="navigation">
-                                        <!-- Dodatkowe elementy nawigacyjne -->
                                         <li sec:authorize="hasAuthority('Job Seeker')"><a class="nav-link"
-                                                                                          th:href="@{/dashboard/}"><i
+                                                                                          th:href="@{/job-listing}"><i
                                                 class="fas fa-search"></i> Search for Jobs</a></li>
-                                        <!--                                        <li sec:authorize="hasAuthority('Job Seeker')"><a class="nav-link"-->
-                                        <!--                                                                                          th:href="@{/saved-jobs/}"><i-->
-                                        <!--                                                class="fa-solid fa-eye"></i> View Saved Jobs</a></li>-->
                                         <li sec:authorize="hasAuthority('Job Seeker')"><a class="nav-link"
                                                                                           th:href="@{/job-seeker/job-seeker-profile/}"><i
                                                 class="fa-solid fa-pencil"></i> Edit Job Seeker Profile</a></li>
@@ -138,10 +138,10 @@
                                                 class="fa-solid fa-file-circle-plus"></i> Post New Job</a></li>
                                         <li sec:authorize="hasAuthority('Recruiter')"><a class="nav-link"
                                                                                          th:href="@{/dashboard/}"><i
-                                                class="fa-solid fa-eye"></i> View Your Jobs</a></li>
+                                                class="fa-solid fa-eye"></i>View Your Posted Jobs</a></li>
                                         <li sec:authorize="hasAuthority('Recruiter')"><a class="nav-link"
                                                                                          th:href="@{/recruiter/recruiter-profile/}"><i
-                                                class="fa-solid fa-pencil"></i> Edit Recruiter Profile</a></li>
+                                                class="fa-solid fa-pencil"></i> Edit Job Seeker Profile</a></li>
                                     </ul>
                                 </nav>
                             </div>
@@ -164,132 +164,84 @@
 <!--NAVBAR  for logged user  ---   ENDED HERE-->
 
 
-
-
-
 <section class="section">
-    <!--    Side Bar Starts here    -->
-    <div class="sidenav px-5">
-        <div>
-            <hr/>
-        </div>
-    </div>
     <article>
-        <div class="box px-3">
-            <a class="mt-3 ms-3 primary" id="back-link"><i class="fa-solid fa-angle-left me-1"></i> Back to Search
-                Results </a>
+        <h2 class="primary-title mt-1">Job Details</h2>
+        <div class="container">
+            <div class="profile-form-wrapper">
 
-            <h1 class="primary-title mt-3"> Job Details </h1>
-            <div class="ms-3">
-                <h4 th:text="${jobDetails.jobTitle}" class="job-title text-left">JOB TITLE</h4>
-                <div class="mt-1">
-                    <p th:text="${jobDetails.postal + ', ' + jobDetails.city+', '+ jobDetails.country}"
-                       class="m-0"> POSTAL, CITY, COUNTRY</p>
-                    <p th:text="${jobDetails.industryForm.getFormName()}">Industry name</p>
+                <div class="profile-section-left">
+
+                    <a href="/job-listing" class="mt-3 ms-3 primary" id="back-link"><i
+                            class="fa-solid fa-angle-left me-1"></i> Back to Search Results</a>
+
+
+                    <div class="job-header ms-3">
+                        <h4 th:text="${jobDetails.jobTitle}" class="job-title text-left">JOB TITLE</h4>
+                        <div class="mt-1">
+                            <p th:text="${jobDetails.postal + ', ' + jobDetails.city+', '+ jobDetails.country}"
+                               class="m-0">POSTAL, CITY, COUNTRY</p>
+                            <p th:text="${jobDetails.industryForm.getFormName()}">Industry name</p>
+                        </div>
+                    </div>
+
+                    <div class="box mt-3 job-info">
+                        <label class="large-label px-3 mt-3">Job Information:</label>
+                        <div class="job-row">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label class="text-left">Date Posted: <span th:text="${#dates.format(jobDetails.postedDate, 'yyyy-MM-dd HH:mm')}">12 Nov, 2030</span></label>
+                                </div>
+                                <div class="col-md-12">
+                                    <label>Salary: <span th:text="${jobDetails.salary}">22,00€/h</span></label>
+                                </div>
+                                <div class="col-md-12">
+                                    <label>Type: <span th:text="${jobDetails.jobType}">Full-time</span></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
-            </div>
-        </div>
 
-        <div class="box mt-3">
-            <label class="large-label px-3 mt-3"> Job information: </label>
-
-            <div class="job-row">
-                <div class="row ">
-                    <div class="col-md-3">
-                        <label class="text-left">Date Posted: <span
-                                th:text="${jobDetails.postedDate}">12 Nov, 2030</span></label>
-                    </div>
-                    <div class="col-md-3 text-center">
-                        <label> Salary: <span th:text="${jobDetails.salary}">22,00€/h</span></label>
-                    </div>
-                    <div class="col-md-3 text-center">
-                        <label>Type: <span th:text="${jobDetails.jobType}"> Full-time</span></label>
-                    </div>
-                    <div class="col-md-3 text-right">
-<!--                        <label>Company: <span th:text="${jobDetails.recruiterProfile.getCompanyName()}">COMPANY NAME</span></label>-->
-                    </div>
-                </div>
-            </div>
-
-            <div class="px-3 mb-3" sec:authorize="hasAuthority('Job Seeker')">
-                <label class="large-label "> Job Description </label>
-                <div th:utext="${jobDetails.descriptionOfJob}"></div>
-            </div>
-
-            <div class="px-3 mb-3" sec:authorize="hasAuthority('Recruiter')">
-                <div class="row">
-                    <div class="col-md-9">
-                        <label class="large-label "> Job Description </label>
+                <div class="profile-section-right">
+                    <div class="px-3 mb-3 job-description">
+                        <label class="large-label">Job Description</label>
                         <div th:utext="${jobDetails.descriptionOfJob}"></div>
                     </div>
-                </div>
-            </div>
 
-
-
-
-            <div class="mt-3 px-3" sec:authorize="hasAuthority('Recruiter')">
-                <div class="row">
-                    <div class="col-md-3">
-                        <form th:action="@{/dashboard/edit/{id}(id=${jobDetails.jobOfferPostId})}" method="get">
-                            <button class="btn-sec btn-red w-100" type="submit">Edit Job</button>
-                        </form>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="col-md-3">
-                            <form th:action="@{/dashboard/delete/confirm/{id}(id=${jobDetails.jobOfferPostId})}" method="get">
-                                <button class="btn-sec btn-black w-100" type="submit">Delete Job</button>
-                            </form>
+                    <div class="mt-3 px-3 job-actions" sec:authorize="hasAuthority('Recruiter')">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <form th:action="@{/dashboard/edit/{id}(id=${jobDetails.jobOfferPostId})}" method="get">
+                                    <button class="btn-sec btn-red w-100" type="submit">Edit Job</button>
+                                </form>
+                            </div>
+                            <div class="col-md-6">
+                                <form th:action="@{/dashboard/delete/confirm/{id}(id=${jobDetails.jobOfferPostId})}"
+                                      method="get">
+                                    <button class="btn-sec btn-black w-100" type="submit">Delete Job</button>
+                                </form>
+                            </div>
                         </div>
-                </div>
-            </div>
-            </div>
-
-
-<!--            <div class="mt-3 px-3" sec:authorize="hasAuthority('Job Seeker')">-->
-<!--                <div class="row">-->
-<!--                    <div class="col-md-3">-->
-<!--                        <form th:action="@{/dashboard/apply/{id}(id=${jobDetails.jobOfferPostId})}" method="post">-->
-<!--                            <button class="btn-sec btn-red w-100" type="submit">Apply</button>-->
-<!--                        </form>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-
-
-<!--            test startet-->
-            <div class="mt-3 px-3" sec:authorize="hasAuthority('Job Seeker')">
-                <div class="row">
-                    <div class="col-md-3">
-                        <a th:if="${recruiterProfile != null}"
-                           th:href="@{'mailto:' + ${recruiterProfile.companyEmail} + '?subject=Aplikacja na ofertę pracy: ' + ${jobDetails.jobTitle} + '&body=Dzień dobry,%0D%0A%0D%0AChciałbym aplikować na tę ofertę pracy. Poniżej zamieszczam swój profil kandydata:%0D%0A%0D%0AImię: ' + ${jobSeekerProfile.firstName} + '%0D%0ANazwisko: ' + ${jobSeekerProfile.lastName} + '%0D%0AEmail: ' + ${jobSeekerProfile.email} + '%0D%0ATelefon: ' + ${jobSeekerProfile.phone} + '%0D%0AData urodzenia: ' + ${jobSeekerProfile.dateOfBirth} + '%0D%0A%0D%0APoziom angielskiego: ' + ${jobSeekerProfile.jobSeekerBasicInformation.englishLanguageLevel} + '%0D%0APoziom niemieckiego: ' + ${jobSeekerProfile.jobSeekerBasicInformation.germanLanguageLevel} + '%0D%0APoziom polskiego: ' + ${jobSeekerProfile.jobSeekerBasicInformation.polishLanguageLevel} + '%0D%0A%0D%0ACzy posiada prawo jazdy: ' + ${jobSeekerProfile.jobSeekerBasicInformation.driverLicense} + '%0D%0ACzy posiada samochód: ' + ${jobSeekerProfile.jobSeekerBasicInformation.carOwner} + '%0D%0A%0D%0AKwalifikacje: ' + ${jobSeekerQualifications} + '%0D%0A%0D%0ARezume: ' + ${jobSeekerProfile.resume} + '%0D%0A%0D%0ADziękuję za rozpatrzenie mojej aplikacji.'}"
-                           class="btn-sec btn-red w-100">Apply</a>
-                        <span th:unless="${recruiterProfile != null}">Recruiter profile not found</span>
                     </div>
+
+                    <div class="mt-3 px-3 job-apply" sec:authorize="hasAuthority('Job Seeker')">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a th:if="${recruiterProfile != null}"
+                                   th:href="@{'mailto:' + ${recruiterProfile.companyEmail} + '?subject=Aplikacja na ofertę pracy: ' + ${jobDetails.jobTitle} + '&body=Dzień dobry,%0D%0A%0D%0AChciałbym aplikować na tę ofertę pracy. Poniżej zamieszczam swój profil kandydata:%0D%0A%0D%0AImię: ' + ${jobSeekerProfile.firstName} + '%0D%0ANazwisko: ' + ${jobSeekerProfile.lastName} + '%0D%0AEmail: ' + ${jobSeekerProfile.email} + '%0D%0ATelefon: ' + ${jobSeekerProfile.phone} + '%0D%0AData urodzenia: ' + ${jobSeekerProfile.dateOfBirth} + '%0D%0A%0D%0APoziom angielskiego: ' + ${jobSeekerProfile.jobSeekerBasicInformation.englishLanguageLevel} + '%0D%0APoziom niemieckiego: ' + ${jobSeekerProfile.jobSeekerBasicInformation.germanLanguageLevel} + '%0D%0APoziom polskiego: ' + ${jobSeekerProfile.jobSeekerBasicInformation.polishLanguageLevel} + '%0D%0A%0D%0ACzy posiada prawo jazdy: ' + ${jobSeekerProfile.jobSeekerBasicInformation.driverLicense} + '%0D%0ACzy posiada samochód: ' + ${jobSeekerProfile.jobSeekerBasicInformation.carOwner} + '%0D%0A%0D%0AKwalifikacje: ' + ${jobSeekerQualifications} + '%0D%0A%0D%0ARezume: ' + ${jobSeekerProfile.resume} + '%0D%0A%0D%0ADziękuję za rozpatrzenie mojej aplikacji.'}"
+                                   class="btn-sec btn-red w-100">Apply</a>
+                                <span th:unless="${recruiterProfile != null}">Recruiter profile not found</span>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
-
-<!--            ended here-->
-
-
-
-
-
-
-
         </div>
     </article>
 </section>
-
-
-
-
-
-
-
-
-
-
 
 
 <!-- FOOTER -->

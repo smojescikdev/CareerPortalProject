@@ -69,7 +69,7 @@ public class JobDetailsController {
 
                 // Prepare qualifications for display in the email body
                 List<String> qualifications = profile.getJobSeekerQualificationList().stream()
-                        .map(q -> q.getQualificationName() + ": " + (q.isQualificationStatus() ? "Posiada" : "Nie posiada"))
+                        .map(q -> q.getQualificationName() + ": " + (q.isQualificationStatus() ? "TAK" : "NIE"))
                         .collect(Collectors.toList());
                 model.addAttribute("jobSeekerQualifications", String.join("%0D%0A", qualifications));
             });
