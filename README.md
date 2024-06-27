@@ -3,11 +3,13 @@
 CareerPortalProject
 
 Welcome to our job portal, designed to simplify your job search and recruitment process. Our platform stands out by offering comprehensive candidate profiles. Each profile includes detailed information about the candidate’s professional qualifications, industry-specific skills, language proficiencies, and more.
-For Job Seekers:
+
+# For Job Seekers:
 1.	Create Your Profile: Build a detailed profile showcasing your qualifications, skills, and language proficiencies.
 2.	Search for Jobs: Find job opportunities that match your profile.
 3.	Apply Easily: Submit your application with just a few clicks, directly from your profile.
-For Employers:
+
+# For Employers:
 1.	Post Jobs: Advertise your vacancies with required qualifications and get qualified and passed candidates.
 2.	Streamlined Recruitment: Simplify the hiring process with direct applications and easy communication with potential hires.
 
