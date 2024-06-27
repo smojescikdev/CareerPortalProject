@@ -23,15 +23,13 @@ import java.sql.Date;
 public class UsersService {
 
     private final UsersRepository usersRepository;
-    private final JobSeekerProfileRepository jobSeekerProfileRepositoryp;
     private final RecruiterProfileRepository recruiterProfileRepository;
     private final JobSeekerProfileRepository jobSeekerProfileRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UsersService(UsersRepository usersRepository, JobSeekerProfileRepository jobSeekerProfileRepositoryp, RecruiterProfileRepository recruiterProfileRepository, JobSeekerProfileRepository jobSeekerProfileRepository, PasswordEncoder passwordEncoder) {
+    public UsersService(UsersRepository usersRepository, RecruiterProfileRepository recruiterProfileRepository, JobSeekerProfileRepository jobSeekerProfileRepository, PasswordEncoder passwordEncoder) {
         this.usersRepository = usersRepository;
-        this.jobSeekerProfileRepositoryp = jobSeekerProfileRepositoryp;
         this.recruiterProfileRepository = recruiterProfileRepository;
         this.jobSeekerProfileRepository = jobSeekerProfileRepository;
         this.passwordEncoder = passwordEncoder;
@@ -48,9 +46,6 @@ public class UsersService {
         if (userTypeId == 1) {
             recruiterProfileRepository.save(new RecruiterProfile(savedUser));
 
-
-
-
         } else {
 
             // Create JobSeekerProfile
@@ -63,8 +58,6 @@ public class UsersService {
             jobSeekerProfile.setJobSeekerBasicInformation(jobSeekerBasicInformation);
 
             jobSeekerProfileRepository.save(jobSeekerProfile);
-
-
         }
         return savedUser;
 
@@ -90,6 +83,7 @@ public class UsersService {
         return null;
 
     }
+
     public Users getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {

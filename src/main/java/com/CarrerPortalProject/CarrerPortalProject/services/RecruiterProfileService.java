@@ -17,11 +17,6 @@ public class RecruiterProfileService {
         this.recruiterProfileRepository = recruiterProfileRepository;
     }
 
-
-//    public Optional<RecruiterProfile> getOne(Users user) {
-//        return recruiterProfileRepository.findByUserId(user);
-//    }
-
     public Optional<RecruiterProfile> getOne(Users user) {
         return recruiterProfileRepository.findByUserId_UserId(user.getUserId());
     }

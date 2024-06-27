@@ -35,8 +35,7 @@ public class RecruiterProfileController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             String currentUsername = authentication.getName();
-            Users user = usersRepository.findByEmail(currentUsername)
-                    .orElseThrow(() -> new UsernameNotFoundException("Could not find user"));
+            Users user = usersRepository.findByEmail(currentUsername).orElseThrow(() -> new UsernameNotFoundException("Could not find user"));
 
             Optional<RecruiterProfile> recruiterProfile = recruiterProfileService.getOne(user);
             recruiterProfile.ifPresent(profile -> model.addAttribute("profile", profile));
@@ -49,22 +48,9 @@ public class RecruiterProfileController {
     public String recruiterProfileSuccess(
 
             //Recruiter details
-            @RequestParam String userAccountId,
-            @RequestParam(required = false) String firstName,
-            @RequestParam(required = false) String lastName,
-            @RequestParam(required = false) String phoneNumber,
-            @RequestParam(required = false) String email,
+            @RequestParam String userAccountId, @RequestParam(required = false) String firstName, @RequestParam(required = false) String lastName, @RequestParam(required = false) String phoneNumber, @RequestParam(required = false) String email,
             //Company details
-            @RequestParam(required = false) String companyName,
-            @RequestParam(required = false) String companyCountry,
-            @RequestParam(required = false) String companyStreet,
-            @RequestParam(required = false) String companyZipCode,
-            @RequestParam(required = false) String companyCity,
-            @RequestParam(required = false) String companyWebsite,
-            @RequestParam(required = false) String companyEmail,
-            @RequestParam(required = false) String companyTaxId,
-            @RequestParam(required = false) String companyDescription
-    ) {
+            @RequestParam(required = false) String companyName, @RequestParam(required = false) String companyCountry, @RequestParam(required = false) String companyStreet, @RequestParam(required = false) String companyZipCode, @RequestParam(required = false) String companyCity, @RequestParam(required = false) String companyWebsite, @RequestParam(required = false) String companyEmail, @RequestParam(required = false) String companyTaxId, @RequestParam(required = false) String companyDescription) {
 
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

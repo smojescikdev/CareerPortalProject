@@ -11,7 +11,6 @@ import lombok.Setter;
 @Table(name = "qualification_question")
 public class QualificationQuestion {
 
-
     //pytania kwalifikacyjne
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,4 +22,17 @@ public class QualificationQuestion {
     @ManyToOne
     @JoinColumn(name = "industry_form_id")
     private IndustryForm industryForm;
+
+
+    public QualificationQuestion() {
+    }
+
+    @Override
+    public String toString() {
+        return "QualificationQuestion{" +
+                "id=" + id +
+                ", question='" + question + '\'' +
+                ", industryForm=" + industryForm +
+                '}';
+    }
 }

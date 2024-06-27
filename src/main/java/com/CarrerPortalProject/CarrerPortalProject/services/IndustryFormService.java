@@ -1,6 +1,5 @@
 package com.CarrerPortalProject.CarrerPortalProject.services;
 
-import com.CarrerPortalProject.CarrerPortalProject.model.Industry;
 import com.CarrerPortalProject.CarrerPortalProject.model.IndustryForm;
 import com.CarrerPortalProject.CarrerPortalProject.model.QualificationQuestion;
 import com.CarrerPortalProject.CarrerPortalProject.repository.IndustryFormRepository;

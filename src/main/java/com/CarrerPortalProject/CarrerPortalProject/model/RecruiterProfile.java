@@ -38,15 +38,11 @@ public class RecruiterProfile {
     private String companyTaxId;
     private String companyDescription;
 
-    //Others
-//    @Column(nullable = true, length = 64)
-//    private String profilePhoto;
-
 
     public RecruiterProfile() {
     }
 
-    public RecruiterProfile(int userAccountId, Users userId, String firstName, String lastName, String phoneNumber, String email, String companyName, String companyCountry, String companyStreet, String companyZipCode, String companyCity, String companyWebsite, String companyEmail, String companyTaxId, String companyDescription, String profilePhoto) {
+    public RecruiterProfile(int userAccountId, Users userId, String firstName, String lastName, String phoneNumber, String email, String companyName, String companyCountry, String companyStreet, String companyZipCode, String companyCity, String companyWebsite, String companyEmail, String companyTaxId, String companyDescription) {
         this.userAccountId = userAccountId;
         this.userId = userId;
         this.firstName = firstName;
@@ -62,7 +58,6 @@ public class RecruiterProfile {
         this.companyEmail = companyEmail;
         this.companyTaxId = companyTaxId;
         this.companyDescription = companyDescription;
-        // this.profilePhoto = profilePhoto;
     }
 
     public RecruiterProfile(Users users) {
@@ -87,7 +82,6 @@ public class RecruiterProfile {
                 ", companyEmail='" + companyEmail + '\'' +
                 ", companyTaxId='" + companyTaxId + '\'' +
                 ", companyDescription='" + companyDescription + '\'' +
-                //  ", profilePhoto='" + profilePhoto + '\'' +
                 '}';
     }
 }

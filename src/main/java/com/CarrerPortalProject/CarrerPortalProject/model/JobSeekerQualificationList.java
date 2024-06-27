@@ -25,9 +25,16 @@ public class JobSeekerQualificationList {
     @JoinColumn(name = "job_seeker_profile_id")
     private JobSeekerProfile jobSeekerProfile;
 
+    public JobSeekerQualificationList() {
+    }
 
-//    //test/ adding industry_ud column to quali list
-//    @ManyToOne
-//    @JoinColumn(name = "industry_id")
-//    private Industry industry;
+    @Override
+    public String toString() {
+        return "JobSeekerQualificationList{" +
+                "id=" + id +
+                ", qualificationName='" + qualificationName + '\'' +
+                ", qualificationStatus=" + qualificationStatus +
+                ", jobSeekerProfile=" + jobSeekerProfile +
+                '}';
+    }
 }

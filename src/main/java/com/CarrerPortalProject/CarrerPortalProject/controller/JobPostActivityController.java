@@ -1,9 +1,13 @@
 package com.CarrerPortalProject.CarrerPortalProject.controller;
 
-import com.CarrerPortalProject.CarrerPortalProject.model.*;
-import com.CarrerPortalProject.CarrerPortalProject.repository.IndustryFormRepository;
-import com.CarrerPortalProject.CarrerPortalProject.repository.IndustryRepository;
-import com.CarrerPortalProject.CarrerPortalProject.services.*;
+import com.CarrerPortalProject.CarrerPortalProject.model.IndustryForm;
+import com.CarrerPortalProject.CarrerPortalProject.model.JobPostActivity;
+import com.CarrerPortalProject.CarrerPortalProject.model.QualificationQuestion;
+import com.CarrerPortalProject.CarrerPortalProject.model.Users;
+import com.CarrerPortalProject.CarrerPortalProject.services.IndustryFormService;
+import com.CarrerPortalProject.CarrerPortalProject.services.JobPostActivityService;
+import com.CarrerPortalProject.CarrerPortalProject.services.QualificationQuestionService;
+import com.CarrerPortalProject.CarrerPortalProject.services.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -20,24 +24,16 @@ public class JobPostActivityController {
 
     private final UsersService usersService;
     private final JobPostActivityService jobPostActivityService;
-    private final IndustryService industryService;
-    private final IndustryRepository industryRepository;
-    private final IndustryFormRepository industryFormRepository;
     private final IndustryFormService industryFormService;
     private final QualificationQuestionService qualificationQuestionService;
-    private final RecruiterProfileService recruiterProfileService;
 
 
     @Autowired
-    public JobPostActivityController(UsersService usersService, JobPostActivityService jobPostActivityService, IndustryService industryService, IndustryRepository industryRepository, IndustryFormRepository industryFormRepository, IndustryFormService industryFormService, QualificationQuestionService qualificationQuestionService, RecruiterProfileService recruiterProfileService) {
+    public JobPostActivityController(UsersService usersService, JobPostActivityService jobPostActivityService, IndustryFormService industryFormService, QualificationQuestionService qualificationQuestionService) {
         this.usersService = usersService;
         this.jobPostActivityService = jobPostActivityService;
-        this.industryService = industryService;
-        this.industryRepository = industryRepository;
-        this.industryFormRepository = industryFormRepository;
         this.industryFormService = industryFormService;
         this.qualificationQuestionService = qualificationQuestionService;
-        this.recruiterProfileService = recruiterProfileService;
     }
 
     @GetMapping("/dashboard/")
@@ -62,10 +58,6 @@ public class JobPostActivityController {
             model.addAttribute("jobPosts", jobPosts);
             model.addAttribute("username", currentUser.getEmail());
         }
-
-////        ended here
-
-
         return "dashboard";
     }
 
@@ -96,9 +88,7 @@ public class JobPostActivityController {
         IndustryForm selectedIndustry = industryFormService.getIndustryFormById(industryFormId);
         jobPostActivity.setIndustryForm(selectedIndustry);
 
-
         JobPostActivity saved = jobPostActivityService.addNew(jobPostActivity);
-
 
         return "redirect:/dashboard/";
     }
@@ -109,26 +99,6 @@ public class JobPostActivityController {
         return qualificationQuestionService.getQuestionsByIndustryFormId(industryFormId);
     }
 
-
-    //edit job offer
-
-//    @PostMapping("/dashboard/edit/{id}")
-//    public String editJob(@PathVariable("id") int id, Model model) {
-//
-//
-//        JobPostActivity jobPostActivity = jobPostActivityService.getOne(id);
-//        JobPostActivity jobDetails = jobPostActivityService.getOne(id);
-//
-//        System.out.println("Job Description: " + jobPostActivity.getDescriptionOfJob());
-//
-//
-//        model.addAttribute("jobPostActivity", jobPostActivity);
-//        model.addAttribute("jobDetails", jobDetails);
-//        model.addAttribute("user", usersService.getCurrentUserProfile());
-//
-//        return "recruiter/add-jobs";
-//
-//    }
 
     @GetMapping("/dashboard/edit/{id}")
     public String editJobForm(@PathVariable("id") int id, Model model) {
@@ -162,10 +132,6 @@ public class JobPostActivityController {
         return "redirect:/dashboard/"; // Przekierowanie po zapisaniu
     }
 
-
-
-    //delete job:
-
     // Metoda do wyświetlenia potwierdzenia usunięcia oferty pracy
     @GetMapping("/dashboard/delete/confirm/{id}")
     public String deleteJobConfirmation(@PathVariable("id") int id, Model model) {
@@ -183,6 +149,5 @@ public class JobPostActivityController {
 
         return "redirect:/dashboard/"; // Przekierowanie po usunięciu
     }
-
 
 }

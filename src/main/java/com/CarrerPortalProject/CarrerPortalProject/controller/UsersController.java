@@ -3,13 +3,11 @@ package com.CarrerPortalProject.CarrerPortalProject.controller;
 import com.CarrerPortalProject.CarrerPortalProject.model.Users;
 import com.CarrerPortalProject.CarrerPortalProject.model.UsersType;
 import com.CarrerPortalProject.CarrerPortalProject.repository.UsersRepository;
-import com.CarrerPortalProject.CarrerPortalProject.repository.UsersTypeRepository;
 import com.CarrerPortalProject.CarrerPortalProject.services.UsersService;
 import com.CarrerPortalProject.CarrerPortalProject.services.UsersTypeService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,14 +23,12 @@ import java.util.List;
 public class UsersController {
 
     private final UsersRepository usersRepository;
-    private final UsersTypeRepository usersTypeRepository;
     private final UsersTypeService usersTypeService;
     private final UsersService usersService;
 
     @Autowired
-    public UsersController(UsersRepository usersRepository, UsersTypeRepository usersTypeRepository, UsersTypeService usersTypeService, UsersService usersService) {
+    public UsersController(UsersRepository usersRepository, UsersTypeService usersTypeService, UsersService usersService) {
         this.usersRepository = usersRepository;
-        this.usersTypeRepository = usersTypeRepository;
         this.usersTypeService = usersTypeService;
         this.usersService = usersService;
 

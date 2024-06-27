@@ -17,7 +17,7 @@ public class Industry {
 
     private String name;
 
-    // Relacja z IndustryForm
+
     @OneToOne(mappedBy = "industry")
     private IndustryForm industryForm;
 

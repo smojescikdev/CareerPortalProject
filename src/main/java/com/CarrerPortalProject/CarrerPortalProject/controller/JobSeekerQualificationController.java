@@ -6,9 +6,7 @@ import com.CarrerPortalProject.CarrerPortalProject.repository.JobSeekerProfileRe
 import com.CarrerPortalProject.CarrerPortalProject.repository.UsersRepository;
 import com.CarrerPortalProject.CarrerPortalProject.services.IndustryFormService;
 import com.CarrerPortalProject.CarrerPortalProject.services.IndustryService;
-import com.CarrerPortalProject.CarrerPortalProject.services.JobSeekerProfileService;
 import com.CarrerPortalProject.CarrerPortalProject.services.JobSeekerQualificationListService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,37 +19,32 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 
 @Controller
 public class JobSeekerQualificationController {
 
-    @Autowired
-    private IndustryService industryService;
+    private final IndustryService industryService;
+    private final IndustryFormService industryFormService;
+    private final JobSeekerQualificationListService jobSeekerQualificationListService;
+    private final UsersRepository usersRepository;
+    private final JobSeekerProfileRepository jobSeekerProfileRepository;
+    private final IndustryRepository industryRepository;
 
-    @Autowired
-    private IndustryFormService industryFormService;
+    public JobSeekerQualificationController(IndustryService industryService, IndustryFormService industryFormService, JobSeekerQualificationListService jobSeekerQualificationListService, UsersRepository usersRepository, JobSeekerProfileRepository jobSeekerProfileRepository, IndustryRepository industryRepository) {
+        this.industryService = industryService;
+        this.industryFormService = industryFormService;
+        this.jobSeekerQualificationListService = jobSeekerQualificationListService;
+        this.usersRepository = usersRepository;
+        this.jobSeekerProfileRepository = jobSeekerProfileRepository;
+        this.industryRepository = industryRepository;
+    }
 
-    @Autowired
-    private JobSeekerQualificationListService jobSeekerQualificationListService;
-
-    @Autowired
-    private UsersRepository usersRepository;
-
-    @Autowired
-    private JobSeekerProfileRepository jobSeekerProfileRepository;
-
-    @Autowired
-    private IndustryRepository industryRepository;
 
     @GetMapping("/job-seeker/select-industry")
     public String selectIndustry(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
-            String currentUsername = authentication.getName();
-            Users user = usersRepository.findByEmail(currentUsername)
-                    .orElseThrow(() -> new UsernameNotFoundException("Could not find user"));
 
             List<Industry> industries = industryService.getAllIndustries();
             model.addAttribute("industries", industries);
@@ -60,31 +53,24 @@ public class JobSeekerQualificationController {
     }
 
     @PostMapping("/job-seeker/select-industry")
-    public String handleIndustrySelection(@RequestParam("industryId") int industryId,
-                                          Model model,
-                                          @RequestParam(required = false) String name) {
+    public String handleIndustrySelection(@RequestParam("industryId") int industryId, Model model, @RequestParam(required = false) String name) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             String currentUsername = authentication.getName();
-            Users user = usersRepository.findByEmail(currentUsername)
-                    .orElseThrow(() -> new UsernameNotFoundException("Could not find user"));
-
-
+            Users user = usersRepository.findByEmail(currentUsername).orElseThrow(() -> new UsernameNotFoundException("Could not find user"));
 
 
             IndustryForm industryForm = industryFormService.getIndustryFormById(industryId);
-          List<QualificationQuestion> questions = industryFormService.getQuestionsByIndustryFormId(industryForm.getId());
+            List<QualificationQuestion> questions = industryFormService.getQuestionsByIndustryFormId(industryForm.getId());
             model.addAttribute("questions", questions);
 
 
             //adding selected industry form to database
 
-            JobSeekerProfile jobSeekerProfile = jobSeekerProfileRepository.findById(user.getUserId())
-                    .orElseThrow(() -> new RuntimeException("Job seeker profile not found"));
+            JobSeekerProfile jobSeekerProfile = jobSeekerProfileRepository.findById(user.getUserId()).orElseThrow(() -> new RuntimeException("Job seeker profile not found"));
 
-            Industry selectedIndustry = industryRepository.findById(industryId)
-                    .orElseThrow(() -> new RuntimeException("Industry not found"));
+            Industry selectedIndustry = industryRepository.findById(industryId).orElseThrow(() -> new RuntimeException("Industry not found"));
 
             jobSeekerProfile.setDesiredIndustry(selectedIndustry.getName());
 
@@ -102,13 +88,11 @@ public class JobSeekerQualificationController {
     }
 
     @PostMapping("/job-seeker/submit-qualification")
-    public String submitQualification(@RequestParam("answers") List<String> answers,
-                                      @RequestParam("qualificationNames") List<String> qualificationNames) {
+    public String submitQualification(@RequestParam("answers") List<String> answers, @RequestParam("qualificationNames") List<String> qualificationNames) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             String currentUsername = authentication.getName();
-            Users user = usersRepository.findByEmail(currentUsername)
-                    .orElseThrow(() -> new UsernameNotFoundException("Could not find user"));
+            Users user = usersRepository.findByEmail(currentUsername).orElseThrow(() -> new UsernameNotFoundException("Could not find user"));
 
             int userAccountId = user.getUserId();  // Pobieranie identyfikatora użytkownika
 

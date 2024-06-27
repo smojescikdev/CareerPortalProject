@@ -48,20 +48,12 @@ public class JobPostActivity {
     private String postal;
     private String country;
 
-    // Dodaj pole Industry
-//    @ManyToOne
-//    @JoinColumn(name = "industry_id")
-//    private Industry industry;
 
-
-    //test to add table industryform!
-// Ignorujemy pole industryForm, aby zapobiec zagnieżdżeniu
+    // Ignor pole industryForm, aby zapobiec zagnieżdżeniu
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "industry_form_id")
     private IndustryForm industryForm;
-    //test ended here!
-
 
     public JobPostActivity() {
     }
@@ -86,21 +78,7 @@ public class JobPostActivity {
 
     @Override
     public String toString() {
-        return "JobOfferPost{" +
-                "jobOfferPostId=" + jobOfferPostId +
-                ", postedById=" + postedById +
-                ", isActive=" + isActive +
-                ", isSaved=" + isSaved +
-                ", jobTitle='" + jobTitle + '\'' +
-                ", descriptionOfJob='" + descriptionOfJob + '\'' +
-                ", jobCategory='" + jobCategory + '\'' +
-                ", jobType='" + jobType + '\'' +
-                ", salary='" + salary + '\'' +
-                ", postedDate=" + postedDate +
-                ", city='" + city + '\'' +
-                ", postal='" + postal + '\'' +
-                ", country='" + country + '\'' +
-                '}';
+        return "JobOfferPost{" + "jobOfferPostId=" + jobOfferPostId + ", postedById=" + postedById + ", isActive=" + isActive + ", isSaved=" + isSaved + ", jobTitle='" + jobTitle + '\'' + ", descriptionOfJob='" + descriptionOfJob + '\'' + ", jobCategory='" + jobCategory + '\'' + ", jobType='" + jobType + '\'' + ", salary='" + salary + '\'' + ", postedDate=" + postedDate + ", city='" + city + '\'' + ", postal='" + postal + '\'' + ", country='" + country + '\'' + '}';
     }
 }
 

@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.util.List;
 
 @Controller
-public class GlobalSearchController {
+public class ListOfJobsController {
 
     private final UsersService usersService;
     private final JobPostActivityService jobPostActivityService;
 
 
-    public GlobalSearchController(UsersService usersService, JobPostActivityService jobPostActivityService) {
+    public ListOfJobsController(UsersService usersService, JobPostActivityService jobPostActivityService) {
         this.usersService = usersService;
         this.jobPostActivityService = jobPostActivityService;
     }
@@ -41,11 +41,10 @@ public class GlobalSearchController {
         Users currentUser = usersService.getCurrentUser();
 
         if (currentUser != null) {
-            List<JobPostActivity> jobPosts = jobPostActivityService.getAllJobPostsSortedByDateDesc(); // Modify this to get all job posts
+            List<JobPostActivity> jobPosts = jobPostActivityService.getAllJobPostsSortedByDateDesc();
             model.addAttribute("jobPosts", jobPosts);
             model.addAttribute("username", currentUser.getEmail());
         }
-
-        return "job-listing"; // Assuming "global-job-list" is your view name
+        return "job-listing";
     }
 }

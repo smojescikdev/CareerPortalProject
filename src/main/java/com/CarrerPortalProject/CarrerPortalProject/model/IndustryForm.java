@@ -25,7 +25,7 @@ public class IndustryForm {
 
     private String formName;
 
-    // Relacja z QualificationQuestion
+    // Relacja z QualificationQuestion - ignor zagniezdzenia
     @JsonIgnore
     @OneToMany(mappedBy = "industryForm")
     private List<QualificationQuestion> questions;

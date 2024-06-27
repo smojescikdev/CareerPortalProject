@@ -1,10 +1,11 @@
 package com.CarrerPortalProject.CarrerPortalProject.controller;
 
-import com.CarrerPortalProject.CarrerPortalProject.model.*;
+import com.CarrerPortalProject.CarrerPortalProject.model.JobSeekerBasicInformation;
+import com.CarrerPortalProject.CarrerPortalProject.model.JobSeekerProfile;
+import com.CarrerPortalProject.CarrerPortalProject.model.Users;
 import com.CarrerPortalProject.CarrerPortalProject.repository.JobSeekerProfileRepository;
 import com.CarrerPortalProject.CarrerPortalProject.repository.UsersRepository;
 import com.CarrerPortalProject.CarrerPortalProject.services.JobSeekerProfileService;
-import com.CarrerPortalProject.CarrerPortalProject.services.UsersService;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,7 +15,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 
 import java.sql.Date;
 import java.util.Optional;
@@ -33,15 +33,12 @@ public class JobSeekerProfileController {
     }
 
 
-
-    //test
     @GetMapping("/job-seeker/job-seeker-profile/")
     public String jobSeekerProfile(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             String currentUsername = authentication.getName();
-            Users user = usersRepository.findByEmail(currentUsername)
-                    .orElseThrow(() -> new UsernameNotFoundException("Could not find user"));
+            Users user = usersRepository.findByEmail(currentUsername).orElseThrow(() -> new UsernameNotFoundException("Could not find user"));
 
             Optional<JobSeekerProfile> jobSeekerProfile = jobSeekerProfileService.getOne(user);
             jobSeekerProfile.ifPresent(profile -> {
@@ -52,29 +49,14 @@ public class JobSeekerProfileController {
 
         return "job-seeker/job-seeker-profile";
     }
-    //test ended here
 
 
     @PostMapping("/job-seeker/job-seeker-profile-success")
-    public String jobSeekerSuccess(
-            @RequestParam String userAccountId,
-            @RequestParam(required = false) String firstName,
-            @RequestParam(required = false) String lastName,
-            @RequestParam(required = false) String email,
-            @RequestParam(required = false) String phone,
-            @RequestParam(required = false) Date dateOfBirth,
-            @RequestParam(required = false) String resume,
-            @RequestParam(required = false) boolean driverLicense,
-            @RequestParam(required = false) boolean carOwner,
-            @RequestParam(required = false) JobSeekerBasicInformation.LanguageLevel polishLanguageLevel,
-            @RequestParam(required = false) JobSeekerBasicInformation.LanguageLevel germanLanguageLevel,
-            @RequestParam(required = false) JobSeekerBasicInformation.LanguageLevel englishLanguageLevel
-    ) {
+    public String jobSeekerSuccess(@RequestParam String userAccountId, @RequestParam(required = false) String firstName, @RequestParam(required = false) String lastName, @RequestParam(required = false) String email, @RequestParam(required = false) String phone, @RequestParam(required = false) Date dateOfBirth, @RequestParam(required = false) String resume, @RequestParam(required = false) boolean driverLicense, @RequestParam(required = false) boolean carOwner, @RequestParam(required = false) JobSeekerBasicInformation.LanguageLevel polishLanguageLevel, @RequestParam(required = false) JobSeekerBasicInformation.LanguageLevel germanLanguageLevel, @RequestParam(required = false) JobSeekerBasicInformation.LanguageLevel englishLanguageLevel) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             String currentUsername = authentication.getName();
-            Users user = usersRepository.findByEmail(currentUsername)
-                    .orElseThrow(() -> new UsernameNotFoundException("Could not find user"));
+            Users user = usersRepository.findByEmail(currentUsername).orElseThrow(() -> new UsernameNotFoundException("Could not find user"));
 
             int accountId = user.getUserId();
             Optional<JobSeekerProfile> existingProfileOptional = jobSeekerProfileService.findById(accountId);

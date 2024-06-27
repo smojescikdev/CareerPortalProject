@@ -1,10 +1,5 @@
 package com.CarrerPortalProject.CarrerPortalProject.config;
 
-//obsługuje zdarzenie pomyślnego uwierzytelnienia użytkownika,
-// drukując jego nazwę użytkownika i przekierowując go na stronę "/dashboard/"
-// w zależności od posiadanych ról ("Job Seeker" lub "Recruiter")
-
-
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
