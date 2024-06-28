@@ -10,4 +10,6 @@ import java.util.List;
 public interface JobSeekerQualificationListRepository extends JpaRepository<JobSeekerQualificationList, Integer> {
 
     List<JobSeekerQualificationList> findByJobSeekerProfile_UserAccountId(Integer userAccountId);
+
+
 }

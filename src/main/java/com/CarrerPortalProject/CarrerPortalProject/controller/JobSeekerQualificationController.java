@@ -146,4 +146,20 @@ public class JobSeekerQualificationController {
         }
         return null;
     }
+
+
+    @PostMapping("/job-seeker/remove-qualifications")
+    public String removeQualifications(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            String currentUsername = authentication.getName();
+            Users user = usersRepository.findByEmail(currentUsername).orElseThrow(() -> new UsernameNotFoundException("Could not find user"));
+
+            // Call the service to remove all qualifications for the user
+            jobSeekerQualificationListService.removeAllQualificationsForUser(user.getUserId());
+        }
+        return "redirect:/job-seeker/select-industry";  // Redirect to a suitable page after removal
+    }
+
+
 }

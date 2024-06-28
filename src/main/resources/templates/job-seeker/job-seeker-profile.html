@@ -191,6 +191,12 @@
                         <label sec:authorize="hasAuthority('Job Seeker')"><a
                                 th:href="@{/job-seeker/select-industry}">
                             <button type="submit" class="head-btn1"> Add Your Professional Qualifications</button>
+
+                            <!-- button to remove qualifications -->
+                            <form th:action="@{/job-seeker/remove-qualifications}" method="post" style="margin-top: 20px;">
+                                <button type="submit" class="danger">Remove All Qualifications</button>
+                            </form>
+
                         </a></label>
 
                         <p><strong>Desired Industry:</strong> <span

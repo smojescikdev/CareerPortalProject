@@ -11,10 +11,12 @@ import java.util.List;
 public class JobSeekerQualificationListService {
 
     private final JobSeekerQualificationListRepository qualificationListRepository;
+    private final JobSeekerQualificationListRepository jobSeekerQualificationListRepository;
 
     @Autowired
-    public JobSeekerQualificationListService(JobSeekerQualificationListRepository qualificationListRepository) {
+    public JobSeekerQualificationListService(JobSeekerQualificationListRepository qualificationListRepository, JobSeekerQualificationListRepository jobSeekerQualificationListRepository) {
         this.qualificationListRepository = qualificationListRepository;
+        this.jobSeekerQualificationListRepository = jobSeekerQualificationListRepository;
     }
 
     public List<JobSeekerQualificationList> findByJobSeekerProfileUserId(int userId) {
@@ -24,4 +26,10 @@ public class JobSeekerQualificationListService {
     public void saveJobSeekerQualifications(List<JobSeekerQualificationList> qualifications) {
         qualificationListRepository.saveAll(qualifications);
     }
+
+    public void removeAllQualificationsForUser(int userId) {
+        List<JobSeekerQualificationList> qualifications = jobSeekerQualificationListRepository.findByJobSeekerProfile_UserAccountId(userId);
+        jobSeekerQualificationListRepository.deleteAll(qualifications);
+    }
+
 }
