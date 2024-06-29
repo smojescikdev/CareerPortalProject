@@ -30,7 +30,6 @@
 
 
     <!-- Supernote CSS -->
-    <!--    <link rel="stylesheet" href="/summernote/summernote-lite.min.css">-->
     <link th:rel="stylesheet" type="text/css" media="all" th:href="@{/summernote/summernote-lite.min.css}"/>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -94,14 +93,13 @@
 <!--NAVBAR  for logged user  ---   ENDED HERE-->
 
 
-
-
-<!-- Nagłówek strony -->
 <h2 th:text="${jobPostActivity.jobOfferPostId} == null ? 'Add Job Form' : 'Edit Job Form'"></h2>
 
-<!-- Formularz dodawania/edycji pracy -->
+
 <div class="col-md-7 container myForm">
-    <form id="job-main-form" th:action="${jobPostActivity.jobOfferPostId} == null ? @{/dashboard/addNew} : @{/dashboard/edit/{id}(id=${jobPostActivity.jobOfferPostId})}" th:object="${jobPostActivity}" method="post" class="job-add-form">
+    <form id="job-main-form"
+          th:action="${jobPostActivity.jobOfferPostId} == null ? @{/dashboard/addNew} : @{/dashboard/edit/{id}(id=${jobPostActivity.jobOfferPostId})}"
+          th:object="${jobPostActivity}" method="post" class="job-add-form">
 
         <input hidden type="text" th:field="*{jobOfferPostId}">
         <input hidden type="text" th:field="*{postedDate}">
@@ -112,7 +110,8 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="d-flex justify-content-center pt-3">
-                    <h1 class="heading_font font-weight-bold" th:text="${jobPostActivity.jobOfferPostId} == null ? 'Post New Job' : 'Edit Job'"></h1>
+                    <h1 class="heading_font font-weight-bold"
+                        th:text="${jobPostActivity.jobOfferPostId} == null ? 'Post New Job' : 'Edit Job'"></h1>
                 </div>
             </div>
         </div>
@@ -120,16 +119,19 @@
         <label class="heading_font font_sub_heading_color">Job Details</label>
         <div class="row">
             <div class="col-lg-12 form-group">
-                <input id="title" type="text" th:field="*{jobTitle}" class="form-control" placeholder="Job Title" required>
+                <input id="title" type="text" th:field="*{jobTitle}" class="form-control" placeholder="Job Title"
+                       required>
             </div>
         </div>
 
         <div class="col-md-4 form-group">
             <label for="industryForm">Select Industry:</label>
-            <select id="industryForm" name="industryFormId" class="form-control" th:disabled="${jobPostActivity.jobOfferPostId != null}" required>
+            <select id="industryForm" name="industryFormId" class="form-control"
+                    th:disabled="${jobPostActivity.jobOfferPostId != null}" required>
                 <option value="">Select Industry</option>
                 <th:block th:each="industryForm : ${industries}">
-                    <option th:value="${industryForm.id}" th:text="${industryForm.formName}" th:selected="${industryForm.id == jobPostActivity.industryForm.id}"></option>
+                    <option th:value="${industryForm.id}" th:text="${industryForm.formName}"
+                            th:selected="${industryForm.id == jobPostActivity.industryForm.id}"></option>
                 </th:block>
             </select>
             <input type="hidden" name="industryFormId" th:value="${jobPostActivity.industryForm.id}">
@@ -156,7 +158,8 @@
         <div class="row">
             <div class="col-md-12 form-group">
                 <label class="mt-2 heading_font font_sub_heading_color">Description</label>
-                <textarea type="text" rows="4" id="content" placeholder="Content" class="form-control" th:field="*{descriptionOfJob}" autocomplete="off" required></textarea>
+                <textarea type="text" rows="4" id="content" placeholder="Content" class="form-control"
+                          th:field="*{descriptionOfJob}" autocomplete="off" required></textarea>
             </div>
         </div>
 
@@ -169,13 +172,15 @@
                 <input id="state" th:field="*{postal}" type="text" class="form-control" placeholder="Postal" required>
             </div>
             <div class="col-md-4 form-group">
-                <input id="country" th:field="*{country}" type="text" class="form-control" placeholder="Country" required>
+                <input id="country" th:field="*{country}" type="text" class="form-control" placeholder="Country"
+                       required>
             </div>
         </div>
 
         <div class="row mt-4">
             <div class="col d-flex justify-content-center">
-                <button type="submit" name="submit" class="btn btn-primary base_button px-4 py-2 mb-5">Add job offer</button>
+                <button type="submit" name="submit" class="btn btn-primary base_button px-4 py-2 mb-5">Add job offer
+                </button>
             </div>
         </div>
     </form>
@@ -196,72 +201,65 @@
 <!-- JS here -->
 <script>
     $(document).ready(function () {
-        // Po załadowaniu całego dokumentu wykonaj następujące:
 
-        // Obsługa kliknięcia przycisku "Copy to Description"
+
         $('#copyToDescriptionBtn').click(function (event) {
-            // Zapobiegaj domyślnej akcji przycisku (wysłaniu formularza)
+
             event.preventDefault();
 
-            // Inicjalizacja tablicy na zaznaczone kwalifikacje
+
             var selectedQualifications = [];
 
-            // Iteracja po zaznaczonych checkboxach kwalifikacji
+
             $('.qualification-checkbox:checked').each(function () {
-                // Pobierz tekst pytania z najbliższego label
+            /
                 var questionText = $(this).closest('label').text().trim();
 
-                // Dodaj pytanie do tablicy selectedQualifications
+
                 selectedQualifications.push(questionText);
             });
 
-            // Jeśli są zaznaczone jakieś kwalifikacje
+
             if (selectedQualifications.length > 0) {
-                // Połącz pytania w jedną linię oddzieloną <br> i przypisz do qualificationsText
+
                 var qualificationsText = selectedQualifications.join('<br>');
 
 
-// Zdefiniuj nagłówek do wstawienia na końcu
                 var header = '<br><b>WYMAGANE KWALIFIKACJE:</b><br>';
 
-// Połącz nagłówek z listą pytań i zapisz to w zmiennej finalContent
+
                 var finalContent = header + qualificationsText;
 
-// Wstaw finalContent do edytora Summernote pod #content
+
                 $('#content').summernote('pasteHTML', finalContent);
             }
         });
 
-        // Obsługa zmiany wartości formularza industryForm
+
         $('#industryForm').change(function () {
-            // Pobierz wybrany industryFormId
+
             var industryFormId = $(this).val();
 
-            // Jeśli industryFormId nie jest puste
+
             if (industryFormId) {
-                // Wyślij żądanie AJAX, aby pobrać pytania dla danego industryFormId
+
                 $.ajax({
-                    url: '/dashboard/getQuestions', // Adres URL endpointu do pobrania pytań
-                    type: 'GET', // Typ żądania GET
-                    data: {industryFormId: industryFormId}, // Dane przesyłane w żądaniu
+                    url: '/dashboard/getQuestions',
+                    type: 'GET',
+                    data: {industryFormId: industryFormId},
 
                     success: function (data) {
-                        // Obsługa sukcesu - data zawiera pobrane pytania
 
-                        // Znajdź div #qualificationQuestions
                         var questionsDiv = $('#qualificationQuestions');
 
-                        // Wyczyść zawartość questionsDiv
                         questionsDiv.empty();
 
-                        // Jeśli są jakieś pytania
                         if (data.length > 0) {
-                            // Dodaj nagłówek do questionsDiv
+
                             questionsDiv.append('<br><br><h3>List of Qualifications to add to description</h3>');
 
-                            // Iteruj po każdym pytaniu w danych
                             data.forEach(function (question) {
-                                // Dodaj div z klasami i pytaniem
+
                                 questionsDiv.append('<div class="col-md-7 container myForm">' +
                                     '<li>' +
                                     '<label class="heading_font font_sub_heading_color">' +
@@ -274,7 +272,6 @@
                         }
                     },
                     error: function (error) {
-                        // Obsługa błędu żądania AJAX
                         console.error('Error fetching questions:', error);
                     }
                 });
@@ -319,7 +316,7 @@
 <script type="text/javascript" th:src="@{/summernote/summernote-lite.min.js}"></script>
 <script type="text/javascript" th:src="@{/js/main.js}"></script>
 
-<!-- Skrypt do inicjalizacji Summernote + Formatka -->
+<!-- Skrypt do Summernote + Formatka -->
 <script>
     $(document).ready(function () {
         // Inicjalizacja Summernote

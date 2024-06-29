@@ -33,18 +33,17 @@
     }
 
     .container {
-        width: 80%; /* Szerokość kontenera, możesz dostosować */
-        margin: 0 auto; /* Automatyczne wyśrodkowanie */
-        padding: 20px; /* Margines wewnętrzny dla kontenera */
-    }
+        width: 80%;
+        margin: 0 auto;
+        padding: 20px;
 
     table {
         width: 100%;
         border-collapse: separate;
         border-spacing: 0;
-        margin-top: 20px; /* Dodatkowy margines na górę tabeli */
-        margin-bottom: 20px; /* Dodatkowy margines na dół tabeli */
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Cień dla całej tabeli */
+        margin-top: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
     th, td {
@@ -111,7 +110,8 @@
         </tr>
         </thead>
         <tbody>
-        <!-- Iteracja po jobPosts -->
+
+
         <tr th:each="jobPost : ${jobPosts}">
             <td th:text="${jobPost.jobTitle}">Job Title</td>
             <td th:text="${jobPost.city}">City</td>

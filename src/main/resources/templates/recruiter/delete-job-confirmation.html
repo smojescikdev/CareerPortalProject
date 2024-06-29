@@ -114,7 +114,6 @@
     <p>Job Title: <span th:text="${jobPostActivity.jobTitle}"></span></p>
     <p>Posted Date: <span th:text="${jobPostActivity.postedDate}"></span></p>
     <p>Industry: <span th:text="${jobPostActivity.industryForm.formName}"></span></p>
-    <!-- Dodaj inne pola do wyświetlenia, jeśli potrzebne -->
 </div>
 <form th:action="@{/dashboard/delete/{id}(id=${jobPostActivity.jobOfferPostId})}" method="post">
     <button type="submit">Delete</button>

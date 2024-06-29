@@ -46,14 +46,14 @@
                             <!-- Header-btn -->
 
                             <div class="d-none f-right d-lg-block">
-                                <!-- Warunek: Pokaż tylko gdy użytkownik nie jest zalogowany -->
+
                                 <a sec:authorize="isAnonymous()" href="register" class="btn head-btn1">Register</a>
                                 <a sec:authorize="isAnonymous()" href="login" class="btn head-btn2">Login</a>
-                                <!-- Warunek: Pokaż tylko gdy użytkownik jest zalogowany jako Job Seeker -->
+
                                 <li sec:authorize="hasAuthority('Job Seeker')"><a class="btn head-btn1"
                                                                                   th:href="@{/dashboard/}">
                                     <i class="fas fa-search"></i> Dashboard Job Seeker</a></li>
-                                <!-- Warunek: Pokaż tylko gdy użytkownik jest zalogowany jako Recruiter -->
+
                                 <li sec:authorize="hasAuthority('Recruiter')"><a class="btn head-btn1"
                                                                                  th:href="@{/dashboard/}">
                                     <i class="fa-solid fa-file-circle-plus"></i> Dashboard Recruiter</a></li>

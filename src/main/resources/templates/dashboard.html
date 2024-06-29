@@ -111,19 +111,15 @@
         <div class="headder-top header-sticky">
             <div class="container">
                 <div class="row align-items-center">
-                    <div class="col-lg-3 col-md-2">
-                        <!-- Logo -->
-                        <!--                        <div class="logo">-->
-                        <!--                            <a href="/"><img src="/assets/img/logo/logo.png" alt=""></a>-->
-                        <!--                        </div>-->
-                    </div>
+
                     <div class="col-lg-9 col-md-9">
                         <div class="menu-wrapper">
                             <!-- Main-menu -->
                             <div class="main-menu">
                                 <nav class="d-none d-lg-block">
                                     <ul id="navigation">
-                                        <!-- Dodatkowe elementy nawigacyjne -->
+
+
                                         <li sec:authorize="hasAuthority('Job Seeker')"><a class="nav-link"
                                                                                           th:href="@{/job-listing}"><i
                                                 class="fas fa-search"></i> Search for Jobs</a></li>
@@ -173,7 +169,9 @@
                         <div class="profile-section">
                             <div class="d-none d-lg-block">
                                 <h4 class="primary-title">Job Seeker Dashboard</h4>
-                                <!-- Warunek: Pokaż tylko gdy użytkownik jest zalogowany jako Job Seeker -->
+
+
+
                                 <li sec:authorize="hasAuthority('Job Seeker')"><a class="btn head-btn1"
                                                                                   th:href="@{/job-listing}">
                                     <i class="fas fa-search head-btn1"></i> Find Job for You! </a></li>
@@ -192,7 +190,8 @@
         <div class="box" sec:authorize="hasAuthority('Recruiter')">
             <h1 class="primary-title">Recruiter Dashboard</h1>
         <div class="box mt-3">
-<!--            <label class="large-label px-3 mb-3" sec:authorize="hasAuthority('Job Seeker')">Search Results</label>-->
+
+
             <div class="container">
                 <div class="profile-form-wrapper">
                     <div class="profile-section">
