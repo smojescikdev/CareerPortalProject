@@ -67,7 +67,6 @@ public class JobSeekerQualificationController {
 
 
             //adding selected industry form to database
-
             JobSeekerProfile jobSeekerProfile = jobSeekerProfileRepository.findById(user.getUserId()).orElseThrow(() -> new RuntimeException("Job seeker profile not found"));
 
             Industry selectedIndustry = industryRepository.findById(industryId).orElseThrow(() -> new RuntimeException("Industry not found"));
@@ -80,7 +79,7 @@ public class JobSeekerQualificationController {
             //  lista odpowiedzi
             List<String> answers = new ArrayList<>(questions.size());
             for (int i = 0; i < questions.size(); i++) {
-                answers.add("false"); // Wartość domyślna
+                answers.add("false");
             }
             model.addAttribute("answers", answers);
         }
@@ -96,30 +95,29 @@ public class JobSeekerQualificationController {
 
             int userAccountId = user.getUserId();  // Pobieranie identyfikatora użytkownika
 
-            // Pobieranie istniejących kwalifikacji użytkownika
+            //pobierz istnieją kwalifikacje
             List<JobSeekerQualificationList> existingQualifications = jobSeekerQualificationListService.findByJobSeekerProfileUserId(userAccountId);
 
-            // Lista do przechowywania nowych kwalifikacji do zapisania
+            //lista do przechowywania nowych kwalifikacji do zapisania
             List<JobSeekerQualificationList> qualificationsToSave = new ArrayList<>();
 
-            // Pętla po wszystkich możliwych kwalifikacjach (na podstawie przesłanych nazw)
+            //pętla po wszystkich kwalifikacjach (na podstawie przesłanych nazw)
             for (int i = 0; i < qualificationNames.size(); i++) {
                 String qualificationName = qualificationNames.get(i);
-                boolean qualificationStatus = false; // Domyślnie ustawiamy na false
+                boolean qualificationStatus = false;
 
-                // Sprawdzenie, czy kwalifikacja została zaznaczona przez użytkownika
                 if (answers.contains(qualificationName)) {
                     qualificationStatus = true;
                 }
 
-                // Sprawdzenie, czy istnieje już kwalifikacja o danej nazwie
+                //check czy istnieje w bazie
                 JobSeekerQualificationList existingQualification = findExistingQualification(existingQualifications, qualificationName);
                 if (existingQualification != null) {
-                    // Aktualizacja istniejącej kwalifikacji
+
                     existingQualification.setQualificationStatus(qualificationStatus);
                     qualificationsToSave.add(existingQualification);
                 } else {
-                    // Tworzenie nowej kwalifikacji do zapisu
+
                     JobSeekerProfile profile = new JobSeekerProfile();
                     profile.setUserAccountId(userAccountId);
 
@@ -131,13 +129,14 @@ public class JobSeekerQualificationController {
                 }
             }
 
-            // Zapis wszystkich kwalifikacji do bazy danych
+            //zapis wszystkich kwalifikacji do bazy
             jobSeekerQualificationListService.saveJobSeekerQualifications(qualificationsToSave);
         }
         return "job-seeker/qualification-submitted";
     }
 
-    // Metoda pomocnicza do znalezienia istniejącej kwalifikacji w liście
+
+    //metoda do znalezienia istniejącej kwalifikacji w liście
     private JobSeekerQualificationList findExistingQualification(List<JobSeekerQualificationList> existingQualifications, String qualificationName) {
         for (JobSeekerQualificationList qualification : existingQualifications) {
             if (qualification.getQualificationName().equals(qualificationName)) {
@@ -155,10 +154,10 @@ public class JobSeekerQualificationController {
             String currentUsername = authentication.getName();
             Users user = usersRepository.findByEmail(currentUsername).orElseThrow(() -> new UsernameNotFoundException("Could not find user"));
 
-            // Call the service to remove all qualifications for the user
+
             jobSeekerQualificationListService.removeAllQualificationsForUser(user.getUserId());
         }
-        return "redirect:/job-seeker/select-industry";  // Redirect to a suitable page after removal
+        return "redirect:/job-seeker/select-industry";
     }
 
 

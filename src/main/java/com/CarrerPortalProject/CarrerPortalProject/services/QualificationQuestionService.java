@@ -17,6 +17,7 @@ public class QualificationQuestionService {
         this.qualificationQuestionRepository = qualificationQuestionRepository;
     }
 
+    //zwraca lista pytań kwalifikacyjnych na podstawie industryFormId
     public List<QualificationQuestion> getQuestionsByIndustryFormId(int industryFormId) {
         return qualificationQuestionRepository.findByIndustryFormId(industryFormId);
     }

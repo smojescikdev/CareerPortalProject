@@ -49,17 +49,18 @@ public class JobDetailsController {
             String currentUsername = authentication.getName();
             Users user = usersRepository.findByEmail(currentUsername).orElseThrow(() -> new UsernameNotFoundException("Could not find user"));
 
+            //pobiera profil user
             Optional<JobSeekerProfile> jobSeekerProfile = jobSeekerProfileService.getOne(user);
             jobSeekerProfile.ifPresent(profile -> {
                 model.addAttribute("jobSeekerProfile", profile);
                 model.addAttribute("profile", profile);
 
-                // Prepare qualifications for display in the email body
+                //lista kwalifikacji do email
                 List<String> qualifications = profile.getJobSeekerQualificationList().stream().map(q -> q.getQualificationName() + ": " + (q.isQualificationStatus() ? "TAK" : "NIE")).collect(Collectors.toList());
                 model.addAttribute("jobSeekerQualifications", String.join("%0D%0A", qualifications));
             });
 
-            // Pobierz profil rekrutera na podstawie autora ogłoszenia o pracę
+            // Pobiera profil rekrutera na podst. postedById
             Optional<RecruiterProfile> recruiterProfile = recruiterProfileService.getOne(jobPostActivity.getPostedById());
             recruiterProfile.ifPresent(profile -> {
                 model.addAttribute("recruiterProfile", profile);
@@ -69,7 +70,6 @@ public class JobDetailsController {
 
             return "job-details";
         }
-
         return "redirect:/login";
     }
 }

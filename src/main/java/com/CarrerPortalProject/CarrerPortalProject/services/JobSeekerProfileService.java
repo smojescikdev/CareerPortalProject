@@ -16,12 +16,14 @@ public class JobSeekerProfileService {
         this.jobSeekerProfileRepository = jobSeekerProfileRepository;
     }
 
+    //zwraca profil jobSekker na podstawie użytkownika
     public Optional<JobSeekerProfile> getOne(Users user) {
         return jobSeekerProfileRepository.findByUserId(user);
     }
 
+    //zwraca profil Jon Seeker'a na podstawie accountId
     public Optional<JobSeekerProfile> findById(int accountId) {
         return jobSeekerProfileRepository.findById(accountId);
-      }
+    }
 }
 

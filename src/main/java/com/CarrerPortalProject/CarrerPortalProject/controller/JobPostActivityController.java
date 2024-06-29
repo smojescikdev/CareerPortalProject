@@ -52,7 +52,7 @@ public class JobPostActivityController {
         Users currentUser = usersService.getCurrentUser();
 
 
-////list of jobs
+        //list of jobs
         if (currentUser != null) {
             List<JobPostActivity> jobPosts = jobPostActivityService.getJobsByRecruiterId(currentUser.getUserId());
             model.addAttribute("jobPosts", jobPosts);
@@ -68,7 +68,7 @@ public class JobPostActivityController {
         model.addAttribute("jobPostActivity", new JobPostActivity());
         model.addAttribute("user", usersService.getCurrentUserProfile());
 
-        // Pobierz listę branż z industry form
+        //pobiera listę branż z industry form
         List<IndustryForm> industries = industryFormService.getAllIndustries();
         model.addAttribute("industries", industries);
 
@@ -84,7 +84,7 @@ public class JobPostActivityController {
         }
         jobPostActivity.setPostedDate(new Date());
 
-        // Pobierz wybraną branżę i ustaw ją w JobPostActivity
+        //Pobiera wybraną branżę i ustawia ją w JobPostActivity
         IndustryForm selectedIndustry = industryFormService.getIndustryFormById(industryFormId);
         jobPostActivity.setIndustryForm(selectedIndustry);
 
@@ -106,33 +106,31 @@ public class JobPostActivityController {
         model.addAttribute("jobPostActivity", jobPostActivity);
         model.addAttribute("user", usersService.getCurrentUserProfile());
 
-        // Pobierz listę branż z industry form
         List<IndustryForm> industries = industryFormService.getAllIndustries();
         model.addAttribute("industries", industries);
 
-        return "recruiter/add-jobs"; // Przekierowanie do formularza edycji
+        return "recruiter/add-jobs";
     }
+
 
     @PostMapping("/dashboard/edit/{id}")
     public String editJob(@PathVariable("id") int id, @ModelAttribute("jobPostActivity") JobPostActivity jobPostActivity, @RequestParam("industryFormId") int industryFormId) {
-        // Pobierz oryginalny obiekt z bazy danych
+
         JobPostActivity existingJobPostActivity = jobPostActivityService.getOne(id);
 
-        // Zachowaj niezmienione pola
         jobPostActivity.setPostedDate(existingJobPostActivity.getPostedDate());
         jobPostActivity.setPostedById(existingJobPostActivity.getPostedById());
 
-        // Pobierz wybraną branżę i ustaw ją w JobPostActivity
         IndustryForm selectedIndustry = industryFormService.getIndustryFormById(industryFormId);
         jobPostActivity.setIndustryForm(selectedIndustry);
 
-        // Ustaw pozostałe pola i zapisz lub aktualizuj
+        //ustawia pozostałe pola i save/update
         jobPostActivityService.saveOrUpdate(jobPostActivity);
 
-        return "redirect:/dashboard/"; // Przekierowanie po zapisaniu
+        return "redirect:/dashboard/";
     }
 
-    // Metoda do wyświetlenia potwierdzenia usunięcia oferty pracy
+    // potiwerdzenie usuniecia oferty
     @GetMapping("/dashboard/delete/confirm/{id}")
     public String deleteJobConfirmation(@PathVariable("id") int id, Model model) {
         JobPostActivity jobPostActivity = jobPostActivityService.getOne(id);
@@ -142,7 +140,7 @@ public class JobPostActivityController {
         return "recruiter/delete-job-confirmation"; // Widok potwierdzenia usunięcia
     }
 
-    // Metoda do usunięcia oferty pracy
+    //Usuwa ofertę pracy po id
     @PostMapping("/dashboard/delete/{id}")
     public String deleteJob(@PathVariable("id") int id) {
         jobPostActivityService.deleteJob(id);

@@ -18,14 +18,17 @@ public class IndustryFormService {
     @Autowired
     private QualificationQuestionRepository qualificationQuestionRepository;
 
+    //zwraca formularz po id
     public IndustryForm getIndustryFormById(int id) {
         return industryFormRepository.findById(id).orElse(null);
     }
 
+    //zwraca listę kwalifikacji po id formularza
     public List<QualificationQuestion> getQuestionsByIndustryFormId(int industryFormId) {
         return qualificationQuestionRepository.findByIndustryFormId(industryFormId);
     }
 
+    //zwraca listę branż
     public List<IndustryForm> getAllIndustries() {
         return industryFormRepository.findAll();
     }

@@ -36,7 +36,7 @@ public class UsersService {
     }
 
 
-    //zapis usera do bazy + utworzenie profilu
+    // zapis usera do bazy + utworzenie profilu
     public Users addNewUser(Users users) {
         users.setActive(true);
         users.setRegistrationDate(new Date(System.currentTimeMillis()));
@@ -48,10 +48,9 @@ public class UsersService {
 
         } else {
 
-            // Create JobSeekerProfile
             JobSeekerProfile jobSeekerProfile = new JobSeekerProfile(savedUser);
 
-            // Create JobSeekerBasicInformation
+
             JobSeekerBasicInformation jobSeekerBasicInformation = new JobSeekerBasicInformation();
             jobSeekerBasicInformation.setJobSeekerProfile(jobSeekerProfile);
 
@@ -63,7 +62,7 @@ public class UsersService {
 
     }
 
-
+    // zwraca profil aktualnie zalogowanego użytkownika
     public Object getCurrentUserProfile() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -84,6 +83,7 @@ public class UsersService {
 
     }
 
+    //zwraca aktualnie zalogowanego użytkownika
     public Users getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {

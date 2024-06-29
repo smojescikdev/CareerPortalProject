@@ -24,25 +24,27 @@ public class JobPostActivityService {
 
     }
 
+    //zwraca listę ofert pracy dla danego rekrutera
     public List<JobPostActivity> getJobsByRecruiterId(int recruiterId) {
         return jobPostActivityRepository.findByPostedById_UserId(recruiterId);
     }
 
+    // zwraca oferty na podstawie id - wszystkie
     public JobPostActivity getOne(int id) {
-
-        return jobPostActivityRepository.findById(id).orElseThrow(()-> new RuntimeException("Job Not Found"));
-
+        return jobPostActivityRepository.findById(id).orElseThrow(() -> new RuntimeException("Job Not Found"));
     }
 
-    // Metoda do pobierania wszystkich ofert pracy posortowanych od najnowszych do najstarszych
+    //pobiera wszystkie ofert pracy Desc
     public List<JobPostActivity> getAllJobPostsSortedByDateDesc() {
         return jobPostActivityRepository.findAllByOrderByPostedDateDesc();
     }
 
+    //zapisuje/update oferty pracy
     public void saveOrUpdate(JobPostActivity jobPostActivity) {
         jobPostActivityRepository.save(jobPostActivity);
     }
 
+    //usuwanie oferty pracy po id
     public void deleteJob(int id) {
         jobPostActivityRepository.deleteById(id);
     }

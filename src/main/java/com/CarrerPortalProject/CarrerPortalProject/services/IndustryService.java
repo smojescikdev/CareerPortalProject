@@ -13,6 +13,7 @@ public class IndustryService {
     @Autowired
     private IndustryRepository industryRepository;
 
+    //zwraca wszystkie branże
     public List<Industry> getAllIndustries() {
         return industryRepository.findAll();
     }

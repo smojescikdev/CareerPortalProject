@@ -19,14 +19,17 @@ public class JobSeekerQualificationListService {
         this.jobSeekerQualificationListRepository = jobSeekerQualificationListRepository;
     }
 
+    //zwraca listę kwalifikacji Job Seeker na podstawie userId
     public List<JobSeekerQualificationList> findByJobSeekerProfileUserId(int userId) {
         return qualificationListRepository.findByJobSeekerProfile_UserAccountId(userId);
     }
 
+    //zapisuje listę kwalifikacji poszukującego pracy
     public void saveJobSeekerQualifications(List<JobSeekerQualificationList> qualifications) {
         qualificationListRepository.saveAll(qualifications);
     }
 
+    //usuwa wszystkie kwalifikacje dla danego użytkownika
     public void removeAllQualificationsForUser(int userId) {
         List<JobSeekerQualificationList> qualifications = jobSeekerQualificationListRepository.findByJobSeekerProfile_UserAccountId(userId);
         jobSeekerQualificationListRepository.deleteAll(qualifications);

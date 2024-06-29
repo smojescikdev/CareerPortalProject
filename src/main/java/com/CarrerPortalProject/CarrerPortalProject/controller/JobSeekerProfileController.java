@@ -40,13 +40,13 @@ public class JobSeekerProfileController {
             String currentUsername = authentication.getName();
             Users user = usersRepository.findByEmail(currentUsername).orElseThrow(() -> new UsernameNotFoundException("Could not find user"));
 
+            //ładuje profil użytkownika
             Optional<JobSeekerProfile> jobSeekerProfile = jobSeekerProfileService.getOne(user);
             jobSeekerProfile.ifPresent(profile -> {
                 model.addAttribute("profile", profile);
                 model.addAttribute("qualifications", profile.getJobSeekerQualificationList());
             });
         }
-
         return "job-seeker/job-seeker-profile";
     }
 

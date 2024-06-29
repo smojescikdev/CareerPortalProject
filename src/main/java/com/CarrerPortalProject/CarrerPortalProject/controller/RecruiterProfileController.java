@@ -58,7 +58,7 @@ public class RecruiterProfileController {
             String currentUsername = authentication.getName();
             Users user = usersRepository.findByEmail(currentUsername).orElseThrow(() -> new UsernameNotFoundException("Could not find user"));
 
-            // Pobieramy ID zalogowanego użytkownika
+
             int accountId = user.getUserId();
 
             Optional<RecruiterProfile> existingProfileOptional = recruiterProfileService.findById(accountId);
@@ -66,7 +66,6 @@ public class RecruiterProfileController {
             if (existingProfileOptional.isPresent()) {
                 RecruiterProfile existingProfile = existingProfileOptional.get();
 
-                // Aktualizujemy profil rekrutera tylko jeśli pola nie są puste
                 if (firstName != null && !firstName.isEmpty()) {
                     existingProfile.setFirstName(firstName);
                 }

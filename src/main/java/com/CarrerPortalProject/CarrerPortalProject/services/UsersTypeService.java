@@ -15,10 +15,13 @@ public class UsersTypeService {
         this.usersTypeRepository = usersTypeRepository;
     }
 
+
+    //lista wszystkich typów użytkowników
     public List<UsersType> getAll() {
         return usersTypeRepository.findAll();
     }
 
+    //lista wszystkich typów użytkowników
     public List<UsersType> getAllUsersTypes() {
         return usersTypeRepository.findAll();
     }
